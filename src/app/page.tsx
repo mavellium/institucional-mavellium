@@ -8,6 +8,7 @@ import { Calendar, Code, FileText, User, Clock } from "lucide-react";
 import RadialOrbitalTimeline from "../components/ui/radial-orbital-timeline";
 import AboutUsSection from "../components/ui/about-us-section";
 import { Footer } from "../components/ui/footer";
+import { ProjectShowcase } from "../components/ui/project-showcase";
 
 export default function Home() {
   const images = [
@@ -144,9 +145,13 @@ export default function Home() {
         ctaText={"Entre em contato"} />
       <HeroSection distortion={1.2} speed={0.8} />
       <AboutUsSection />
+      <ProjectShowcase 
+        title="Por que a Mavellium?"
+        description="Conheça alguns dos nossos trabalhos mais recentes que combinam criatividade e tecnologia."
+      />
       <ZoomParallax
         title="Meu Título Dinâmico"
-        titleClassName="text-3xl md:text-7xl font-black text-white drop-shadow-lg"
+        titleClassName="text-4xl md:text-7xl font-black text-white drop-shadow-lg"
         images={images} />
       <Gallery4 {...demoData} />
       <RadialOrbitalTimeline 

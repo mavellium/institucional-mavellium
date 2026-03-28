@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Link, Zap, Calendar, Code, FileText, User, Clock, Star, GitBranch, Rocket } from "lucide-react";
+import { ArrowRight, Link, Zap, Calendar, Code, FileText, User, Clock, Star, GitBranch, Rocket, X } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 // Exporte o tipo IconName para uso externo
-export type IconName = 
+export type IconName =
   | "Calendar"
   | "Code"
   | "FileText"
@@ -51,17 +51,12 @@ export default function RadialOrbitalTimeline({
   title = "Timeline Orbital",
   description = "Explore os marcos do projeto em uma visualização interativa",
 }: RadialOrbitalTimelineProps) {
-  const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>(
-    {}
-  );
+  const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
   const [viewMode, setViewMode] = useState<"orbital">("orbital");
   const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
   const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
-  const [centerOffset, setCenterOffset] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
+  const [centerOffset, setCenterOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
@@ -109,6 +104,13 @@ export default function RadialOrbitalTimeline({
     });
   };
 
+  const closeExpanded = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    setExpandedItems((prev) => ({ ...prev, [id]: false }));
+    setActiveNodeId(null);
+    setAutoRotate(true);
+  };
+
   useEffect(() => {
     let rotationTimer: NodeJS.Timeout;
 
@@ -146,13 +148,18 @@ export default function RadialOrbitalTimeline({
     const x = radius * Math.cos(radian) + centerOffset.x;
     const y = radius * Math.sin(radian) + centerOffset.y;
 
+    // Arredondar para 3 casas decimais
+    const roundedX = Math.round(x * 1000) / 1000;
+    const roundedY = Math.round(y * 1000) / 1000;
+
     const zIndex = Math.round(100 + 50 * Math.cos(radian));
     const opacity = Math.max(
       0.4,
       Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2))
     );
+    const roundedOpacity = Math.round(opacity * 1000) / 1000;
 
-    return { x, y, angle, zIndex, opacity };
+    return { x: roundedX, y: roundedY, angle, zIndex, opacity: roundedOpacity };
   };
 
   const getRelatedItems = (itemId: number): number[] => {
@@ -179,18 +186,31 @@ export default function RadialOrbitalTimeline({
     }
   };
 
+  const getStatusColor = (status: TimelineItem["status"]): string => {
+    switch (status) {
+      case "completed":
+        return "bg-green-400";
+      case "in-progress":
+        return "bg-yellow-400";
+      case "pending":
+        return "bg-gray-400";
+      default:
+        return "bg-gray-400";
+    }
+  };
+
   return (
     <div
-      className="w-full min-h-screen bg-black z-10 flex flex-col items-center justify-center bg-black overflow-hidden"
+      className="w-full min-h-screen bg-black z-10 flex flex-col items-center justify-center overflow-hidden"
       ref={containerRef}
       onClick={handleContainerClick}
     >
       {/* Seção de Título e Descrição */}
       <div className="relative z-20 w-full max-w-4xl text-center mb-12 mt-20 px-4">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 bg-clip-text text-transparent mb-4 animate-fade-in">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 bg-clip-text text-transparent mb-4">
           {title}
         </h1>
-        <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto animate-fade-in-up">
+        <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto">
           {description}
         </p>
       </div>
@@ -222,6 +242,7 @@ export default function RadialOrbitalTimeline({
             const isRelated = isRelatedToActive(item.id);
             const isPulsing = pulseEffect[item.id];
             const IconComponent = iconMap[item.icon];
+            const statusColor = getStatusColor(item.status);
 
             const nodeStyle = {
               transform: `translate(${position.x}px, ${position.y}px)`,
@@ -232,7 +253,9 @@ export default function RadialOrbitalTimeline({
             return (
               <div
                 key={item.id}
-                ref={(el) => {nodeRefs.current[item.id] = el}}
+                ref={(el) => {
+                  nodeRefs.current[item.id] = el;
+                }}
                 className="absolute transition-all duration-700 cursor-pointer"
                 style={nodeStyle}
                 onClick={(e) => {
@@ -255,27 +278,19 @@ export default function RadialOrbitalTimeline({
 
                 <div
                   className={`
-                  w-10 h-10 rounded-full flex items-center justify-center
-                  ${
-                    isExpanded
-                      ? "bg-white text-black"
-                      : isRelated
-                      ? "bg-white/50 text-black"
-                      : "bg-black text-white"
-                  }
+                  w-10 h-10 rounded-full flex items-center justify-center relative
+                  ${isExpanded ? "bg-white text-black" : isRelated ? "bg-white/50 text-black" : "bg-black text-white"}
                   border-2 
-                  ${
-                    isExpanded
-                      ? "border-white shadow-lg shadow-white/30"
-                      : isRelated
-                      ? "border-white animate-pulse"
-                      : "border-white/40"
-                  }
+                  ${isExpanded ? "border-white shadow-lg shadow-white/30" : isRelated ? "border-white animate-pulse" : "border-white/40"}
                   transition-all duration-300 transform
                   ${isExpanded ? "scale-150" : ""}
                 `}
                 >
                   <IconComponent size={16} />
+                  {/* Indicador de status (pontinho colorido) */}
+                  <div
+                    className={`absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full border border-black/30 ${statusColor}`}
+                  />
                 </div>
 
                 <div
@@ -291,13 +306,19 @@ export default function RadialOrbitalTimeline({
 
                 {isExpanded && (
                   <Card className="absolute top-20 left-1/2 -translate-x-1/2 w-64 bg-black/90 backdrop-blur-lg border-white/30 shadow-xl shadow-white/10 overflow-visible">
+                    {/* Botão de fechar */}
+                    <button
+                      onClick={(e) => closeExpanded(e, item.id)}
+                      className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-black/80 border border-white/30 flex items-center justify-center hover:bg-white/20 transition-colors z-10"
+                    >
+                      <X size={12} className="text-white/70" />
+                    </button>
+
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-white/50"></div>
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-center">
                         <Badge
-                          className={`px-2 text-xs ${getStatusStyles(
-                            item.status
-                          )}`}
+                          className={`px-2 text-xs ${getStatusStyles(item.status)}`}
                         >
                           {item.status === "completed"
                             ? "COMPLETE"
