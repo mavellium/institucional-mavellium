@@ -1,25 +1,24 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useRef, useEffect } from "react"
-import { ArrowUpRight } from "lucide-react"
+import type React from "react";
+import { useState, useRef, useEffect } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { useInView } from "react-intersection-observer";
 
 interface Project {
-  title: string
-  description: string
-  year: string
-  link: string
-  image: string
+  title: string;
+  description: string;
+  year: string;
+  link: string;
+  image: string;
 }
 
-// Props do componente
 interface ProjectShowcaseProps {
-  projects?: Project[];        // opcional, para permitir customização
-  title?: string;              // título opcional
-  description?: string;        // descrição opcional
+  projects?: Project[];
+  title?: string;
+  description?: string;
 }
 
-// Dados padrão (caso não passe projects)
 const defaultProjects: Project[] = [
   {
     title: "Lumina",
@@ -56,61 +55,78 @@ export function ProjectShowcase({
   title = "Selected Work",
   description = "Uma seleção de projetos que combinam design, tecnologia e inovação."
 }: ProjectShowcaseProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [smoothPosition, setSmoothPosition] = useState({ x: 0, y: 0 })
-  const [isVisible, setIsVisible] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const animationRef = useRef<number | null>(null)
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [smoothPosition, setSmoothPosition] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+
+  // Intersection Observer para animar título e descrição
+  const { ref: textRef, inView: textInView } = useInView({
+    triggerOnce: true,   // anima apenas na primeira vez que entra
+    threshold: 0.2,      // quando 20% do elemento estiver visível
+  });
 
   useEffect(() => {
     const lerp = (start: number, end: number, factor: number) => {
-      return start + (end - start) * factor
-    }
+      return start + (end - start) * factor;
+    };
 
     const animate = () => {
       setSmoothPosition((prev) => ({
         x: lerp(prev.x, mousePosition.x, 0.15),
         y: lerp(prev.y, mousePosition.y, 0.15),
-      }))
-      animationRef.current = requestAnimationFrame(animate)
-    }
+      }));
+      animationRef.current = requestAnimationFrame(animate);
+    };
 
-    animationRef.current = requestAnimationFrame(animate)
+    animationRef.current = requestAnimationFrame(animate);
 
     return () => {
       if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current)
+        cancelAnimationFrame(animationRef.current);
       }
-    }
-  }, [mousePosition])
+    };
+  }, [mousePosition]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect()
+      const rect = containerRef.current.getBoundingClientRect();
       setMousePosition({
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
-      })
+      });
     }
-  }
+  };
 
   const handleMouseEnter = (index: number) => {
-    setHoveredIndex(index)
-    setIsVisible(true)
-  }
+    setHoveredIndex(index);
+    setIsVisible(true);
+  };
 
   const handleMouseLeave = () => {
-    setHoveredIndex(null)
-    setIsVisible(false)
-  }
+    setHoveredIndex(null);
+    setIsVisible(false);
+  };
 
   return (
-    <section ref={containerRef} onMouseMove={handleMouseMove} className="relative w-full bg-black">
-      <div className="relative w-full max-w-2xl mx-auto px-6 py-16">
-        {/* Título e descrição */}
-        <div className="mb-32 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground to-white bg-clip-text text-transparent mb-3">
+    <section
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="relative w-full bg-black"
+    >
+      <div className="relative w-full max-w-5xl mx-auto px-6 py-16">
+        {/* Título e descrição com animação de fade */}
+        <div
+          ref={textRef}
+          className={`mb-32 text-center transition-all duration-700 ease-out ${
+            textInView
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
+          }`}
+        >
+          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-foreground to-white bg-clip-text text-transparent mb-3">
             {title}
           </h2>
           <p className="text-muted-foreground text-base max-w-lg mx-auto">
@@ -118,6 +134,7 @@ export function ProjectShowcase({
           </p>
         </div>
 
+        {/* Imagem flutuante */}
         <div
           className="pointer-events-none fixed z-50 overflow-hidden rounded-xl shadow-2xl"
           style={{
@@ -143,11 +160,11 @@ export function ProjectShowcase({
                 }}
               />
             ))}
-            {/* Subtle gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
           </div>
         </div>
 
+        {/* Lista de projetos */}
         <div className="space-y-0">
           {projects.map((project, index) => (
             <a
@@ -161,62 +178,58 @@ export function ProjectShowcase({
                 {/* Background highlight on hover */}
                 <div
                   className={`
-                  absolute inset-0 -mx-4 px-4 bg-white rounded-lg
-                  transition-all duration-300 ease-out
-                  ${hoveredIndex === index ? "opacity-100 scale-100" : "opacity-0 scale-95"}
-                `}
+                    absolute inset-0 -mx-4 px-4 bg-white rounded-lg
+                    transition-all duration-300 ease-out
+                    ${hoveredIndex === index ? "opacity-100 scale-100" : "opacity-0 scale-95"}
+                  `}
                 />
 
                 <div className="relative flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    {/* Title with animated underline */}
                     <div className="inline-flex items-center gap-2">
                       <h3 className="text-white group-hover:text-black font-medium text-lg tracking-tight">
                         <span className="relative">
                           {project.title}
-                          {/* Animated underline */}
                           <span
                             className={`
-                            absolute left-0 -bottom-0.5 h-px bg-foreground
-                            transition-all duration-300 ease-out
-                            ${hoveredIndex === index ? "w-full" : "w-0"}
-                          `}
+                              absolute left-0 -bottom-0.5 h-px bg-foreground
+                              transition-all duration-300 ease-out
+                              ${hoveredIndex === index ? "w-full" : "w-0"}
+                            `}
                           />
                         </span>
                       </h3>
 
-                      {/* Arrow that slides in */}
                       <ArrowUpRight
                         className={`
-                        w-4 h-4 text-muted-white/40
-                        transition-all duration-300 ease-out
-                        ${hoveredIndex === index
-                            ? "opacity-100 translate-x-0 translate-y-0"
-                            : "opacity-0 -translate-x-2 translate-y-2"
+                          w-4 h-4 text-muted-white/40
+                          transition-all duration-300 ease-out
+                          ${
+                            hoveredIndex === index
+                              ? "opacity-100 translate-x-0 translate-y-0"
+                              : "opacity-0 -translate-x-2 translate-y-2"
                           }
-                      `}
+                        `}
                       />
                     </div>
 
-                    {/* Description with fade effect */}
                     <p
                       className={`
-                      text-muted-foreground text-sm mt-1 leading-relaxed
-                      transition-all duration-300 ease-out
-                      ${hoveredIndex === index ? "text-black/70" : "text-black"}
-                    `}
+                        text-muted-foreground text-sm mt-1 leading-relaxed
+                        transition-all duration-300 ease-out
+                        ${hoveredIndex === index ? "text-black/70" : "text-black"}
+                      `}
                     >
                       {project.description}
                     </p>
                   </div>
 
-                  {/* Year badge */}
                   <span
                     className={`
-                    text-xs font-mono text-muted-foreground tabular-nums
-                    transition-all duration-300 ease-out
-                    ${hoveredIndex === index ? "text-black/50" : ""}
-                  `}
+                      text-xs font-mono text-muted-foreground tabular-nums
+                      transition-all duration-300 ease-out
+                      ${hoveredIndex === index ? "text-black/50" : ""}
+                    `}
                   >
                     {project.year}
                   </span>
@@ -225,10 +238,9 @@ export function ProjectShowcase({
             </a>
           ))}
 
-          {/* Bottom border for last item */}
           <div className="border-t border-border" />
         </div>
       </div>
     </section>
-  )
+  );
 }

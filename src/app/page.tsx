@@ -9,6 +9,8 @@ import RadialOrbitalTimeline from "../components/ui/radial-orbital-timeline";
 import AboutUsSection from "../components/ui/about-us-section";
 import { Footer } from "../components/ui/footer";
 import { ProjectShowcase } from "../components/ui/project-showcase";
+import FinalCtaSection from "../components/ui/cta-final";
+import { HoverPreview } from "../components/ui/hover-preview";
 
 export default function Home() {
   const images = [
@@ -135,6 +137,32 @@ export default function Home() {
     energy: 10,
   },
 ];
+
+const finalCtaData = {
+  text: {
+    headline: "Ready to transform",
+    highlight: "your space?",
+    description: "Let's create something beautiful together. Book a free consultation today."
+  },
+  theme: {
+    bg_color: "#ffffff", // opcional
+    gold_start: "#89c1f7",
+    gold_end: "#8361f4",
+    button_bg: "#000000"
+  },
+  calls_to_action: {
+    primary: {
+      label: "Entre em contato",
+      href: "/contact",
+      icon: "mdi:arrow-right"
+    },
+    secondary: {
+      label: "Learn More",
+      href: "/about",
+      icon: "mdi:chevron-right"
+    }
+  }
+};
   return (
     <>
       <Header
@@ -145,6 +173,15 @@ export default function Home() {
         ctaText={"Entre em contato"} />
       <HeroSection distortion={1.2} speed={0.8} />
       <AboutUsSection />
+      <HoverPreview 
+        title="Explore Ferramentas de IA"
+        description="Passe o mouse sobre os links para ver prévias interativas das principais ferramentas de IA generativa."
+      />
+      <RadialOrbitalTimeline 
+      title="Minha Timeline Interativa"
+      description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
+      timelineData={timelineData} />
+      <Gallery4 {...demoData} />
       <ProjectShowcase 
         title="Por que a Mavellium?"
         description="Conheça alguns dos nossos trabalhos mais recentes que combinam criatividade e tecnologia."
@@ -153,11 +190,8 @@ export default function Home() {
         title="Meu Título Dinâmico"
         titleClassName="text-4xl md:text-7xl font-black text-white drop-shadow-lg"
         images={images} />
-      <Gallery4 {...demoData} />
-      <RadialOrbitalTimeline 
-      title="Minha Timeline Interativa"
-      description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
-      timelineData={timelineData} />
+      
+      <FinalCtaSection data={finalCtaData} />
       <Footer />
     </>
   );
