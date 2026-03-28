@@ -77,92 +77,92 @@ export default function Home() {
     ],
   };
 
-// Import IconName type from the timeline component
+  // Import IconName type from the timeline component
 
 
   const timelineData = [
-  {
-    id: 1,
-    title: "Planning",
-    date: "Jan 2024",
-    content: "Project planning and requirements gathering phase.",
-    category: "Planning",
-    icon: "Calendar" as IconName, // Cast to IconName
-    relatedIds: [2],
-    status: "completed" as const,
-    energy: 100,
-  },
-  {
-    id: 2,
-    title: "Design",
-    date: "Feb 2024",
-    content: "UI/UX design and system architecture.",
-    category: "Design",
-    icon: "FileText" as IconName,
-    relatedIds: [1, 3],
-    status: "completed" as const,
-    energy: 90,
-  },
-  {
-    id: 3,
-    title: "Development",
-    date: "Mar 2024",
-    content: "Core features implementation and testing.",
-    category: "Development",
-    icon: "Code" as IconName,
-    relatedIds: [2, 4],
-    status: "in-progress" as const,
-    energy: 60,
-  },
-  {
-    id: 4,
-    title: "Testing",
-    date: "Apr 2024",
-    content: "User testing and bug fixes.",
-    category: "Testing",
-    icon: "User" as IconName,
-    relatedIds: [3, 5],
-    status: "pending" as const,
-    energy: 30,
-  },
-  {
-    id: 5,
-    title: "Release",
-    date: "May 2024",
-    content: "Final deployment and release.",
-    category: "Release",
-    icon: "Clock" as IconName,
-    relatedIds: [4],
-    status: "pending" as const,
-    energy: 10,
-  },
-];
-
-const finalCtaData = {
-  text: {
-    headline: "Ready to transform",
-    highlight: "your space?",
-    description: "Let's create something beautiful together. Book a free consultation today."
-  },
-  theme: {
-    bg_color: "#ffffff", // opcional
-    gold_start: "#89c1f7",
-    gold_end: "#8361f4",
-    button_bg: "#000000"
-  },
-  calls_to_action: {
-    primary: {
-      label: "Entre em contato",
-      href: "/contact",
-      icon: "mdi:arrow-right"
+    {
+      id: 1,
+      title: "Planning",
+      date: "Jan 2024",
+      content: "Project planning and requirements gathering phase.",
+      category: "Planning",
+      icon: "Calendar" as IconName, // Cast to IconName
+      relatedIds: [2],
+      status: "completed" as const,
+      energy: 100,
     },
-    secondary: {
-      label: "Learn More",
-      href: "/about",
-      icon: "mdi:chevron-right"
+    {
+      id: 2,
+      title: "Design",
+      date: "Feb 2024",
+      content: "UI/UX design and system architecture.",
+      category: "Design",
+      icon: "FileText" as IconName,
+      relatedIds: [1, 3],
+      status: "completed" as const,
+      energy: 90,
+    },
+    {
+      id: 3,
+      title: "Development",
+      date: "Mar 2024",
+      content: "Core features implementation and testing.",
+      category: "Development",
+      icon: "Code" as IconName,
+      relatedIds: [2, 4],
+      status: "in-progress" as const,
+      energy: 60,
+    },
+    {
+      id: 4,
+      title: "Testing",
+      date: "Apr 2024",
+      content: "User testing and bug fixes.",
+      category: "Testing",
+      icon: "User" as IconName,
+      relatedIds: [3, 5],
+      status: "pending" as const,
+      energy: 30,
+    },
+    {
+      id: 5,
+      title: "Release",
+      date: "May 2024",
+      content: "Final deployment and release.",
+      category: "Release",
+      icon: "Clock" as IconName,
+      relatedIds: [4],
+      status: "pending" as const,
+      energy: 10,
+    },
+  ];
+
+  const finalCtaData = {
+    text: {
+      headline: "Ready to transform",
+      highlight: "your space?",
+      description: "Let's create something beautiful together. Book a free consultation today."
+    },
+    theme: {
+      bg_color: "#ffffff", // opcional
+      gold_start: "#89c1f7",
+      gold_end: "#8361f4",
+      button_bg: "#000000"
+    },
+    calls_to_action: {
+      primary: {
+        label: "Entre em contato",
+        href: "/contact",
+        icon: "mdi:arrow-right"
+      },
+      secondary: {
+        label: "Learn More",
+        href: "/about",
+        icon: "mdi:chevron-right"
+      }
     }
-  }
-};
+  };
   return (
     <>
       <Header
@@ -173,16 +173,21 @@ const finalCtaData = {
         ctaText={"Entre em contato"} />
       <HeroSection distortion={1.2} speed={0.8} />
       <AboutUsSection />
-      <HoverPreview 
+      <HoverPreview
         title="Explore Ferramentas de IA"
         description="Passe o mouse sobre os links para ver prévias interativas das principais ferramentas de IA generativa."
       />
-      <RadialOrbitalTimeline 
-      title="Minha Timeline Interativa"
-      description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
-      timelineData={timelineData} />
-      <Gallery4 {...demoData} />
-      <ProjectShowcase 
+      <RadialOrbitalTimeline
+        title="Minha Timeline Interativa"
+        description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
+        timelineData={timelineData} />
+      <Gallery4  {...demoData}
+        cta={{
+          label: "Ver todos os cases",
+          href: "/cases",
+          variant: "default"
+        }} />
+      <ProjectShowcase
         title="Por que a Mavellium?"
         description="Conheça alguns dos nossos trabalhos mais recentes que combinam criatividade e tecnologia."
       />
@@ -190,7 +195,7 @@ const finalCtaData = {
         title="Meu Título Dinâmico"
         titleClassName="text-4xl md:text-7xl font-black text-white drop-shadow-lg"
         images={images} />
-      
+
       <FinalCtaSection data={finalCtaData} />
       <Footer />
     </>

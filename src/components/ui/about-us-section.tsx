@@ -336,17 +336,17 @@ export default function AboutUsSection() {
 
         {/* CTA Section */}
         <motion.div
-          className="mt-20 bg-white/80 text-black p-8 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6"
+          className="mt-20 bg-black/80 text-white ring-1 ring-white p-8 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6"
           initial={{ opacity: 0, y: 30 }}
           animate={isStatsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
           <div className="flex-1">
             <h3 className="text-2xl font-medium mb-2">Ready to transform your space?</h3>
-            <p className="text-black/80">Let's create something beautiful together.</p>
+            <p className="text-white/80">Let's create something beautiful together.</p>
           </div>
           <motion.button
-            className="bg-black hover:bg-black/75 text-white px-6 py-3 rounded-lg flex items-center gap-2 font-medium transition-colors"
+            className="bg-gradient-to-r from-purple-400 cursor-pointer via-blue-400 to-teal-400 hover:scale-105 transition-all duration-200 hover:shadow-xl hover:shadow-purple-400/20 text-white px-6 py-3 rounded-lg flex items-center gap-2 font-medium transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

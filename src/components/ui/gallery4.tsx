@@ -23,6 +23,12 @@ export interface Gallery4Props {
   title?: string;
   description?: string;
   items: Gallery4Item[];
+  cta?: {
+    text?: string;
+    label?: string;
+    href?: string;
+    variant?: "default" | "outline" | "secondary" | "ghost";
+  };
 }
 
 const data = [
@@ -71,12 +77,14 @@ const data = [
     image:
       "https://images.unsplash.com/photo-1550070881-a5d71eda5800?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjV8fHx8fHwyfHwxNzIzNDM1Mjk4fA&ixlib=rb-4.0.3&q=80&w=1080",
   },
+  
 ];
 
 const Gallery4 = ({
   title = "Case Studies",
   description = "Discover how leading companies and developers are leveraging modern web technologies to build exceptional digital experiences. These case studies showcase real-world applications and success stories.",
   items = data,
+  cta,
 }: Gallery4Props) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
@@ -98,6 +106,14 @@ const Gallery4 = ({
       carouselApi.off("select", updateSelection);
     };
   }, [carouselApi]);
+
+  // CTA padrão (se não for fornecido)
+  const defaultCta = {
+    label: "Get in touch",
+    href: "/contact",
+    variant: "default" as const,
+  };
+  const finalCta = cta ? { ...defaultCta, ...cta } : defaultCta;
 
   return (
     <section className="py-32 bg-black z-10">
@@ -183,12 +199,24 @@ const Gallery4 = ({
             <button
               key={index}
               className={`h-2 w-2 rounded-full transition-colors ${
-                currentSlide === index ? "bg-primary" : "bg-primary/20"
+                currentSlide === index ? "bg-white" : "bg-white/20"
               }`}
               onClick={() => carouselApi?.scrollTo(index)}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-16 text-center">
+          <Button
+            asChild
+            variant={finalCta.variant}
+            size="lg"
+            className="rounded-full text-white bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 hover:scale-105 transition-all duration-200 hover:shadow-xl hover:shadow-purple-400/20 px-8"
+          >
+            <a href={finalCta.href}>{finalCta.label}</a>
+          </Button>
         </div>
       </div>
     </section>

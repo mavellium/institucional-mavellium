@@ -38,7 +38,7 @@ export function HeroSection({
   className = "",
   titleClassName = "",
   descriptionClassName = "",
-  buttonClassName = "bg-bg-[transparent] hover:bg-[#3372d6]/80",
+  buttonClassName = "bg-bg-[transparent] hover:bg-black/80 cursor-pointer",
   maxWidth = "max-w-6xl",
   veilOpacity = "bg-white/20 dark:bg-black/25",
   fontFamily = "Satoshi, sans-serif",
