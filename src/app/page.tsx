@@ -11,6 +11,8 @@ import { Footer } from "../components/ui/footer";
 import { ProjectShowcase } from "../components/ui/project-showcase";
 import FinalCtaSection from "../components/ui/cta-final";
 import { HoverPreview } from "../components/ui/hover-preview";
+import Pricing from "../components/ui/pricing-section";
+import { Carousel } from "../components/ui/carousel-companys";
 
 export default function Home() {
   const images = [
@@ -163,6 +165,47 @@ export default function Home() {
       }
     }
   };
+
+  const SlideWithText = ({ image, title, description }: { image: string; title: string; description: string }) => (
+    <div className="relative h-156 w-full overflow-hidden rounded-[40px] group">
+      <img
+        src={image}
+        alt={title}
+        className="object-cover transition-transform duration-500 group-hover:scale-110"
+      />
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-4 pt-12">
+        <h3 className="text-white text-xl font-semibold mb-1">{title}</h3>
+        <p className="text-white/80 text-sm">{description}</p>
+      </div>
+    </div>
+  );
+
+  const slides = [
+    <SlideWithText
+      key="1"
+      image="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4"
+      title="Modern Office"
+      description="A bright and inspiring workspace"
+    />,
+    <SlideWithText
+      key="2"
+      image="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
+      title="Team Collaboration"
+      description="Working together to achieve great things"
+    />,
+    <SlideWithText
+      key="3"
+      image="https://images.unsplash.com/photo-1557804506-669a67965ba0"
+      title="Creative Solutions"
+      description="Innovative ideas for modern challenges"
+    />,
+    <SlideWithText
+      key="4"
+      image="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
+      title="Project Management"
+      description="Streamlined workflows for success"
+    />,
+  ];
   return (
     <>
       <Header
@@ -171,8 +214,14 @@ export default function Home() {
         links={[{ name: "Início", href: "/" }]}
         ctaLink={""}
         ctaText={"Entre em contato"} />
-      <HeroSection distortion={1.2} speed={0.8} />
-      <AboutUsSection />
+      <HeroSection />
+      <Pricing />
+      <Carousel
+        slides={slides}
+        options={{ loop: true }}
+        title="Featured Projects"
+        description="Discover our latest work and success stories."
+      />
       <HoverPreview
         title="Explore Ferramentas de IA"
         description="Passe o mouse sobre os links para ver prévias interativas das principais ferramentas de IA generativa."
