@@ -44,7 +44,7 @@ export function HeroSection() {
                             <div className="relative w-full h-full">
                                 <iframe
                                     className="absolute inset-0 w-full h-full object-cover opacity-50 dark:lg:opacity-75"
-                                    src="https://www.youtube.com/embed/ABzDOSQkhTM?autoplay=1&loop=1&mute=1&controls=0&showinfo=0&modestbranding=1&disablekb=1&fs=0&playlist=ABzDOSQkhTM"
+                                    src="https://www.youtube.com/embed/9thKG053Tyk?autoplay=1&loop=1&mute=1&controls=0&showinfo=0&modestbranding=1&disablekb=1&fs=0&playlist=9thKG053Tyk"
                                     frameBorder="0"
                                     allow="autoplay; encrypted-media"
                                     allowFullScreen

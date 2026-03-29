@@ -13,6 +13,11 @@ import FinalCtaSection from "../components/ui/cta-final";
 import { HoverPreview } from "../components/ui/hover-preview";
 import Pricing from "../components/ui/pricing-section";
 import { Carousel } from "../components/ui/carousel-companys";
+import SelectCards from "../components/ui/select-cards";
+import VerticalTabs from "../components/ui/vertical-tabs";
+import Benefits from "../components/ui/benefits";
+import Video from "../components/ui/video";
+import Demo from "../components/ui/video";
 
 export default function Home() {
   const images = [
@@ -222,6 +227,10 @@ export default function Home() {
         title="Featured Projects"
         description="Discover our latest work and success stories."
       />
+      <SelectCards />
+      <VerticalTabs />
+      <Benefits />
+      <Demo />
       <HoverPreview
         title="Explore Ferramentas de IA"
         description="Passe o mouse sobre os links para ver prévias interativas das principais ferramentas de IA generativa."
