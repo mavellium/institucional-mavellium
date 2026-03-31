@@ -72,7 +72,7 @@ export default function Pricing() {
   return (
     <Section className="bg-black z-10">
       <Container className="flex flex-col items-center gap-4 text-center">
-        <h2 className="!my-0 text-white">Pricing</h2>
+        <h2 className="!my-0 text-3xl md:text-4xl font-bold text-white">Pricing</h2>
         <p className="text-lg opacity-70 md:text-2xl text-white">Select the plan that best suits your needs.</p>
 
         <div className="not-prose mt-4 grid grid-cols-1 gap-6 min-[900px]:grid-cols-3">

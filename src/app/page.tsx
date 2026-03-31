@@ -8,9 +8,9 @@ import { Calendar, Code, FileText, User, Clock } from "lucide-react";
 import RadialOrbitalTimeline from "../components/ui/radial-orbital-timeline";
 import AboutUsSection from "../components/ui/about-us-section";
 import { Footer } from "../components/ui/footer";
-import { ProjectShowcase } from "../components/ui/project-showcase";
+import ProjectShowcase from "../components/ui/project-showcase";
 import FinalCtaSection from "../components/ui/cta-final";
-import { HoverPreview } from "../components/ui/hover-preview";
+import HoverPreview from "../components/ui/hover-preview";
 import Pricing from "../components/ui/pricing-section";
 import { Carousel } from "../components/ui/carousel-companys";
 import SelectCards from "../components/ui/select-cards";
@@ -18,6 +18,9 @@ import VerticalTabs from "../components/ui/vertical-tabs";
 import Benefits from "../components/ui/benefits";
 import Video from "../components/ui/video";
 import Demo from "../components/ui/video";
+import FlippingCardDemo from "../components/ui/autonomous-agents";
+import { GalleryGridBlock } from "../components/ui/sections-gallery";
+import { PricingSection } from "../components/ui/pricing-details";
 
 export default function Home() {
   const images = [
@@ -211,6 +214,94 @@ export default function Home() {
       description="Streamlined workflows for success"
     />,
   ];
+  const PLANS = [
+	{
+		id: 'basic',
+		name: 'Basic',
+		info: 'For most individuals',
+		price: {
+			monthly: 7,
+			yearly: Math.round(7 * 12 * (1 - 0.12)),
+		},
+		features: [
+			{ text: 'Up to 3 Blog posts', limit: '100 tags' },
+			{ text: 'Up to 3 Transcriptions' },
+			{ text: 'Up to 3 Posts stored' },
+			{
+				text: 'Markdown support',
+				tooltip: 'Export content in Markdown format',
+			},
+			{
+				text: 'Community support',
+				tooltip: 'Get answers your questions on discord',
+			},
+			{
+				text: 'AI powered suggestions',
+				tooltip: 'Get up to 100 AI powered suggestions',
+			},
+		],
+		btn: {
+			text: 'Start Your Free Trial',
+			href: '#',
+		},
+	},
+	{
+		highlighted: true,
+		id: 'pro',
+		name: 'Pro',
+		info: 'For small businesses',
+		price: {
+			monthly: 17.99,
+			yearly: Math.round(17.99 * 12 * (1 - 0.12)),
+		},
+		features: [
+			{ text: 'Up to 500 Blog Posts', limit: '500 tags' },
+			{ text: 'Up to 500 Transcriptions' },
+			{ text: 'Up to 500 Posts stored' },
+			{
+				text: 'Unlimited Markdown support',
+				tooltip: 'Export content in Markdown format',
+			},
+			{ text: 'SEO optimization tools' },
+			{ text: 'Priority support', tooltip: 'Get 24/7 chat support' },
+			{
+				text: 'AI powered suggestions',
+				tooltip: 'Get up to 500 AI powered suggestions',
+			},
+		],
+		btn: {
+			text: 'Get started',
+			href: '#',
+		},
+	},
+	{
+		name: 'Business',
+		info: 'For large organizations',
+		price: {
+			monthly: 69.99,
+			yearly: Math.round(49.99 * 12 * (1 - 0.12)),
+		},
+		features: [
+			{ text: 'Unlimited Blog Posts' },
+			{ text: 'Unlimited Transcriptions' },
+			{ text: 'Unlimited Posts stored' },
+			{ text: 'Unlimited Markdown support' },
+			{
+				text: 'SEO optimization tools',
+				tooltip: 'Advanced SEO optimization tools',
+			},
+			{ text: 'Priority support', tooltip: 'Get 24/7 chat support' },
+			{
+				text: 'AI powered suggestions',
+				tooltip: 'Get up to 500 AI powered suggestions',
+			},
+		],
+		btn: {
+			text: 'Contact team',
+			href: '#',
+		},
+	},
+];
   return (
     <>
       <Header
@@ -231,30 +322,33 @@ export default function Home() {
       <VerticalTabs />
       <Benefits />
       <Demo />
-      <HoverPreview
-        title="Explore Ferramentas de IA"
-        description="Passe o mouse sobre os links para ver prévias interativas das principais ferramentas de IA generativa."
+      <FlippingCardDemo
+        title="Soluções Inteligentes"
+        description="Combinamos design centrado no usuário com análise de dados poderosa para impulsionar seu sucesso digital." 
       />
-      <RadialOrbitalTimeline
-        title="Minha Timeline Interativa"
-        description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
-        timelineData={timelineData} />
+      <GalleryGridBlock />
+      <PricingSection
+				plans={PLANS}
+				heading="Plans that Scale with You"
+				description="Whether you're just starting out or growing fast, our flexible pricing has you covered — with no hidden costs."
+			/>
+      <FinalCtaSection data={finalCtaData} />
+      <HoverPreview />
+      <ProjectShowcase />
       <Gallery4  {...demoData}
         cta={{
           label: "Ver todos os cases",
           href: "/cases",
           variant: "default"
         }} />
-      <ProjectShowcase
-        title="Por que a Mavellium?"
-        description="Conheça alguns dos nossos trabalhos mais recentes que combinam criatividade e tecnologia."
-      />
-      <ZoomParallax
+      {/* <ZoomParallax
         title="Meu Título Dinâmico"
         titleClassName="text-4xl md:text-7xl font-black text-white drop-shadow-lg"
-        images={images} />
-
-      <FinalCtaSection data={finalCtaData} />
+        images={images} /> */}
+      {/* <RadialOrbitalTimeline
+        title="Minha Timeline Interativa"
+        description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
+        timelineData={timelineData} /> */}
       <Footer />
     </>
   );

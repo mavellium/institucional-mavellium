@@ -1,371 +1,273 @@
-"use client";
+'use client';
 
-import type React from "react";
-import { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef } from 'react';
+import { cn } from '@/src/lib/utils';
+import { Headset, MessageSquare, ShieldCheck, Zap } from 'lucide-react';
 
-// Dados de preview (podem ser passados via props também, se desejar)
-const previewData = {
-  midjourney: {
-    image: "https://images.unsplash.com/photo-1695144244472-a4543101ef35?w=560&h=320&fit=crop",
-    title: "Midjourney",
-    subtitle: "Create stunning AI-generated artwork",
-  },
-  stable: {
-    image: "https://images.unsplash.com/photo-1712002641088-9d76f9080889?w=560&h=320&fit=crop",
-    title: "Stable Diffusion",
-    subtitle: "Open-source generative AI model",
-  },
-  leonardo: {
-    image: "https://images.unsplash.com/photo-1718241905696-cb34c2c07bed?w=560&h=320&fit=crop",
-    title: "Leonardo AI",
-    subtitle: "Production-ready creative assets",
-  },
+const supportDetails = {
+    realtime: {
+        image: "https://images.unsplash.com/photo-1549923746-c502d488b3ea?w=560&h=320&fit=crop",
+        title: "Chat em Tempo Real",
+        subtitle: "Resposta média em menos de 2 minutos com agentes reais.",
+    },
+    documentation: {
+        image: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=560&h=320&fit=crop",
+        title: "Base de Conhecimento",
+        subtitle: "Mais de 500 artigos detalhados para autoatendimento 24/7.",
+    },
+    priority: {
+        image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=560&h=320&fit=crop",
+        title: "Suporte VIP",
+        subtitle: "Gerente de conta dedicado para planos Enterprise.",
+    },
 };
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@800&display=swap');
 
-  .hover-preview-container {
+  .support-section-container {
     min-height: 100vh;
-    background: #0a0a0a;
+    background: #000;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
-    font-family: sans-serif;
-    overflow-x: hidden;
+    padding: 80px 24px;
+    font-family: 'Space Grotesk', sans-serif;
     position: relative;
+    overflow: hidden;
   }
 
-  .hover-preview-container::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
+  .support-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 80px;
+    max-width: 1200px;
+    width: 100%;
+    align-items: center;
+    z-index: 10;
+  }
+
+  @media (min-width: 1024px) {
+    .support-grid {
+      /* Inverti a proporção: imagem maior à esquerda */
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+
+  .support-image-wrapper {
+    position: relative;
+    border-radius: 40px;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.12); /* Aumentei um pouco o contraste da borda */
+  }
+
+  /* Para telas menores, inverto a ordem para o texto aparecer antes */
+  @media (max-width: 1023px) {
+    .support-image-wrapper {
+      order: 2;
+    }
+    .support-text-content {
+      order: 1;
+    }
+  }
+
+  .support-image-wrapper img {
     width: 100%;
     height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 9999;
+    object-fit: cover;
+    filter: grayscale(10%) contrast(1.15); /* Imagem um pouco mais "viva" */
+    opacity: 0.95;
   }
 
-  .ambient-glow {
-    position: fixed;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 107, 107, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulse 8s ease-in-out infinite;
-  }
-
-  .content-container {
-    max-width: 900px;
-    width: 100%;
-  }
-
-  .text-block {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    line-height: 1.6;
-    color: #888;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-  }
-
-  .text-block p {
-    margin-bottom: 1.5em;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards;
-  }
-
-  .text-block p:nth-child(1) { animation-delay: 0.2s; }
-  .text-block p:nth-child(2) { animation-delay: 0.4s; }
-  .text-block p:nth-child(3) { animation-delay: 0.6s; }
-
-  @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .hover-link {
+  .support-link {
     color: #fff;
     font-weight: 700;
-    font-family: sans-serif;
-    cursor: pointer;
+    cursor: help;
     position: relative;
-    display: inline-block;
-    transition: color 0.3s ease;
+    padding: 0 4px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 4px;
+    transition: all 0.2s ease;
   }
 
-  .hover-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb);
-    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  .support-link:hover {
+    background: #fff;
+    color: #000;
   }
 
-  .hover-link:hover::after {
-    width: 100%;
-  }
-
-  .preview-card {
+  .support-card-preview {
     position: fixed;
     pointer-events: none;
     z-index: 1000;
     opacity: 0;
-    transform: translateY(10px) scale(0.95);
-    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    will-change: transform, opacity;
+    transform: translateY(15px) scale(0.98);
+    transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
   }
 
-  .preview-card.visible {
+  .support-card-preview.active {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 
-  .preview-card-inner {
-    background: #1a1a1a;
-    border-radius: 16px;
-    padding: 8px;
-    box-shadow: 
-      0 25px 50px -12px rgba(0, 0, 0, 0.8),
-      0 0 0 1px rgba(255, 255, 255, 0.1),
-      0 0 60px rgba(255, 107, 107, 0.1);
-    overflow: hidden;
-    backdrop-filter: blur(10px);
+  .preview-inner {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.2); /* Borda mais visível no dark */
+    border-radius: 20px;
+    padding: 10px;
+    width: 260px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+    backdrop-filter: blur(12px);
   }
 
-  .preview-card img {
-    width: 280px;
-    height: auto;
-    border-radius: 10px;
-    display: block;
+  .preview-inner img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
   }
 
-  .preview-card-title {
-    padding: 12px 8px 8px;
-    font-size: 0.85rem;
-    color: #fff;
-    font-weight: 600;
-    font-family: 'Syne', sans-serif;
-  }
-
-  .preview-card-subtitle {
-    padding: 0 8px 8px;
-    font-size: 0.75rem;
-    color: #666;
+  .feature-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
   }
 `;
 
-const HoverLink = ({
-  previewKey,
-  children,
-  onHoverStart,
-  onHoverMove,
-  onHoverEnd,
-}: {
-  previewKey: string;
-  children: React.ReactNode;
-  onHoverStart: (key: string, e: React.MouseEvent) => void;
-  onHoverMove: (e: React.MouseEvent) => void;
-  onHoverEnd: () => void;
-}) => {
-  return (
-    <span
-      className="hover-link"
-      onMouseEnter={(e) => onHoverStart(previewKey, e)}
-      onMouseMove={onHoverMove}
-      onMouseLeave={onHoverEnd}
-    >
-      {children}
-    </span>
-  );
-};
+export default function SupportHoverSection() {
+    const [activeItem, setActiveItem] = useState<any>(null);
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+    const [showPreview, setShowPreview] = useState(false);
 
-const PreviewCard = ({
-  data,
-  position,
-  isVisible,
-  cardRef,
-}: {
-  data: (typeof previewData)[keyof typeof previewData] | null;
-  position: { x: number; y: number };
-  isVisible: boolean;
-  cardRef: React.RefObject<HTMLDivElement | null>;
-}) => {
-  if (!data) return null;
+    const handleMouseMove = (e: React.MouseEvent) => {
+        setMousePos({ x: e.clientX, y: e.clientY });
+    };
 
-  return (
-    <div
-      ref={cardRef}
-      className={`preview-card ${isVisible ? "visible" : ""}`}
-      style={{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-      }}
-    >
-      <div className="preview-card-inner">
-        <img
-          src={data.image || "/placeholder.svg"}
-          alt={data.title || ""}
-          crossOrigin="anonymous"
-          referrerPolicy="no-referrer"
-        />
-        <div className="preview-card-title">{data.title}</div>
-        <div className="preview-card-subtitle">{data.subtitle}</div>
-      </div>
-    </div>
-  );
-};
+    const triggerPreview = (key: string) => {
+        setActiveItem(supportDetails[key as keyof typeof supportDetails]);
+        setShowPreview(true);
+    };
 
-// Props do componente
-interface HoverPreviewProps {
-  title?: string;
-  description?: string;
-}
+    return (
+        <>
+            <style>{styles}</style>
+            <section className="support-section-container" onMouseMove={handleMouseMove}>
+                <div className="support-grid">
+                    
+                    {/* Lado Esquerdo: Imagem Arredondada (AGORA PRIMEIRO) */}
+                    <div className="support-image-wrapper shadow-2xl">
+                        <img 
+                            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000" 
+                            alt="Equipe de Suporte"
+                        />
+                        {/* Gradiente um pouco mais escuro para garantir contraste do texto */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-black/40 to-black/80" />
+                        <div className="absolute bottom-10 left-10 right-10 z-20">
+                            {/* Card de Testemunho Premium */}
+                            <div className="bg-zinc-900/60 backdrop-blur-md border border-white/20 p-6 rounded-3xl shadow-xl">
+                                <p className="text-white text-base italic leading-relaxed">"O melhor suporte que já experimentamos em uma plataforma SaaS. Eles realmente se importam."</p>
+                                <div className="mt-5 flex items-center gap-4">
+                                    <div className="w-10 h-10 rounded-full bg-zinc-800 border border-white/30 flex items-center justify-center font-bold text-white text-xs">TF</div>
+                                    <div className="flex flex-col">
+                                        <span className="text-xs font-black uppercase tracking-widest text-white">— Diretor de Operações</span>
+                                        <span className="text-xs text-zinc-400">TechFlow Soluções</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-export function HoverPreview({ title, description }: HoverPreviewProps) {
-  const [activePreview, setActivePreview] = useState<(typeof previewData)[keyof typeof previewData] | null>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
+                    {/* Lado Direito: Conteúdo de Texto */}
+                    <div className="support-text-content flex flex-col">
+                        <div className="feature-icon-box">
+                            <Headset size={24} strokeWidth={2.5} />
+                        </div>
+                        
+                        <h2 className="text-5xl md:text-7xl font-bold font-syne tracking-tighter uppercase leading-[0.9] mb-8">
+                            Sempre aqui, <br />
+                            <span className="text-zinc-600 italic">quando precisar.</span>
+                        </h2>
 
-  // Preload all images on mount
-  useEffect(() => {
-    Object.entries(previewData).forEach(([, data]) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = data.image;
-    });
-  }, []);
+                        <div className="space-y-6 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl">
+                            <p>
+                                Acreditamos que um produto excelente só é completo com um suporte impecável. Nossa equipe está disponível para garantir que você nunca perca o ritmo, oferecendo 
+                                <span 
+                                    className="support-link mx-1"
+                                    onMouseEnter={() => triggerPreview('realtime')}
+                                    onMouseLeave={() => setShowPreview(false)}
+                                >
+                                    atendimento em tempo real
+                                </span> 
+                                focado em resolver problemas técnicos em minutos, não dias.
+                            </p>
 
-  const updatePosition = useCallback((e: React.MouseEvent | MouseEvent) => {
-    const cardWidth = 300;
-    const cardHeight = 250; // Approximate card height
-    const offsetX = 15;
-    const offsetY = 20; // Gap between cursor and card bottom
+                            <p>
+                                Para dúvidas rápidas e guias passo a passo, você pode navegar por nossa 
+                                <span 
+                                    className="support-link mx-1"
+                                    onMouseEnter={() => triggerPreview('documentation')}
+                                    onMouseLeave={() => setShowPreview(false)}
+                                >
+                                    central de ajuda
+                                </span>, 
+                                um repositório completo com vídeos e tutoriais criados pelos nossos próprios desenvolvedores.
+                            </p>
 
-    // Position card so its bottom-left is above the cursor
-    let x = e.clientX - cardWidth / 2; // Center horizontally on cursor
-    let y = e.clientY - cardHeight - offsetY; // Position above cursor
+                            <p>
+                                Grandes empresas contam com a tranquilidade do nosso 
+                                <span 
+                                    className="support-link mx-1"
+                                    onMouseEnter={() => triggerPreview('priority')}
+                                    onMouseLeave={() => setShowPreview(false)}
+                                >
+                                    Suporte Prioritário
+                                </span>, 
+                                que inclui um SLA garantido e acesso direto via Slack ou WhatsApp.
+                            </p>
+                        </div>
 
-    // Boundary checks - keep card on screen
-    if (x + cardWidth > window.innerWidth - 20) {
-      x = window.innerWidth - cardWidth - 20;
-    }
-    if (x < 20) {
-      x = 20;
-    }
+                        {/* Badges de Confiança */}
+                        <div className="mt-12 flex flex-wrap gap-6 border-t border-zinc-900 pt-8">
+                            <div className="flex items-center gap-2">
+                                <ShieldCheck className="text-emerald-400" size={18} />
+                                <span className="text-xs uppercase tracking-widest font-bold text-zinc-500">99.8% Satisfação</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Zap className="text-emerald-400" size={18} />
+                                <span className="text-xs uppercase tracking-widest font-bold text-zinc-500">Resposta em &lt; 2min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    // If card would go above viewport, position below cursor instead
-    if (y < 20) {
-      y = e.clientY + offsetY;
-    }
-
-    setPosition({ x, y });
-  }, []);
-
-  const handleHoverStart = useCallback(
-    (key: string, e: React.MouseEvent) => {
-      setActivePreview(previewData[key as keyof typeof previewData]);
-      setIsVisible(true);
-      updatePosition(e);
-    },
-    [updatePosition],
-  );
-
-  const handleHoverMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (isVisible) {
-        updatePosition(e);
-      }
-    },
-    [isVisible, updatePosition],
-  );
-
-  const handleHoverEnd = useCallback(() => {
-    setIsVisible(false);
-  }, []);
-
-  return (
-    <>
-      <style>{styles}</style>
-      <div className="hover-preview-container">
-        <div className="ambient-glow" />
-
-        <div className="content-container">
-          {/* Título e descrição (novos) */}
-          {(title || description) && (
-            <div className="text-center mb-32">
-              {title && (
-                <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent mb-3">
-                  {title}
-                </h2>
-              )}
-              {description && (
-                <p className="text-muted-foreground text-base max-w-lg mx-auto">
-                  {description}
-                </p>
-              )}
-            </div>
-          )}
-
-          {/* Conteúdo original */}
-          <div className="text-block">
-            <p className="text-3xl">
-              Explore{" "}
-              <HoverLink
-                previewKey="midjourney"
-                onHoverStart={handleHoverStart}
-                onHoverMove={handleHoverMove}
-                onHoverEnd={handleHoverEnd}
-              >
-                Midjourney
-              </HoverLink>{" "}
-              for breathtaking AI-generated artwork and illustrations.
-            </p>
-
-            <p className="text-3xl">
-              For open-source freedom try{" "}
-              <HoverLink
-                previewKey="stable"
-                onHoverStart={handleHoverStart}
-                onHoverMove={handleHoverMove}
-                onHoverEnd={handleHoverEnd}
-              >
-                Stable Diffusion
-              </HoverLink>{" "}
-              or generate production assets with{" "}
-              <HoverLink
-                previewKey="leonardo"
-                onHoverStart={handleHoverStart}
-                onHoverMove={handleHoverMove}
-                onHoverEnd={handleHoverEnd}
-              >
-                Leonardo AI
-              </HoverLink>
-              .
-            </p>
-          </div>
-        </div>
-
-        <PreviewCard data={activePreview} position={position} isVisible={isVisible} cardRef={cardRef} />
-      </div>
-    </>
-  );
+                {/* Card de Preview (Hover) */}
+                <div 
+                    className={cn("support-card-preview", showPreview && "active")}
+                    style={{ 
+                        left: mousePos.x - 130, 
+                        top: mousePos.y - 320 
+                    }}
+                >
+                    {activeItem && (
+                        <div className="preview-inner">
+                            <img src={activeItem.image} alt={activeItem.title} />
+                            <div className="px-2">
+                                <h4 className="text-white font-bold text-sm uppercase">{activeItem.title}</h4>
+                                <p className="text-zinc-500 text-xs mt-1 leading-snug">{activeItem.subtitle}</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </section>
+        </>
+    );
 }

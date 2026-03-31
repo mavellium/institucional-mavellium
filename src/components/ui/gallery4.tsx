@@ -1,8 +1,7 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
-
+import { memo, useEffect, useState, useCallback } from "react";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Carousel,
@@ -10,6 +9,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
+import { cn } from "@/src/lib/utils"; // Certifique-se de ter essa utilidade ou use template strings
 
 export interface Gallery4Item {
   id: string;
@@ -24,66 +24,56 @@ export interface Gallery4Props {
   description?: string;
   items: Gallery4Item[];
   cta?: {
-    text?: string;
     label?: string;
     href?: string;
     variant?: "default" | "outline" | "secondary" | "ghost";
   };
 }
 
-const data = [
-  {
-    id: "shadcn-ui",
-    title: "shadcn/ui: Building a Modern Component Library",
-    description:
-      "Explore how shadcn/ui revolutionized React component libraries by providing a unique approach to component distribution and customization, making it easier for developers to build beautiful, accessible applications.",
-    href: "https://ui.shadcn.com",
-    image:
-      "https://images.unsplash.com/photo-1551250928-243dc937c49d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjN8fHx8fHwyfHwxNzIzODA2OTM5fA&ixlib=rb-4.0.3&q=80&w=1080",
-  },
-  {
-    id: "tailwind",
-    title: "Tailwind CSS: The Utility-First Revolution",
-    description:
-      "Discover how Tailwind CSS transformed the way developers style their applications, offering a utility-first approach that speeds up development while maintaining complete design flexibility.",
-    href: "https://tailwindcss.com",
-    image:
-      "https://images.unsplash.com/photo-1551250928-e4a05afaed1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjR8fHx8fHwyfHwxNzIzODA2OTM5fA&ixlib=rb-4.0.3&q=80&w=1080",
-  },
-  {
-    id: "astro",
-    title: "Astro: The All-in-One Web Framework",
-    description:
-      "Learn how Astro's innovative 'Islands Architecture' and zero-JS-by-default approach is helping developers build faster websites while maintaining rich interactivity where needed.",
-    href: "https://astro.build",
-    image:
-      "https://images.unsplash.com/photo-1536735561749-fc87494598cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxNzd8fHx8fHwyfHwxNzIzNjM0NDc0fA&ixlib=rb-4.0.3&q=80&w=1080",
-  },
-  {
-    id: "react",
-    title: "React: Pioneering Component-Based UI",
-    description:
-      "See how React continues to shape modern web development with its component-based architecture, enabling developers to build complex user interfaces with reusable, maintainable code.",
-    href: "https://react.dev",
-    image:
-      "https://images.unsplash.com/photo-1548324215-9133768e4094?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMzF8fHx8fHwyfHwxNzIzNDM1MzA1fA&ixlib=rb-4.0.3&q=80&w=1080",
-  },
-  {
-    id: "nextjs",
-    title: "Next.js: The React Framework for Production",
-    description:
-      "Explore how Next.js has become the go-to framework for building full-stack React applications, offering features like server components, file-based routing, and automatic optimization.",
-    href: "https://nextjs.org",
-    image:
-      "https://images.unsplash.com/photo-1550070881-a5d71eda5800?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjV8fHx8fHwyfHwxNzIzNDM1Mjk4fA&ixlib=rb-4.0.3&q=80&w=1080",
-  },
-  
-];
+// Componente de Card extraído para melhor performance (Memo)
+const GalleryCard = memo(({ item }: { item: Gallery4Item }) => (
+  <CarouselItem className="max-w-[320px] pl-5 lg:max-w-[420px]">
+    <a 
+      href={item.href} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="group relative block h-[450px] overflow-hidden rounded-2xl bg-zinc-900 shadow-2xl transition-all"
+    >
+      {/* Imagem com Overlay dinâmico */}
+      <img
+        src={item.image}
+        alt={item.title}
+        loading="lazy"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:opacity-60"
+      />
+      
+      {/* Gradiente mais suave e profissional */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
+      
+      {/* Conteúdo */}
+      <div className="absolute inset-x-0 bottom-0 flex flex-col items-start p-6 text-white md:p-8">
+        <h3 className="mb-3 text-2xl font-bold leading-tight tracking-tight md:text-3xl">
+          {item.title}
+        </h3>
+        <p className="mb-6 line-clamp-3 text-sm text-zinc-300 transition-colors group-hover:text-white">
+          {item.description}
+        </p>
+        
+        <div className="flex items-center gap-2 text-sm font-medium text-blue-400 transition-all group-hover:gap-3 group-hover:text-blue-300">
+          Explorar Projeto 
+          <ExternalLink className="size-4" />
+        </div>
+      </div>
+    </a>
+  </CarouselItem>
+));
+
+GalleryCard.displayName = "GalleryCard";
 
 const Gallery4 = ({
-  title = "Case Studies",
-  description = "Discover how leading companies and developers are leveraging modern web technologies to build exceptional digital experiences. These case studies showcase real-world applications and success stories.",
-  items = data,
+  title = "Estudos de Caso",
+  description = "Explore como estamos utilizando tecnologias de ponta para criar experiências digitais memoráveis.",
+  items,
   cta,
 }: Gallery4Props) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
@@ -91,131 +81,110 @@ const Gallery4 = ({
   const [canScrollNext, setCanScrollNext] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    if (!carouselApi) {
-      return;
-    }
-    const updateSelection = () => {
-      setCanScrollPrev(carouselApi.canScrollPrev());
-      setCanScrollNext(carouselApi.canScrollNext());
-      setCurrentSlide(carouselApi.selectedScrollSnap());
-    };
-    updateSelection();
-    carouselApi.on("select", updateSelection);
-    return () => {
-      carouselApi.off("select", updateSelection);
-    };
+  const onSelect = useCallback(() => {
+    if (!carouselApi) return;
+    setCanScrollPrev(carouselApi.canScrollPrev());
+    setCanScrollNext(carouselApi.canScrollNext());
+    setCurrentSlide(carouselApi.selectedScrollSnap());
   }, [carouselApi]);
 
-  // CTA padrão (se não for fornecido)
-  const defaultCta = {
-    label: "Get in touch",
+  useEffect(() => {
+    if (!carouselApi) return;
+    onSelect();
+    carouselApi.on("select", onSelect);
+    carouselApi.on("reInit", onSelect);
+    return () => {
+      carouselApi.off("select", onSelect);
+      carouselApi.off("reInit", onSelect);
+    };
+  }, [carouselApi, onSelect]);
+
+  const finalCta = {
+    label: "Iniciar um projeto",
     href: "/contact",
     variant: "default" as const,
+    ...cta,
   };
-  const finalCta = cta ? { ...defaultCta, ...cta } : defaultCta;
 
   return (
-    <section className="py-32 bg-black z-10">
-      <div className="container mx-auto">
-        <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
-          <div className="flex flex-col gap-4 z-10 text-white">
-            <h2 className="text-4xl font-medium md:text-4xl lg:text-5xl">
+    <section className="relative overflow-hidden bg-black py-24 lg:py-32">
+      {/* Background Glow sutil */}
+      <div className="absolute top-0 left-1/4 size-[500px] rounded-full bg-blue-500/10 blur-[120px]" />
+      
+      <div className="container relative z-10 mx-auto px-4">
+        <div className="mb-12 flex flex-col items-end justify-between gap-6 md:flex-row lg:mb-20">
+          <div className="max-w-2xl text-white">
+            <h2 className="mb-4 text-4xl font-bold tracking-tighter md:text-5xl lg:text-6xl">
               {title}
             </h2>
-            <p className="max-w-lg text-muted-foreground">{description}</p>
+            <p className="text-lg text-zinc-400 md:text-xl">{description}</p>
           </div>
-          <div className="hidden shrink-0 text-white rounded-full bg-white/9 gap-2 md:flex">
+          
+          {/* Navegação Desktop */}
+          <div className="hidden gap-3 md:flex">
             <Button
               size="icon"
-              variant="ghost"
-              onClick={() => {
-                carouselApi?.scrollPrev();
-              }}
+              variant="outline"
+              onClick={() => carouselApi?.scrollPrev()}
               disabled={!canScrollPrev}
-              className="disabled:pointer-events-auto rounded-s-full"
+              className="size-12 rounded-full border-zinc-800 bg-zinc-950 text-white hover:bg-zinc-800 disabled:opacity-30"
             >
-              <ArrowLeft className="size-5" />
+              <ArrowLeft className="size-6" />
             </Button>
             <Button
               size="icon"
-              variant="ghost"
-              onClick={() => {
-                carouselApi?.scrollNext();
-              }}
+              variant="outline"
+              onClick={() => carouselApi?.scrollNext()}
               disabled={!canScrollNext}
-              className="disabled:pointer-events-auto rounded-e-full"
+              className="size-12 rounded-full border-zinc-800 bg-zinc-950 text-white hover:bg-zinc-800 disabled:opacity-30"
             >
-              <ArrowRight className="size-5" />
+              <ArrowRight className="size-6" />
             </Button>
           </div>
         </div>
-      </div>
-      <div className="w-full">
+
         <Carousel
           setApi={setCarouselApi}
-          opts={{
-            breakpoints: {
-              "(max-width: 768px)": {
-                dragFree: true,
-              },
-            },
-          }}
+          opts={{ align: "start", loop: false }}
+          className="w-full"
         >
-          <CarouselContent className="ml-0 2xl:ml-[max(8rem,calc(50vw-700px))] 2xl:mr-[max(0rem,calc(50vw-700px))]">
+          <CarouselContent className="-ml-5">
             {items.map((item) => (
-              <CarouselItem
-                key={item.id}
-                className="max-w-[320px] pl-[20px] lg:max-w-[360px]"
-              >
-                <a href={item.href} className="group rounded-xl">
-                  <div className="group relative h-full min-h-[27rem] max-w-full overflow-hidden rounded-xl md:aspect-[5/4] lg:aspect-[16/9]">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="absolute h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 h-full bg-[linear-gradient(hsl(var(--primary)/0),hsl(var(--primary)/0.4),hsl(var(--primary)/0.8)_100%)] mix-blend-multiply" />
-                    <div className="absolute inset-x-0 bottom-0 flex flex-col items-start p-6 text-primary-foreground md:p-8">
-                      <div className="mb-2 pt-4 text-xl font-semibold md:mb-3 md:pt-4 lg:pt-4">
-                        {item.title}
-                      </div>
-                      <div className="mb-8 line-clamp-2 md:mb-12 lg:mb-9">
-                        {item.description}
-                      </div>
-                      <div className="flex items-center text-sm">
-                        Read more{" "}
-                        <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </CarouselItem>
+              <GalleryCard key={item.id} item={item} />
             ))}
           </CarouselContent>
         </Carousel>
-        <div className="mt-8 flex justify-center gap-2">
-          {items.map((_, index) => (
-            <button
-              key={index}
-              className={`h-2 w-2 rounded-full transition-colors ${
-                currentSlide === index ? "bg-white" : "bg-white/20"
-              }`}
-              onClick={() => carouselApi?.scrollTo(index)}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
 
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
+        {/* Paginação & CTA */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-8 border-t border-zinc-900 pt-12 md:flex-row">
+          {/* Indicadores de Slide */}
+          <div className="flex gap-2">
+            {items.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => carouselApi?.scrollTo(index)}
+                className={cn(
+                  "h-1.5 transition-all duration-300 rounded-full",
+                  currentSlide === index ? "w-8 bg-blue-500" : "w-2 bg-zinc-800 hover:bg-zinc-700"
+                )}
+                aria-label={`Ir para slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
           <Button
             asChild
             variant={finalCta.variant}
-            size="lg"
-            className="rounded-full text-white bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400 hover:scale-105 transition-all duration-200 hover:shadow-xl hover:shadow-purple-400/20 px-8"
+            className="group relative h-14 overflow-hidden rounded-full bg-white px-10 text-lg font-bold text-black transition-all hover:scale-105 active:scale-95"
           >
-            <a href={finalCta.href}>{finalCta.label}</a>
+            <a href={finalCta.href}>
+              <span className="relative z-10 flex items-center gap-2">
+                {finalCta.label}
+                <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+              </span>
+              {/* Efeito de brilho no hover */}
+              <div className="absolute inset-0 z-0 bg-background/80 " />
+            </a>
           </Button>
         </div>
       </div>

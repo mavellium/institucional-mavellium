@@ -2,243 +2,202 @@
 
 import type React from "react";
 import { useState, useRef, useEffect } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 
-interface Project {
-  title: string;
-  description: string;
-  year: string;
-  link: string;
+interface FAQItem {
+  question: string;
+  answer: string;
+  category: string;
   image: string;
 }
 
-interface ProjectShowcaseProps {
-  projects?: Project[];
-  title?: string;
-  description?: string;
-}
-
-const defaultProjects: Project[] = [
+const faqData: FAQItem[] = [
   {
-    title: "Lumina",
-    description: "AI-powered design system generator.",
-    year: "2024",
-    link: "#",
-    image: "https://plus.unsplash.com/premium_photo-1723489242223-865b4a8cf7b8?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D$0",
+    question: "Como funciona o suporte 24/7?",
+    answer: "Nossa equipe global opera em turnos rotativos para garantir que você tenha uma resposta humana em menos de 15 minutos, independente do fuso horário.",
+    category: "Suporte",
+    image: "https://images.unsplash.com/photo-1484807352052-23338990c6c6?q=80&w=600&auto=format&fit=crop",
   },
   {
-    title: "Flux",
-    description: "Real-time collaboration for creative teams.",
-    year: "2024",
-    link: "#",
-    image: "https://images.unsplash.com/photo-1530435460869-d13625c69bbf?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D$0",
+    question: "Posso cancelar minha assinatura a qualquer momento?",
+    answer: "Sim. Sem contratos de fidelidade ou taxas ocultas. Você pode cancelar ou pausar seu plano diretamente pelo painel de controle com um clique.",
+    category: "Assinatura",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600&auto=format&fit=crop",
   },
   {
-    title: "Prism",
-    description: "Color palette extraction from any image.",
-    year: "2023",
-    link: "#",
-    image: "https://i.pinimg.com/1200x/99/ca/5c/99ca5cf82cf12df8801f7b2bef38d325.jpg",
+    question: "Quais são as integrações disponíveis?",
+    answer: "Conectamos nativamente com Slack, Notion, Jira e mais de 2.000 outros apps via Zapier ou nossa API pública robusta.",
+    category: "Integrações",
+    image: "https://images.unsplash.com/photo-1551288049-bbbda540d3b9?q=80&w=600&auto=format&fit=crop",
   },
   {
-    title: "Vertex",
-    description: "3D modeling toolkit for the web.",
-    year: "2023",
-    link: "#",
-    image: "https://i.pinimg.com/736x/7c/15/39/7c1539cf7ff0207cb49ce0d338de1e5f.jpg",
+    question: "Meus dados estão seguros e criptografados?",
+    answer: "Utilizamos criptografia AES-256 de nível bancário e conformidade total com LGPD e GDPR para garantir que apenas você acesse suas informações.",
+    category: "Segurança",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop",
   },
 ];
 
-export function ProjectShowcase({
-  projects = defaultProjects,
-  title = "Selected Work",
-  description = "Uma seleção de projetos que combinam design, tecnologia e inovação."
-}: ProjectShowcaseProps) {
+export default function ImmersiveFAQ() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null); // Para mobile (clique)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [smoothPosition, setSmoothPosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
+  const [isHoverVisible, setIsHoverVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
 
-  // Intersection Observer para animar título e descrição
-  const { ref: textRef, inView: textInView } = useInView({
-    triggerOnce: true,   // anima apenas na primeira vez que entra
-    threshold: 0.2,      // quando 20% do elemento estiver visível
+  const { ref: headerRef, inView: headerInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
   });
 
+  // Detectar se é mobile/touch para desativar o hover
   useEffect(() => {
-    const lerp = (start: number, end: number, factor: number) => {
-      return start + (end - start) * factor;
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
     };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
+  // Interpolação suave para o mouse (Desktop Only)
+  useEffect(() => {
+    if (isMobile) return;
+
+    const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
     const animate = () => {
       setSmoothPosition((prev) => ({
-        x: lerp(prev.x, mousePosition.x, 0.15),
-        y: lerp(prev.y, mousePosition.y, 0.15),
+        x: lerp(prev.x, mousePosition.x, 0.12),
+        y: lerp(prev.y, mousePosition.y, 0.12),
       }));
       animationRef.current = requestAnimationFrame(animate);
     };
-
     animationRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [mousePosition]);
+    return () => { if (animationRef.current) cancelAnimationFrame(animationRef.current); };
+  }, [mousePosition, isMobile]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-    }
+    if (isMobile || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-  const handleMouseEnter = (index: number) => {
-    setHoveredIndex(index);
-    setIsVisible(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredIndex(null);
-    setIsVisible(false);
+  const toggleAccordion = (index: number) => {
+    if (!isMobile) return;
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full bg-black"
+      className="relative w-full bg-black py-16 lg:py-24 overflow-hidden"
     >
-      <div className="relative w-full max-w-5xl mx-auto px-6 py-16">
-        {/* Título e descrição com animação de fade */}
+      <div className="relative w-full max-w-5xl mx-auto px-6">
+        
+        {/* Header */}
         <div
-          ref={textRef}
-          className={`mb-32 text-center transition-all duration-700 ease-out ${
-            textInView
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-8"
+          ref={headerRef}
+          className={`mb-16 lg:mb-24 transition-all duration-1000 ease-out ${
+            headerInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-foreground to-white bg-clip-text text-transparent mb-3">
-            {title}
+          <h2 className="text-4xl lg:text-7xl font-bold text-white text-center tracking-tighter mb-6">
+            Dúvidas <span className="text-zinc-600 italic">Frequentes.</span>
           </h2>
-          <p className="text-muted-foreground text-base max-w-lg mx-auto">
-            {description}
-          </p>
         </div>
 
-        {/* Imagem flutuante */}
-        <div
-          className="pointer-events-none fixed z-50 overflow-hidden rounded-xl shadow-2xl"
-          style={{
-            left: containerRef.current?.getBoundingClientRect().left ?? 0,
-            top: containerRef.current?.getBoundingClientRect().top ?? 0,
-            transform: `translate3d(${smoothPosition.x + 20}px, ${smoothPosition.y - 100}px, 0)`,
-            opacity: isVisible ? 1 : 0,
-            scale: isVisible ? 1 : 0.8,
-            transition: "opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), scale 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          }}
-        >
-          <div className="relative w-[280px] h-[180px] bg-secondary rounded-xl overflow-hidden">
-            {projects.map((project, index) => (
+        {/* Imagem Flutuante (Desktop Only) */}
+        {!isMobile && (
+          <div
+            className="pointer-events-none absolute z-50 overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
+            style={{
+              left: 0,
+              top: 0,
+              width: "300px",
+              height: "180px",
+              transform: `translate3d(${smoothPosition.x + 30}px, ${smoothPosition.y - 90}px, 0)`,
+              opacity: isHoverVisible ? 1 : 0,
+              scale: isHoverVisible ? 1 : 0.85,
+              transition: "opacity 0.4s ease, scale 0.4s ease",
+            }}
+          >
+            {faqData.map((item, index) => (
               <img
-                key={project.title}
-                src={project.image || "/placeholder.svg"}
-                alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out"
-                style={{
-                  opacity: hoveredIndex === index ? 1 : 0,
-                  scale: hoveredIndex === index ? 1 : 1.1,
-                  filter: hoveredIndex === index ? "none" : "blur(10px)",
-                }}
+                key={index}
+                src={item.image}
+                alt=""
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${hoveredIndex === index ? "opacity-100" : "opacity-0"}`}
               />
             ))}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
           </div>
-        </div>
+        )}
 
-        {/* Lista de projetos */}
-        <div className="space-y-0">
-          {projects.map((project, index) => (
-            <a
-              key={project.title}
-              href={project.link}
-              className="group block"
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className="relative py-5 border-t border-border transition-all duration-300 ease-out">
-                {/* Background highlight on hover */}
-                <div
-                  className={`
-                    absolute inset-0 -mx-4 px-4 bg-white rounded-lg
-                    transition-all duration-300 ease-out
-                    ${hoveredIndex === index ? "opacity-100 scale-100" : "opacity-0 scale-95"}
-                  `}
-                />
+        {/* Lista de FAQ */}
+        <div className="relative border-t border-zinc-900">
+          {faqData.map((item, index) => {
+            const isOpen = isMobile ? activeIndex === index : hoveredIndex === index;
 
-                <div className="relative flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="inline-flex items-center gap-2">
-                      <h3 className="text-white group-hover:text-black font-medium text-lg tracking-tight">
-                        <span className="relative">
-                          {project.title}
-                          <span
-                            className={`
-                              absolute left-0 -bottom-0.5 h-px bg-foreground
-                              transition-all duration-300 ease-out
-                              ${hoveredIndex === index ? "w-full" : "w-0"}
-                            `}
-                          />
-                        </span>
+            return (
+              <div
+                key={index}
+                className="group relative border-b border-zinc-900"
+                onMouseEnter={() => !isMobile && (setHoveredIndex(index), setIsHoverVisible(true))}
+                onMouseLeave={() => !isMobile && (setHoveredIndex(null), setIsHoverVisible(false))}
+                onClick={() => toggleAccordion(index)}
+              >
+                {/* Background Highlight (Desktop Only) */}
+                {!isMobile && (
+                  <div className={`absolute inset-0 bg-zinc-900/40 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`} />
+                )}
+
+                <div className="relative py-8 lg:py-10 px-2 lg:px-4">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex-1">
+                      <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest block mb-2">
+                        {item.category}
+                      </span>
+                      <h3 className={`text-xl lg:text-3xl font-medium tracking-tight transition-colors duration-300 ${isOpen ? "text-white" : "text-zinc-500"}`}>
+                        {item.question}
                       </h3>
-
-                      <ArrowUpRight
-                        className={`
-                          w-4 h-4 text-muted-white/40
-                          transition-all duration-300 ease-out
-                          ${
-                            hoveredIndex === index
-                              ? "opacity-100 translate-x-0 translate-y-0"
-                              : "opacity-0 -translate-x-2 translate-y-2"
-                          }
-                        `}
-                      />
                     </div>
-
-                    <p
-                      className={`
-                        text-muted-foreground text-sm mt-1 leading-relaxed
-                        transition-all duration-300 ease-out
-                        ${hoveredIndex === index ? "text-black/70" : "text-black"}
-                      `}
-                    >
-                      {project.description}
-                    </p>
+                    
+                    <div className={`p-2 rounded-full border transition-all duration-500 ${isOpen ? "border-white bg-white text-black rotate-45" : "border-zinc-800 text-zinc-500"}`}>
+                      <Plus size={18} />
+                    </div>
                   </div>
 
-                  <span
-                    className={`
-                      text-xs font-mono text-muted-foreground tabular-nums
-                      transition-all duration-300 ease-out
-                      ${hoveredIndex === index ? "text-black/50" : ""}
-                    `}
-                  >
-                    {project.year}
-                  </span>
+                  {/* Resposta + Imagem Mobile */}
+                  <div className={`grid transition-all duration-500 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100 mt-6" : "grid-rows-[0fr] opacity-0"}`}>
+                    <div className="overflow-hidden">
+                      {/* No mobile, a imagem aparece aqui dentro do conteúdo */}
+                      {isMobile && (
+                        <img 
+                          src={item.image} 
+                          alt="" 
+                          className="w-full h-48 object-cover rounded-xl mb-6 border border-zinc-800"
+                        />
+                      )}
+                      <p className="text-zinc-400 text-base lg:text-lg max-w-2xl leading-relaxed pb-4">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </a>
-          ))}
+            );
+          })}
+        </div>
 
-          <div className="border-t border-border" />
+        <div className="mt-16 text-center">
+            <p className="text-zinc-600 text-sm">
+                Ainda tem dúvidas? <a href="#" className="text-white hover:underline underline-offset-4">Fale conosco.</a>
+            </p>
         </div>
       </div>
     </section>
