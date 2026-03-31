@@ -148,27 +148,27 @@ export default function Home() {
     },
   ];
 
-  const finalCtaData = {
+ const finalCtaData = {
     text: {
-      headline: "Ready to transform",
-      highlight: "your space?",
-      description: "Let's create something beautiful together. Book a free consultation today."
+      headline: "Ainda na dúvida sobre",
+      highlight: "qual plano escolher?",
+      description: "Não se preocupe! Cada projeto é único e nós sabemos disso. Fale com a nossa equipe para entendermos o seu momento e recomendarmos a solução perfeita para o seu negócio."
     },
     theme: {
-      bg_color: "#ffffff", // opcional
-      gold_start: "#89c1f7",
-      gold_end: "#8361f4",
-      button_bg: "#000000"
+      bg_color: "#ffffff", // Mantido o seu fundo
+      gold_start: "#89c1f7", // Mantido o seu gradiente azul
+      gold_end: "#8361f4",   // Mantido o seu gradiente roxo
+      button_bg: "#000000"   // Mantido o botão preto
     },
     calls_to_action: {
       primary: {
-        label: "Entre em contato",
-        href: "/contact",
-        icon: "mdi:arrow-right"
+        label: "Falar com especialista",
+        href: "https://wa.me/5511999999999", // Recomendo colocar o link direto pro seu WhatsApp
+        icon: "mdi:arrow-right" // Troquei para o ícone do WhatsApp, mas pode voltar pro "mdi:arrow-right" se preferir
       },
       secondary: {
-        label: "Learn More",
-        href: "/about",
+        label: "Ver perguntas frequentes",
+        href: "#faq", // Ou "/faq" dependendo das suas rotas
         icon: "mdi:chevron-right"
       }
     }
