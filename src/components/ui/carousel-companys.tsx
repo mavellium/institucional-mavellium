@@ -29,17 +29,17 @@ const Carousel: React.FC<PropType> = (props) => {
     useDotButton(emblaApi);
 
   return (
-    <div className="bg-black py-10">
+    <div className="bg-white py-10">
       {/* Optional title and description */}
       {(title || description) && (
         <div className="text-center mb-8">
           {title && (
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-4">
+            <h2 className="text-4xl md:text-6xl font-bold text-black mb-4">
               {title}
             </h2>
           )}
           {description && (
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <p className="text-black/50 text-lg max-w-2xl mx-auto">
               {description}
             </p>
           )}
@@ -66,8 +66,8 @@ const Carousel: React.FC<PropType> = (props) => {
               }
               className={`w-3 h-3 rounded-full border-2 border-border transition-colors duration-200 ${
                 index === selectedIndex
-                  ? "bg-white"
-                  : "bg-transparent hover:bg-muted"
+                  ? "bg-black"
+                  : "bg-transparent hover:bg-black"
               }`}
             />
           ))}

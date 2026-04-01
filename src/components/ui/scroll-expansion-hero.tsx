@@ -58,7 +58,7 @@ const ScrollExpandMedia = ({
   const restOfTitle = title ? title.split(' ').slice(1).join(' ') : '';
 
   return (
-    <div ref={containerRef} className="relative bg-black">
+    <div ref={containerRef} className="relative bg-white">
       
       {/* Container de 400vh: Dá muito espaço para o vídeo "ficar parado" */}
       <div className="relative h-[400vh]">
@@ -109,7 +109,7 @@ const ScrollExpandMedia = ({
       {/* Seção de Texto que sobe depois da parada */}
       <motion.div 
         style={{ opacity: childrenOpacity, y: childrenY }}
-        className="relative z-30 w-full bg-black py-32 min-h-screen border-t border-white/5"
+        className="relative z-30 w-full bg-white py-32 min-h-screen border-t border-white/5"
       >
         <div className="container mx-auto px-6 max-w-4xl">
           {children}

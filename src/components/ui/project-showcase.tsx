@@ -41,7 +41,7 @@ const faqData: FAQItem[] = [
 
 export default function ImmersiveFAQ() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null); // Para mobile (clique)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [smoothPosition, setSmoothPosition] = useState({ x: 0, y: 0 });
   const [isHoverVisible, setIsHoverVisible] = useState(false);
@@ -55,20 +55,15 @@ export default function ImmersiveFAQ() {
     threshold: 0.2,
   });
 
-  // Detectar se é mobile/touch para desativar o hover
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Interpolação suave para o mouse (Desktop Only)
   useEffect(() => {
     if (isMobile) return;
-
     const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
     const animate = () => {
       setSmoothPosition((prev) => ({
@@ -96,7 +91,7 @@ export default function ImmersiveFAQ() {
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full bg-black py-16 lg:py-24 overflow-hidden"
+      className="relative w-full bg-[#fafafa] py-16 lg:py-24 overflow-hidden"
     >
       <div className="relative w-full max-w-5xl mx-auto px-6">
         
@@ -107,15 +102,15 @@ export default function ImmersiveFAQ() {
             headerInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <h2 className="text-4xl lg:text-7xl font-bold text-white text-center tracking-tighter mb-6">
-            Dúvidas <span className="text-zinc-600 italic">Frequentes.</span>
+          <h2 className="text-4xl lg:text-7xl font-bold text-zinc-950 text-center tracking-tighter mb-6">
+            Dúvidas <span className="text-zinc-400 italic">Frequentes.</span>
           </h2>
         </div>
 
         {/* Imagem Flutuante (Desktop Only) */}
         {!isMobile && (
           <div
-            className="pointer-events-none absolute z-50 overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
+            className="pointer-events-none absolute z-50 overflow-hidden rounded-2xl border border-zinc-200 shadow-2xl bg-white"
             style={{
               left: 0,
               top: 0,
@@ -139,35 +134,35 @@ export default function ImmersiveFAQ() {
         )}
 
         {/* Lista de FAQ */}
-        <div className="relative border-t border-zinc-900">
+        <div className="relative border-t border-zinc-200">
           {faqData.map((item, index) => {
             const isOpen = isMobile ? activeIndex === index : hoveredIndex === index;
 
             return (
               <div
                 key={index}
-                className="group relative border-b border-zinc-900"
+                className="group relative border-b border-zinc-200"
                 onMouseEnter={() => !isMobile && (setHoveredIndex(index), setIsHoverVisible(true))}
                 onMouseLeave={() => !isMobile && (setHoveredIndex(null), setIsHoverVisible(false))}
                 onClick={() => toggleAccordion(index)}
               >
                 {/* Background Highlight (Desktop Only) */}
                 {!isMobile && (
-                  <div className={`absolute inset-0 bg-zinc-900/40 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`} />
+                  <div className={`absolute inset-0 bg-white transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`} />
                 )}
 
-                <div className="relative py-8 lg:py-10 px-2 lg:px-4">
+                <div className="relative py-8 lg:py-10 px-2 lg:px-4 cursor-pointer">
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex-1">
-                      <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest block mb-2">
+                      <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">
                         {item.category}
                       </span>
-                      <h3 className={`text-xl lg:text-3xl font-medium tracking-tight transition-colors duration-300 ${isOpen ? "text-white" : "text-zinc-500"}`}>
+                      <h3 className={`text-xl lg:text-3xl font-medium tracking-tight transition-colors duration-300 ${isOpen ? "text-zinc-950" : "text-zinc-500"}`}>
                         {item.question}
                       </h3>
                     </div>
                     
-                    <div className={`p-2 rounded-full border transition-all duration-500 ${isOpen ? "border-white bg-white text-black rotate-45" : "border-zinc-800 text-zinc-500"}`}>
+                    <div className={`p-2 rounded-full border transition-all duration-500 ${isOpen ? "border-zinc-950 bg-zinc-950 text-white rotate-45" : "border-zinc-200 text-zinc-400"}`}>
                       <Plus size={18} />
                     </div>
                   </div>
@@ -175,15 +170,14 @@ export default function ImmersiveFAQ() {
                   {/* Resposta + Imagem Mobile */}
                   <div className={`grid transition-all duration-500 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100 mt-6" : "grid-rows-[0fr] opacity-0"}`}>
                     <div className="overflow-hidden">
-                      {/* No mobile, a imagem aparece aqui dentro do conteúdo */}
                       {isMobile && (
                         <img 
                           src={item.image} 
                           alt="" 
-                          className="w-full h-48 object-cover rounded-xl mb-6 border border-zinc-800"
+                          className="w-full h-48 object-cover rounded-xl mb-6 border border-zinc-100"
                         />
                       )}
-                      <p className="text-zinc-400 text-base lg:text-lg max-w-2xl leading-relaxed pb-4">
+                      <p className="text-zinc-600 text-base lg:text-lg max-w-2xl leading-relaxed pb-4">
                         {item.answer}
                       </p>
                     </div>
@@ -195,8 +189,8 @@ export default function ImmersiveFAQ() {
         </div>
 
         <div className="mt-16 text-center">
-            <p className="text-zinc-600 text-sm">
-                Ainda tem dúvidas? <a href="#" className="text-white hover:underline underline-offset-4">Fale conosco.</a>
+            <p className="text-zinc-400 text-sm">
+                Ainda tem dúvidas? <a href="#" className="text-zinc-950 font-medium hover:underline underline-offset-4">Fale conosco.</a>
             </p>
         </div>
       </div>

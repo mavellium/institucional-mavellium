@@ -60,14 +60,14 @@ const MediaContent = ({ mediaType }: { mediaType: 'video' | 'image' }) => {
 
   return (
     <div className='max-w-4xl mx-auto py-10'>
-      <h2 className='text-4xl md:text-5xl font-bold mb-8 text-white'>
+      <h2 className='text-4xl md:text-5xl font-bold mb-8 text-black'>
         About This Component
       </h2>
       <div className="space-y-6">
-        <p className='text-xl md:text-2xl leading-relaxed text-gray-300'>
+        <p className='text-xl md:text-2xl leading-relaxed text-black/50'>
           {currentMedia.about.overview}
         </p>
-        <p className='text-xl md:text-2xl leading-relaxed text-gray-300'>
+        <p className='text-xl md:text-2xl leading-relaxed text-black/50'>
           {currentMedia.about.conclusion}
         </p>
       </div>

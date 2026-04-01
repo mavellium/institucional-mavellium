@@ -87,7 +87,7 @@ export function VerticalTabs() {
   return (
     <section 
       ref={containerRef} 
-      className="w-full bg-black py-8 md:py-16 lg:py-24 overflow-hidden"
+      className="w-full bg-white py-8 md:py-16 lg:py-24 overflow-hidden"
     >
       <div className="w-full px-4 md:px-8 lg:px-12 xl:px-20 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -95,7 +95,7 @@ export function VerticalTabs() {
           {/* Left Column: Content */}
           <div className="lg:col-span-5 flex flex-col justify-center order-2 lg:order-1 pt-4">
             <div className="space-y-1 mb-12">
-              <h2 className="tracking-tighter text-balance text-3xl font-medium md:text-4xl lg:text-5xl text-white">
+              <h2 className="tracking-tighter text-balance text-3xl font-medium md:text-4xl lg:text-5xl text-black">
                 Dê vida à sua ideia de forma rápida e impactante
               </h2>
               <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-[0.3em] block ml-0.5">
@@ -112,15 +112,15 @@ export function VerticalTabs() {
                     onClick={() => handleTabClick(index)}
                     className={cn(
                       "group relative flex items-start gap-4 py-6 md:py-8 text-left transition-all duration-500 border-t border-white/10 first:border-0 outline-none",
-                      isActive ? "text-white" : "text-white/40 hover:text-white/70"
+                      isActive ? "text-black" : "text-black/40 hover:text-black/70"
                     )}
                   >
                     {/* Progress Bar Lateral */}
-                    <div className="absolute left-[-16px] md:left-[-24px] top-0 bottom-0 w-[2px] bg-white/5">
+                    <div className="absolute left-[-16px] md:left-[-24px] top-0 bottom-0 w-[2px] bg-black/5">
                       {isActive && isInView && (
                         <motion.div
                           key={`progress-${index}-${isPaused}`}
-                          className="absolute top-0 left-0 w-full bg-white origin-top"
+                          className="absolute top-0 left-0 w-full bg-black origin-top"
                           initial={{ height: "0%" }}
                           animate={isPaused ? { height: "100%" } : { height: "100%" }}
                           transition={isPaused ? { duration: 0 } : {
