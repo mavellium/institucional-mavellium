@@ -189,7 +189,7 @@ export default function ImmersiveFAQ() {
         </div>
 
         <div className="mt-16 text-center">
-            <p className="text-zinc-400 text-sm">
+            <p className="text-zinc-400 text-2xl">
                 Ainda tem dúvidas? <a href="#" className="text-zinc-950 font-medium hover:underline underline-offset-4">Fale conosco.</a>
             </p>
         </div>

@@ -192,9 +192,9 @@ export default function SupportHoverSection() {
                             <Headset size={24} strokeWidth={2.5} />
                         </div>
                         
-                        <h2 className="text-5xl md:text-7xl font-bold font-syne tracking-tighter uppercase leading-[0.9] mb-8">
+                        <h2 className="text-5xl md:text-6xl font-bold font-syne tracking-tighter leading-[0.9] mb-8">
                             Sempre aqui, <br />
-                            <span className="text-zinc-600 italic">quando precisar.</span>
+                            <span className="text-zinc-600">quando precisar.</span>
                         </h2>
 
                         <div className="space-y-6 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl">
@@ -239,11 +239,11 @@ export default function SupportHoverSection() {
                         <div className="mt-12 flex flex-wrap gap-6 border-t border-zinc-900 pt-8">
                             <div className="flex items-center gap-2">
                                 <ShieldCheck className="text-emerald-400" size={18} />
-                                <span className="text-xs uppercase tracking-widest font-bold text-zinc-500">99.8% Satisfação</span>
+                                <span className="text-md uppercase tracking-widest font-bold text-zinc-500">99.8% Satisfação</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Zap className="text-emerald-400" size={18} />
-                                <span className="text-xs uppercase tracking-widest font-bold text-zinc-500">Resposta em &lt; 2min</span>
+                                <span className="text-md uppercase tracking-widest font-bold text-zinc-500">Resposta em &lt; 2min</span>
                             </div>
                         </div>
                     </div>
