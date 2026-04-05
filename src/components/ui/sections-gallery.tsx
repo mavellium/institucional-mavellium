@@ -4,8 +4,8 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { AnimatePresence, motion } from "framer-motion";
-import { Grid } from "lucide-react";
-import { useState } from "react";
+import { Grid, Plus } from "lucide-react";
+import { useMemo, useState } from "react";
 import Link from "next/link"; // Importação do Link
 
 const galleryImages = [
@@ -57,17 +57,44 @@ const galleryImages = [
     category: "Design",
     href: "/portfolio/minimalist-view",
   },
+  {
+    id: 7,
+    url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800",
+    title: "Minimalist View",
+    description: "A beleza do vazio e a sofisticação das linhas simples em foco.",
+    category: "Design",
+    href: "/portfolio/minimalist-view",
+  },
 ];
 
 export function GalleryGridBlock() {
   const [filter, setFilter] = useState<string>("All");
+  
+  // 1. Estado para controlar quantos itens mostrar
+  const INITIAL_DISPLAY_COUNT = 6;
+  const [visibleCount, setVisibleCount] = useState(INITIAL_DISPLAY_COUNT);
 
-  const categories = ["All", ...new Set(galleryImages.map((img) => img.category))];
+  const categories = useMemo(() => 
+    ["All", ...new Set(galleryImages.map((img) => img.category))],
+    []
+  );
 
-  const filteredImages =
+  // Itens após o filtro de categoria
+  const filteredImages = useMemo(() => 
     filter === "All"
       ? galleryImages
-      : galleryImages.filter((img) => img.category === filter);
+      : galleryImages.filter((img) => img.category === filter),
+    [filter]
+  );
+
+  // 2. Itens que serão efetivamente renderizados (limitados pelo visibleCount)
+  const displayedImages = filteredImages.slice(0, visibleCount);
+
+  // 3. Função para resetar o contador quando mudar o filtro (opcional, melhora UX)
+  const handleFilterChange = (category: string) => {
+    setFilter(category);
+    setVisibleCount(INITIAL_DISPLAY_COUNT);
+  };
 
   return (
     <section className="w-full bg-background px-4 py-16" aria-labelledby="gallery-heading">
@@ -76,14 +103,13 @@ export function GalleryGridBlock() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           className="mb-12 text-center"
         >
           <Badge className="mb-4" variant="secondary">
             <Grid className="mr-1 h-3 w-3" />
             Galeria
           </Badge>
-          <h2 id="gallery-heading" className="mb-4 text-6xl font-bold tracking-tight">
+          <h2 id="gallery-heading" className="mb-4 text-4xl md:text-6xl font-bold tracking-tight">
             Nosso Portfólio
           </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
@@ -92,51 +118,38 @@ export function GalleryGridBlock() {
         </motion.div>
 
         {/* Filter Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-8 flex flex-wrap justify-center gap-2"
-        >
+        <div className="mb-8 flex flex-wrap justify-center gap-2">
           {categories.map((category) => (
             <Button
               key={category}
               variant={filter === category ? "default" : "outline"}
               size="sm"
-              onClick={() => setFilter(category)}
-              aria-pressed={filter === category}
+              onClick={() => handleFilterChange(category)}
             >
               {category}
             </Button>
           ))}
-        </motion.div>
+        </div>
 
         {/* Gallery Grid */}
-        <motion.div
-          layout
-          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
-          role="list"
-        >
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
-            {filteredImages.map((image, index) => (
+            {displayedImages.map((image, index) => (
               <motion.div
                 key={image.id}
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                transition={{ duration: 0.3 }}
               >
-                {/* O Link envolve o Card para tornar tudo clicável */}
                 <Link href={image.href} className="block h-full outline-none">
-                  <Card className="group h-full flex flex-col overflow-hidden border-border bg-card transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.5)] hover:-translate-y-1 active:scale-[0.98]">
+                  <Card className="group h-full flex flex-col overflow-hidden border-border bg-card transition-all duration-300 hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.5)] hover:-translate-y-1">
                     <div className="relative aspect-video overflow-hidden">
-                      <motion.img
+                      <img
                         src={image.url}
                         alt={image.title}
-                        className="h-full w-full object-cover"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.4 }}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute top-3 left-3">
                         <Badge className="bg-black/60 backdrop-blur-md text-white border-none">
@@ -144,8 +157,6 @@ export function GalleryGridBlock() {
                         </Badge>
                       </div>
                     </div>
-
-                    {/* Conteúdo do Card embaixo da imagem */}
                     <div className="flex flex-col p-5 space-y-2">
                       <h3 className="text-xl font-bold tracking-tight group-hover:text-primary transition-colors">
                         {image.title}
@@ -159,7 +170,26 @@ export function GalleryGridBlock() {
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
+
+        {/* 4. Lógica do Botão "Ver Mais" */}
+        {filteredImages.length > visibleCount && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mt-12 flex justify-center"
+          >
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="rounded-full px-8 font-semibold transition-all hover:bg-black cursor-pointer hover:text-white"
+              onClick={() => setVisibleCount(prev => prev + 3)} // Aumenta de 3 em 3
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Ver mais projetos
+            </Button>
+          </motion.div>
+        )}
       </div>
     </section>
   );

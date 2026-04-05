@@ -2,7 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, MessageCircle } from 'lucide-react'
 
 export function HeroSection() {
     return (
@@ -13,22 +13,17 @@ export function HeroSection() {
                 {/* === BACKGROUND COM VÍDEO === */}
                 <div className="absolute inset-0 z-0 h-full w-full">
                     <div className="absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/15 via-white/5 to-transparent p-[1px]">
-
                         <div className="relative h-full w-full overflow-hidden rounded-[calc(inherit-1px)]">
-
                             <iframe
                                 title="Vídeo de apresentação em background"
                                 aria-hidden="true"
                                 tabIndex={-1}
-                                // A MÁGICA FINAL ESTÁ AQUI: adicionei `scale-[1.2]`
-                                // Isso dá um zoom de 20% no iframe, empurrando qualquer borda preta para fora da tela.
                                 className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-[100vh] w-[100vw] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 scale-[1.2] opacity-50 mix-blend-luminosity duration-700 ease-in-out dark:opacity-60"
                                 src="https://www.youtube.com/embed/9thKG053Tyk?autoplay=1&loop=1&mute=1&controls=0&showinfo=0&modestbranding=1&disablekb=1&playsinline=1&playlist=9thKG053Tyk"
                                 frameBorder="0"
                                 allow="autoplay; encrypted-media"
                                 allowFullScreen
                             />
-
                             <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 md:bg-gradient-to-r md:from-black/90 md:via-black/50 md:to-black/20" />
                         </div>
                     </div>
@@ -47,10 +42,11 @@ export function HeroSection() {
                         </p>
 
                         <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+                            {/* BOTÃO CHAMATIVO (AZUL ELÉTRICO) */}
                             <Button
                                 asChild
                                 size="lg"
-                                className="h-12 w-full rounded-full bg-white pl-6 pr-4 text-base font-semibold text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all hover:scale-105 hover:bg-zinc-200 sm:w-auto"
+                                className="h-14 w-full rounded-full bg-blue-600 pl-8 pr-6 text-base font-bold text-white shadow-[0_0_25px_rgba(37,99,235,0.4)] transition-all hover:scale-105 hover:bg-blue-500 hover:shadow-[0_0_35px_rgba(37,99,235,0.6)] active:scale-95 sm:w-auto"
                             >
                                 <Link href="#link">
                                     <span>Quero estruturar meu crescimento</span>
@@ -58,13 +54,15 @@ export function HeroSection() {
                                 </Link>
                             </Button>
 
+                            {/* BOTÃO SECUNDÁRIO (BORDA REFINADA) */}
                             <Button
                                 asChild
                                 size="lg"
-                                variant="ghost"
-                                className="h-12 w-full rounded-full px-6 text-base font-semibold text-white transition-all hover:bg-white/10 hover:text-white sm:w-auto"
+                                variant="outline"
+                                className="h-14 w-full rounded-full border-2 border-blue-600/30 bg-transparent px-8 text-base font-semibold text-white transition-all hover:border-blue-500 hover:bg-blue-500/10 hover:text-white sm:w-auto"
                             >
                                 <Link href="#link">
+                                    <MessageCircle className="mr-2 h-5 w-5 text-blue-400" />
                                     <span>Falar com especialista</span>
                                 </Link>
                             </Button>

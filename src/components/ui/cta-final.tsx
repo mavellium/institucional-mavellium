@@ -107,10 +107,19 @@ export default function FinalCtaSection({ data, className = "" }: FinalCtaSectio
             </button>
           </Link>
 
-          {/* Link Secundário */}
+          {/* Link Secundário - Alterado para apontar para o ID #faq */}
           <Link
             href={calls_to_action.secondary.href}
             className="group flex items-center gap-2 text-xs font-bold text-gray-400 hover:text-black uppercase tracking-widest transition-colors"
+            onClick={(e) => {
+              // Opcional: Fallback via JS caso o scroll-behavior: smooth não esteja no CSS
+              const href = calls_to_action.secondary.href;
+              if (href.startsWith("#")) {
+                e.preventDefault();
+                const element = document.getElementById(href.slice(1));
+                element?.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
           >
             {calls_to_action.secondary.label}
             <Icon

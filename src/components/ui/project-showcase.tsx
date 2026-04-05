@@ -91,7 +91,7 @@ export default function ImmersiveFAQ() {
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full bg-[#fafafa] py-16 lg:py-24 overflow-hidden"
+      className="relative w-full bg-[#fafafa] py-16 lg:py-24 overflow-hidden" id="faq" 
     >
       <div className="relative w-full max-w-5xl mx-auto px-6">
         
