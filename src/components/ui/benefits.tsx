@@ -1,190 +1,163 @@
 "use client";
 
-import React, { memo } from "react";
-import { motion, type Variants } from "framer-motion";
-import { Box, Lock, Search, Settings, Sparkles, Shield, Rocket } from "lucide-react";
+import React, { memo, useMemo } from "react";
+import { motion } from "framer-motion";
+import { Box, Lock, Search, Settings, Sparkles, Shield, Rocket, Activity, Globe, ArrowUpRight } from "lucide-react";
 import { GlowingEffect } from "../ui/glowing-cards";
 
-// Animações centralizadas para evitar recreação de objetos em cada render
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-};
-
-const METRICS_DATA = [
-  {
-    number: "3",
-    label: "Clientes",
-    description: "Empresas confiando em nossas soluções.",
-    icon: <Box className="h-5 w-5 text-yellow-400" />,
-  },
-  {
-    number: "1",
-    label: "Ano",
-    description: "Há 1 gerando resultados para nossos clientes.",
-    icon: <Sparkles className="h-5 w-5 text-blue-400" />,
-  },
-  {
-    number: "5",
-    label: "Sites",
-    description: "Projetos web de alta qualidade entregues.",
-    icon: <Rocket className="h-5 w-5 text-purple-400" />,
-  },
-  {
-    number: "98%",
-    label: "Satisfação",
-    description: "Taxa de aprovação dos nossos parceiros.",
-    icon: <Shield className="h-5 w-5 text-pink-400" />,
-  },
+// --- Configurações de Dados ---
+const METRICS = [
+  { label: "Clientes", value: "3", icon: Box, color: "text-yellow-400" },
+  { label: "Satisfação", value: "98%", icon: Shield, color: "text-pink-400" },
+  { label: "Anos", value: "1", icon: Sparkles, color: "text-blue-400" },
+  { label: "Projetos", value: "5", icon: Rocket, color: "text-purple-400" },
 ];
+
+const SECURITY_STATS = [
+  { label: "Firewall", value: 100, color: "bg-blue-500" },
+  { label: "SSL/TLS", value: 100, color: "bg-emerald-500" },
+  { label: "DDoS Protection", value: 85, color: "bg-purple-500" },
+];
+
+// --- Sub-componentes Otimizados ---
+
+const CardWrapper = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => (
+  <div className={`relative h-full w-full group ${className}`}>
+    <div className="relative h-full rounded-2xl border border-white/10 p-[1px] bg-white/5 transition-all duration-300 hover:border-white/20">
+      <GlowingEffect spread={40} glow={true} proximity={64} />
+      <div className="relative flex h-full flex-col bg-zinc-950 rounded-[15px] p-5 overflow-hidden">
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
+const SectionHeader = memo(() => (
+  <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-xl">
+      <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white">
+        Dashboard de <span className="text-yellow-400 italic">Resultados</span>
+      </h2>
+      <p className="text-zinc-400 mt-4 text-balance">
+        Infraestrutura de alta performance com monitoramento ativo e segurança enterprise-grade.
+      </p>
+    </motion.div>
+    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-white/10 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+      <span className="relative flex h-2 w-2">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+      </span>
+      Sistema Live
+    </div>
+  </div>
+));
 
 export default function Benefits() {
   return (
-    <section className="p-6 md:p-12 lg:p-16 bg-black min-h-screen overflow-hidden">
-      {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="mb-16 max-w-4xl"
-      >
-        <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-          Nossos 
-          <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 bg-clip-text text-transparent ml-3">
-            Benefícios
-          </span>
-        </h2>
-        <p className="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed">
-          Soluções desenvolvidas para escalar sua presença digital com segurança e performance de elite.
-        </p>
-      </motion.header>
+    <section className="p-6 md:p-12 lg:p-20 bg-black min-h-screen text-zinc-100 selection:bg-yellow-400/30">
+      <SectionHeader />
 
-      {/* Grid de Benefícios Principal */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[14rem] md:auto-rows-[16rem]">
-        <GridItem
-          area="md:col-span-6 lg:col-span-4"
-          icon={<Box size={24} className="text-white" />}
-          title="Seamless Integration"
-          description="Build high-performance interfaces with beautiful glowing borders."
-        />
-        <GridItem
-          area="md:col-span-6 lg:col-span-4"
-          icon={<Settings size={24} className="text-white" />}
-          title="Fully Customizable"
-          description="Adjust spread and proximity via simple props."
-        />
-        <GridItem
-          area="md:col-span-12 lg:col-span-4"
-          icon={<Lock size={24} className="text-white" />}
-          title="Secure by Default"
-          description="Enterprise-ready components with zero compromise."
-        />
-        <GridItem
-          area="md:col-span-7 lg:col-span-8"
-          icon={<Sparkles size={24} className="text-white" />}
-          title="Modern Motion"
-          description="Powered by Motion for fluid 60fps animations and interactions."
-        />
-        <GridItem
-          area="md:col-span-5 lg:col-span-4"
-          icon={<Search size={24} className="text-white" />}
-          title="Global Search"
-          description="Easily find and implement components fast."
-        />
-      </div>
-
-      {/* Seção de Métricas (Os 4 Bloquinhos) */}
-      <motion.div
-        className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
-      >
-        {METRICS_DATA.map((metric, idx) => (
-          <MetricCard key={idx} metric={metric} />
-        ))}
-      </motion.div>
-    </section>
-  );
-}
-
-// Sub-componente de Métrica otimizado
-const MetricCard = memo(({ metric }: { metric: typeof METRICS_DATA[0] }) => {
-  return (
-    <motion.div
-      variants={itemVariants}
-      whileHover={{ y: -5 }}
-      className="group relative p-[1px] rounded-2xl overflow-hidden bg-white/5 transition-all"
-    >
-      {/* Border Glow Effect sutil */}
-      <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
-      <div className="relative h-full rounded-[15px] bg-zinc-950 p-6 flex flex-col gap-4">
-        <div className="flex justify-between items-start">
-          <div className="p-2 rounded-lg bg-white/5 border border-white/10 group-hover:scale-110 transition-transform">
-            {metric.icon}
-          </div>
-          <div className="h-1 w-8 rounded-full bg-white/10 group-hover:bg-yellow-400/30 transition-colors" />
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-fr">
+        
+        {/* Lado Esquerdo: Grid de Métricas Rápidas */}
+        <div className="md:col-span-4 grid grid-cols-2 gap-4">
+          {METRICS.map((item, idx) => (
+            <div key={idx} className="relative group p-4 rounded-2xl bg-zinc-900/50 border border-white/5 hover:bg-zinc-900 transition-colors">
+              <item.icon className={`w-5 h-5 ${item.color} mb-3`} />
+              <div className="text-2xl font-bold tracking-tight">{item.value}</div>
+              <div className="text-[10px] uppercase text-zinc-500 font-semibold tracking-wider">{item.label}</div>
+            </div>
+          ))}
         </div>
 
-        <div>
-          <div className="text-4xl font-bold text-white tracking-tighter group-hover:text-yellow-400 transition-colors">
-            {metric.number}
-          </div>
-          <h3 className="text-sm font-medium text-zinc-300 mb-1">{metric.label}</h3>
-          <p className="text-xs text-zinc-500 leading-tight line-clamp-2">
-            {metric.description}
-          </p>
+        {/* Centro: Gráfico de Barras Principal */}
+        <div className="md:col-span-8">
+          <CardWrapper>
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center gap-2">
+                <Activity size={16} className="text-yellow-400" />
+                <span className="text-sm font-bold uppercase tracking-tight">Tráfego de Rede</span>
+              </div>
+              <ArrowUpRight size={16} className="text-zinc-600" />
+            </div>
+            <div className="flex items-end justify-between h-40 gap-1.5">
+              {[30, 45, 35, 60, 90, 70, 85, 40, 65, 50, 95, 80].map((h, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  style={{ height: `${h}%`, originY: 1 }}
+                  className="flex-1 bg-gradient-to-t from-yellow-500/10 via-yellow-400/40 to-yellow-400 rounded-t-sm"
+                />
+              ))}
+            </div>
+          </CardWrapper>
         </div>
-      </div>
-    </motion.div>
-  );
-});
 
-MetricCard.displayName = "MetricCard";
+        {/* Linha Inferior: Segurança e Status */}
+        <div className="md:col-span-5">
+          <CardWrapper>
+            <div className="flex items-center gap-2 mb-6">
+              <Lock size={16} className="text-blue-400" />
+              <span className="text-sm font-bold uppercase tracking-tight">Segurança Ativa</span>
+            </div>
+            <div className="space-y-5">
+              {SECURITY_STATS.map((stat, i) => (
+                <div key={i}>
+                  <div className="flex justify-between text-[10px] mb-1.5 font-medium text-zinc-400 uppercase">
+                    <span>{stat.label}</span>
+                    <span>{stat.value}%</span>
+                  </div>
+                  <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }} 
+                      whileInView={{ width: `${stat.value}%` }}
+                      className={`h-full ${stat.color}`} 
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardWrapper>
+        </div>
 
-// Sub-componente GridItem otimizado
-const GridItem = memo(({ area, icon, title, description }: any) => {
-  return (
-    <div className={`relative group h-full ${area}`}>
-      <div className="relative h-full rounded-2xl border border-white/10 p-[1px] bg-white/5 transition-all group-hover:border-white/20">
-        <GlowingEffect
-          spread={60}
-          glow={true}
-          disabled={false}
-          proximity={64}
-          inactiveZone={0.01}
-        />
-        <div className="relative flex h-full flex-col justify-between bg-black rounded-[15px] p-6 overflow-hidden">
-          <div className="w-fit rounded-lg border border-white/10 p-2 mb-4 bg-zinc-900 group-hover:bg-zinc-800 transition-colors">
-            {icon}
-          </div>
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-white tracking-tight">
-              {title}
-            </h3>
-            <p className="text-sm text-zinc-400 leading-snug">
-              {description}
+        <div className="md:col-span-4">
+          <CardWrapper>
+            <div className="flex items-center gap-2 mb-4">
+              <Globe size={16} className="text-emerald-400" />
+              <span className="text-sm font-bold uppercase tracking-tight">Uptime Global</span>
+            </div>
+            <div className="grid grid-cols-8 gap-1.5">
+              {Array.from({ length: 24 }).map((_, i) => (
+                <div 
+                  key={i} 
+                  className={`h-6 rounded-[2px] transition-all hover:scale-110 ${
+                    i === 18 ? 'bg-zinc-800' : 'bg-emerald-500/30 border border-emerald-500/20'
+                  }`} 
+                />
+              ))}
+            </div>
+            <div className="mt-4 flex justify-between items-center text-[10px] text-zinc-500 font-mono">
+              <span>99.98% SUCESSO</span>
+              <span>LATÊNCIA: 24MS</span>
+            </div>
+          </CardWrapper>
+        </div>
+
+        <div className="md:col-span-3">
+          <div className="h-full rounded-2xl bg-gradient-to-br from-zinc-900 to-black border border-white/5 p-6 flex flex-col items-center justify-center text-center group cursor-help">
+            <div className="w-12 h-12 rounded-full bg-yellow-400/10 flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
+              <Search className="text-yellow-400" size={20} />
+            </div>
+            <h4 className="text-sm font-bold">SEO Audit</h4>
+            <p className="text-[10px] text-zinc-500 mt-2 leading-relaxed">
+              Otimização de indexação automática em todos os motores de busca.
             </p>
           </div>
         </div>
-      </div>
-    </div>
-  );
-});
 
-GridItem.displayName = "GridItem";
+      </div>
+    </section>
+  );
+}

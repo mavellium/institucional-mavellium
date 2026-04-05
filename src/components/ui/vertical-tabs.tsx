@@ -1,48 +1,59 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "motion/react";
+import React, { useState, useEffect, useCallback, useRef, memo } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { cn } from "@/src/lib/utils";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-const SERVICES = [
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tag: string;
+}
+
+const SERVICES: Service[] = [
   {
     id: "01",
-    title: "Aumente a produtividade do seu time com IA",
-    description: "Automatize processos repetitivos, reduza erros e ganhe escala sem precisar aumentar sua equipe.",
+    tag: "Automação",
+    title: "Produtividade com IA",
+    description: "Automatize processos repetitivos e ganhe escala sem precisar aumentar sua equipe.",
     image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200",
   },
   {
     id: "02",
-    title: "Transforme visitantes em clientes todos os dias",
-    description: "Landing pages pensadas para conversão, com estratégia, copy e estrutura que realmente gera leads.",
+    tag: "Conversão",
+    title: "Landing Pages de Elite",
+    description: "Páginas pensadas para conversão, com copy estratégica que realmente gera leads qualificados.",
     image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1200",
   },
   {
     id: "03",
-    title: "Tenha um site que trabalha por você 24 horas",
-    description: "Mais do que presença digital: um ativo estratégico que posiciona sua marca e gera oportunidades.",
+    tag: "Presença",
+    title: "Ativos Digitais 24h",
+    description: "Um site que trabalha por você: posiciona sua marca e gera oportunidades de negócio constantes.",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200",
   },
   {
     id: "04",
-    title: "Tudo conectado para gerar crescimento contínuo",
-    description: "Integramos ferramentas, dados e automações para criar uma estrutura sólida e escalável.",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200",
+    tag: "Escala",
+    title: "Crescimento Contínuo",
+    description: "Integramos dados e automações para criar uma estrutura sólida, escalável e lucrativa.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200",
   },
 ];
 
 const AUTO_PLAY_DURATION = 5000;
 
-export function VerticalTabs() {
+export default function VerticalTabs() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   
-  // Ref para detectar se a seção está visível
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { amount: 0.5 }); // 50% da seção visível
+  const isInView = useInView(containerRef, { amount: 0.3, once: false });
 
   const handleNext = useCallback(() => {
     setDirection(1);
@@ -54,157 +65,89 @@ export function VerticalTabs() {
     setActiveIndex((prev) => (prev - 1 + SERVICES.length) % SERVICES.length);
   }, []);
 
-  const handleTabClick = (index: number) => {
-    if (index === activeIndex) return;
-    setDirection(index > activeIndex ? 1 : -1);
-    setActiveIndex(index);
-    // Resetamos o pause temporariamente para reiniciar o timer
-    setIsPaused(false);
-  };
-
   useEffect(() => {
-    // Só inicia o intervalo se estiver visível E não estiver pausado (hover)
     if (!isInView || isPaused) return;
-
-    const interval = setInterval(() => {
-      handleNext();
-    }, AUTO_PLAY_DURATION);
-
+    const interval = setInterval(handleNext, AUTO_PLAY_DURATION);
     return () => clearInterval(interval);
   }, [activeIndex, isPaused, isInView, handleNext]);
 
-  const variants = {
-    enter: (direction: number) => ({
-      y: direction > 0 ? "20%" : "-20%",
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      y: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      y: direction > 0 ? "-20%" : "20%",
-      opacity: 0,
-    }),
-  };
-
   return (
-    <section 
-      ref={containerRef} 
-      className="w-full bg-white py-8 md:py-16 lg:py-24 overflow-hidden"
-    >
-      <div className="w-full px-4 md:px-8 lg:px-12 xl:px-20 mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+    <section ref={containerRef} className="w-full bg-white py-20 lg:py-32 overflow-hidden border-t border-zinc-100">
+      <div className="max-w-7xl px-6 mx-auto">
+        
+        {/* Header da Seção */}
+        <div className="mb-16 md:mb-24">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="flex flex-col gap-4"
+          >
+            <span className="text-amber-600 text-xs font-bold uppercase tracking-[0.3em]">Processos & Resultados</span>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 max-w-3xl leading-[0.9]">
+              Como transformamos <br/> <span className="text-zinc-400">sua operação digital</span>
+            </h2>
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
-          {/* Left Column: Content */}
-          <div className="lg:col-span-5 flex flex-col justify-center order-2 lg:order-1 pt-4">
-            <div className="space-y-1 mb-12">
-              <h2 className="tracking-tighter text-balance text-3xl font-medium md:text-4xl lg:text-5xl text-black">
-                Como ajudamos seu negócio a crescer de verdade
-              </h2>
-              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-[0.3em] block ml-0.5">
-                Não entregamos apenas tecnologia.<br/>
-Construímos estruturas que geram resultado.
-              </span>
-            </div>
-
-            <div className="flex flex-col space-y-0">
-              {SERVICES.map((service, index) => {
-                const isActive = activeIndex === index;
-                return (
-                  <button
-                    key={service.id}
-                    onClick={() => handleTabClick(index)}
-                    className={cn(
-                      "group relative flex items-start gap-4 py-6 md:py-8 text-left transition-all duration-500 border-t border-white/10 first:border-0 outline-none",
-                      isActive ? "text-black" : "text-black/40 hover:text-black/70"
-                    )}
-                  >
-                    {/* Progress Bar Lateral */}
-                    <div className="absolute left-[-16px] md:left-[-24px] top-0 bottom-0 w-[2px] bg-black/5">
-                      {isActive && isInView && (
-                        <motion.div
-                          key={`progress-${index}-${isPaused}`}
-                          className="absolute top-0 left-0 w-full bg-black origin-top"
-                          initial={{ height: "0%" }}
-                          animate={isPaused ? { height: "100%" } : { height: "100%" }}
-                          transition={isPaused ? { duration: 0 } : {
-                            duration: AUTO_PLAY_DURATION / 1000,
-                            ease: "linear",
-                          }}
-                        />
-                      )}
-                    </div>
-
-                    <span className="text-[9px] md:text-[10px] font-mono mt-1 opacity-50">
-                      /{service.id}
-                    </span>
-
-                    <div className="flex flex-col gap-2 flex-1">
-                      <span className="text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight transition-colors duration-500">
-                        {service.title}
-                      </span>
-
-                      <AnimatePresence mode="wait">
-                        {isActive && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                            className="overflow-hidden"
-                          >
-                            <p className="text-zinc-400 text-sm md:text-base font-normal leading-relaxed max-w-sm pb-2">
-                              {service.description}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </button>
-                );
-              })}
+          {/* Coluna Esquerda: Abas */}
+          <div className="lg:col-span-5 order-2 lg:order-1">
+            <div className="flex flex-col">
+              {SERVICES.map((service, index) => (
+                <TabButton
+                  key={service.id}
+                  service={service}
+                  isActive={activeIndex === index}
+                  isInView={isInView}
+                  isPaused={isPaused}
+                  onClick={() => {
+                    setDirection(index > activeIndex ? 1 : -1);
+                    setActiveIndex(index);
+                  }}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Right Column: Gallery */}
-          <div className="lg:col-span-7 flex flex-col justify-end h-full order-1 lg:order-2">
-            <div
-              className="relative group/gallery"
+          {/* Coluna Direita: Galeria Visual */}
+          <div className="lg:col-span-7 order-1 lg:order-2 h-full min-h-[400px]">
+            <div 
+              className="relative h-full w-full group/gallery"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              <div className="relative aspect-4/5 md:aspect-4/3 lg:aspect-16/11 rounded-3xl md:rounded-[2.5rem] overflow-hidden bg-zinc-900 border border-white/5">
-                <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              <div className="relative aspect-[16/10] lg:aspect-square xl:aspect-[16/11] rounded-[2rem] overflow-hidden border border-zinc-200 bg-zinc-50 shadow-2xl shadow-zinc-200/50">
+                <AnimatePresence mode="popLayout" custom={direction}>
                   <motion.div
                     key={activeIndex}
-                    custom={direction}
-                    variants={variants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{
-                      y: { type: "spring", stiffness: 300, damping: 30 },
-                      opacity: { duration: 0.4 },
-                    }}
-                    className="absolute inset-0 w-full h-full cursor-pointer"
-                    onClick={handleNext}
+                    initial={{ opacity: 0, scale: 1.1, x: direction * 50 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, x: direction * -50 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute inset-0"
                   >
                     <img
                       src={SERVICES[activeIndex].image}
                       alt={SERVICES[activeIndex].title}
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-[2s] group-hover/gallery:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                    {/* Overlay gradiente mais suave para o tema claro */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 via-transparent to-transparent opacity-60" />
                   </motion.div>
                 </AnimatePresence>
 
-                {/* Navigation Buttons */}
-                <div className="absolute bottom-6 right-6 md:bottom-8 md:right-8 flex gap-2 md:gap-3 z-20">
-                  <NavButton onClick={handlePrev} icon={ArrowLeft01Icon} label="Previous" />
-                  <NavButton onClick={handleNext} icon={ArrowRight01Icon} label="Next" />
+                {/* Navegação Custom */}
+                <div className="absolute bottom-8 right-8 flex gap-3 z-30">
+                  <NavButton onClick={handlePrev} icon={ArrowLeft01Icon} />
+                  <NavButton onClick={handleNext} icon={ArrowRight01Icon} />
+                </div>
+
+                {/* Tag Flutuante na Imagem */}
+                <div className="absolute top-8 left-8 z-30">
+                  <div className="px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-zinc-200 text-[10px] font-bold text-amber-600 uppercase tracking-widest shadow-sm">
+                    {SERVICES[activeIndex].tag}
+                  </div>
                 </div>
               </div>
             </div>
@@ -215,20 +158,67 @@ Construímos estruturas que geram resultado.
   );
 }
 
-// Sub-componente para os botões de navegação
-function NavButton({ onClick, icon, label }: { onClick: () => void, icon: any, label: string }) {
-  return (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        onClick();
-      }}
-      className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all active:scale-90"
-      aria-label={label}
-    >
-      <HugeiconsIcon icon={icon} size={20} />
-    </button>
-  );
-}
+// --- Sub-componentes ---
 
-export default VerticalTabs;
+const TabButton = memo(({ service, isActive, isInView, isPaused, onClick }: any) => (
+  <button
+    onClick={onClick}
+    className={cn(
+      "group relative pl-8 py-8 text-left transition-all duration-500 border-b border-zinc-100 outline-none last:border-0",
+      isActive ? "opacity-100" : "opacity-40 hover:opacity-70"
+    )}
+  >
+    {/* Progress Bar Indicator */}
+    <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-zinc-100">
+      {isActive && isInView && (
+        <motion.div
+          key={isPaused ? 'paused' : 'active'}
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{
+            duration: AUTO_PLAY_DURATION / 1000,
+            ease: "linear",
+          }}
+          className="h-full w-full bg-amber-500 origin-top"
+        />
+      )}
+    </div>
+
+    <div className="flex flex-col gap-3">
+      <span className="text-[10px] font-mono text-zinc-400 tracking-tighter">
+        /0{service.id}
+      </span>
+      <h3 className={cn(
+        "text-2xl md:text-3xl font-bold tracking-tight transition-all duration-500",
+        isActive ? "text-zinc-900 translate-x-2" : "text-zinc-500"
+      )}>
+        {service.title}
+      </h3>
+      <AnimatePresence>
+        {isActive && (
+          <motion.p
+            initial={{ opacity: 0, height: 0, y: 10 }}
+            animate={{ opacity: 1, height: "auto", y: 0 }}
+            exit={{ opacity: 0, height: 0, y: 5 }}
+            className="text-zinc-500 text-sm md:text-base leading-relaxed max-w-md ml-2"
+          >
+            {service.description}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
+  </button>
+));
+
+TabButton.displayName = "TabButton";
+
+const NavButton = memo(({ onClick, icon }: { onClick: () => void, icon: any }) => (
+  <button
+    onClick={(e) => { e.stopPropagation(); onClick(); }}
+    className="w-12 h-12 rounded-xl bg-white/90 backdrop-blur-md border border-zinc-200 flex items-center justify-center text-zinc-900 hover:bg-amber-500 hover:text-white hover:border-amber-500 shadow-sm transition-all active:scale-95"
+  >
+    <HugeiconsIcon icon={icon} size={20} />
+  </button>
+));
+
+NavButton.displayName = "NavButton";
