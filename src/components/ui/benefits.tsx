@@ -25,19 +25,19 @@ const itemVariants: Variants = {
 
 const METRICS_DATA = [
   {
-    number: "150+",
+    number: "3",
     label: "Clientes",
     description: "Empresas confiando em nossas soluções.",
     icon: <Box className="h-5 w-5 text-yellow-400" />,
   },
   {
-    number: "8+",
-    label: "Anos",
-    description: "Mais de uma década de expertise em desenvolvimento.",
+    number: "1",
+    label: "Ano",
+    description: "Há 1 gerando resultados para nossos clientes.",
     icon: <Sparkles className="h-5 w-5 text-blue-400" />,
   },
   {
-    number: "500+",
+    number: "5",
     label: "Sites",
     description: "Projetos web de alta qualidade entregues.",
     icon: <Rocket className="h-5 w-5 text-purple-400" />,

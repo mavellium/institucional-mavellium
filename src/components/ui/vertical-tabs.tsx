@@ -9,20 +9,26 @@ import { HugeiconsIcon } from "@hugeicons/react";
 const SERVICES = [
   {
     id: "01",
-    title: "Web Design",
-    description: "Creating beautiful, functional, and user-centric digital experiences.",
+    title: "Aumente a produtividade do seu time com IA",
+    description: "Automatize processos repetitivos, reduza erros e ganhe escala sem precisar aumentar sua equipe.",
     image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200",
   },
   {
     id: "02",
-    title: "Framer Development",
-    description: "Building high-performance, animated websites with Framer.",
+    title: "Transforme visitantes em clientes todos os dias",
+    description: "Landing pages pensadas para conversão, com estratégia, copy e estrutura que realmente gera leads.",
     image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1200",
   },
   {
     id: "03",
-    title: "Branding",
-    description: "Defining your brand's visual identity and voice for a lasting impression.",
+    title: "Tenha um site que trabalha por você 24 horas",
+    description: "Mais do que presença digital: um ativo estratégico que posiciona sua marca e gera oportunidades.",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200",
+  },
+  {
+    id: "04",
+    title: "Tudo conectado para gerar crescimento contínuo",
+    description: "Integramos ferramentas, dados e automações para criar uma estrutura sólida e escalável.",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200",
   },
 ];
@@ -96,10 +102,11 @@ export function VerticalTabs() {
           <div className="lg:col-span-5 flex flex-col justify-center order-2 lg:order-1 pt-4">
             <div className="space-y-1 mb-12">
               <h2 className="tracking-tighter text-balance text-3xl font-medium md:text-4xl lg:text-5xl text-black">
-                Dê vida à sua ideia de forma rápida e impactante
+                Como ajudamos seu negócio a crescer de verdade
               </h2>
               <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-[0.3em] block ml-0.5">
-                (SERVICES)
+                Não entregamos apenas tecnologia.<br/>
+Construímos estruturas que geram resultado.
               </span>
             </div>
 
