@@ -6,7 +6,7 @@ import { ChevronRight, MessageCircle } from 'lucide-react'
 
 export function HeroSection() {
     return (
-        <section className="relative w-full bg-black p-2 sm:p-4">
+        <section id="inicio" className="relative w-full bg-black p-2 sm:p-4">
 
             <div className="relative min-h-[85vh] md:min-h-[90vh] w-full overflow-hidden rounded-[2.5rem] bg-zinc-950 lg:rounded-[4rem]">
 
@@ -34,11 +34,11 @@ export function HeroSection() {
                     <div className="max-w-3xl text-center lg:text-left">
 
                         <h1 className="text-balance text-5xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl">
-                            Pare de perder oportunidades por falta de estrutura digital.
+                            Tecnologia focada no futuro, desenhada para a sua realidade.
                         </h1>
 
                         <p className="mt-6 text-balance text-lg leading-8 text-zinc-200 md:text-xl md:leading-9">
-                            Criamos sites, landing pages e automações com IA focadas em gerar leads, vendas e eficiência para o seu negócio.
+                            Apoiamos negócios na transição para um modelo mais eficiente e lucrativo através de Sites Inteligentes, Landing Pages de Alta Conversão e Agentes Autônomos de IA.
                         </p>
 
                         <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
@@ -48,8 +48,8 @@ export function HeroSection() {
                                 size="lg"
                                 className="h-14 w-full rounded-full bg-blue-600 pl-8 pr-6 text-base font-bold text-white shadow-[0_0_25px_rgba(37,99,235,0.4)] transition-all hover:scale-105 hover:bg-blue-500 hover:shadow-[0_0_35px_rgba(37,99,235,0.6)] active:scale-95 sm:w-auto"
                             >
-                                <Link href="#link">
-                                    <span>Quero estruturar meu crescimento</span>
+                                <Link href="#solucoes">
+                                    <span>Conhecer Nossas Soluções</span>
                                     <ChevronRight className="ml-2 h-5 w-5" />
                                 </Link>
                             </Button>
@@ -61,9 +61,9 @@ export function HeroSection() {
                                 variant="outline"
                                 className="h-14 w-full rounded-full border-2 border-blue-600/30 bg-transparent px-8 text-base font-semibold text-white transition-all hover:border-blue-500 hover:bg-blue-500/10 hover:text-white sm:w-auto"
                             >
-                                <Link href="#link">
+                                <Link href="https://wa.me/5514999999999" target="_blank" rel="noopener noreferrer">
                                     <MessageCircle className="mr-2 h-5 w-5 text-blue-400" />
-                                    <span>Falar com especialista</span>
+                                    <span>Falar com Especialista</span>
                                 </Link>
                             </Button>
                         </div>

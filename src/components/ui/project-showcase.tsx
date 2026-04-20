@@ -12,29 +12,30 @@ interface FAQItem {
   image: string;
 }
 
+// --- Textos adaptados para a sua Empresa de Projetos Customizados ---
 const faqData: FAQItem[] = [
   {
-    question: "Como funciona o suporte 24/7?",
-    answer: "Nossa equipe global opera em turnos rotativos para garantir que você tenha uma resposta humana em menos de 15 minutos, independente do fuso horário.",
-    category: "Suporte",
-    image: "https://images.unsplash.com/photo-1484807352052-23338990c6c6?q=80&w=600&auto=format&fit=crop",
+    question: "Como funciona o desenvolvimento do meu projeto?",
+    answer: "Trabalhamos com total transparência através de 5 passos: Imersão e Briefing, Análise de Viabilidade Técnica, Cronograma, Desenvolvimento acompanhado por você e Entrega Final. Você nunca fica no escuro.",
+    category: "Metodologia",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
   },
   {
-    question: "Posso cancelar minha assinatura a qualquer momento?",
-    answer: "Sim. Sem contratos de fidelidade ou taxas ocultas. Você pode cancelar ou pausar seu plano diretamente pelo painel de controle com um clique.",
-    category: "Assinatura",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    question: "Quais são as integrações disponíveis?",
-    answer: "Conectamos nativamente com Slack, Notion, Jira e mais de 2.000 outros apps via Zapier ou nossa API pública robusta.",
-    category: "Integrações",
+    question: "Os projetos são feitos a partir de templates prontos?",
+    answer: "Não. Nós desenvolvemos projetos altamente customizados, desenhados cirurgicamente para a realidade e necessidade de cada cliente, seja uma Landing Page de conversão ou a sede digital da sua empresa.",
+    category: "Customização",
     image: "https://images.unsplash.com/photo-1551288049-bbbda540d3b9?q=80&w=600&auto=format&fit=crop",
   },
   {
-    question: "Meus dados estão seguros e criptografados?",
-    answer: "Utilizamos criptografia AES-256 de nível bancário e conformidade total com LGPD e GDPR para garantir que apenas você acesse suas informações.",
-    category: "Segurança",
+    question: "Onde vocês estão localizados? Atendem todo o país?",
+    answer: "Nossa operação técnica e expertise estão estabelecidas no polo de Garça-SP. No entanto, nossa infraestrutura digital nos permite atuar como parceiros estratégicos para pequenas, médias e grandes empresas em todo o território nacional.",
+    category: "Atendimento",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop",
+  },
+  {
+    question: "O que acontece após o lançamento do projeto?",
+    answer: "Nós não entregamos o código e sumimos. Oferecemos modelos de parceria evolutiva, garantindo que o seu projeto conte com manutenção constante, segurança de dados e atualizações contínuas.",
+    category: "Pós-Entrega",
     image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop",
   },
 ];
@@ -91,7 +92,7 @@ export default function ImmersiveFAQ() {
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full bg-[#fafafa] py-16 lg:py-24 overflow-hidden" id="faq" 
+      className="relative w-full bg-white py-16 lg:py-24 overflow-hidden border-t border-zinc-100" id="faq" 
     >
       <div className="relative w-full max-w-5xl mx-auto px-6">
         
@@ -103,7 +104,7 @@ export default function ImmersiveFAQ() {
           }`}
         >
           <h2 className="text-4xl lg:text-7xl font-bold text-zinc-950 text-center tracking-tighter mb-6">
-            Dúvidas <span className="text-zinc-400 italic">Frequentes.</span>
+            Dúvidas <span className="text-blue-600 italic">Frequentes.</span>
           </h2>
         </div>
 
@@ -148,13 +149,13 @@ export default function ImmersiveFAQ() {
               >
                 {/* Background Highlight (Desktop Only) */}
                 {!isMobile && (
-                  <div className={`absolute inset-0 bg-white transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`} />
+                  <div className={`absolute inset-0 bg-zinc-50 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`} />
                 )}
 
                 <div className="relative py-8 lg:py-10 px-2 lg:px-4 cursor-pointer">
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex-1">
-                      <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block mb-2">
+                      <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest block mb-2">
                         {item.category}
                       </span>
                       <h3 className={`text-xl lg:text-3xl font-medium tracking-tight transition-colors duration-300 ${isOpen ? "text-zinc-950" : "text-zinc-500"}`}>
@@ -162,7 +163,7 @@ export default function ImmersiveFAQ() {
                       </h3>
                     </div>
                     
-                    <div className={`p-2 rounded-full border transition-all duration-500 ${isOpen ? "border-zinc-950 bg-zinc-950 text-white rotate-45" : "border-zinc-200 text-zinc-400"}`}>
+                    <div className={`p-2 rounded-full border transition-all duration-500 ${isOpen ? "border-blue-600 bg-blue-600 text-white rotate-45 shadow-md" : "border-zinc-200 text-zinc-400"}`}>
                       <Plus size={18} />
                     </div>
                   </div>
@@ -189,8 +190,8 @@ export default function ImmersiveFAQ() {
         </div>
 
         <div className="mt-16 text-center">
-            <p className="text-zinc-400 text-2xl">
-                Ainda tem dúvidas? <a href="#" className="text-zinc-950 font-medium hover:underline underline-offset-4">Fale conosco.</a>
+            <p className="text-zinc-500 text-xl md:text-2xl font-medium">
+                Sua dúvida não está aqui? <a href="https://wa.me/5514999999999" target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold hover:text-blue-700 hover:underline underline-offset-4 transition-colors">Fale com a nossa equipe.</a>
             </p>
         </div>
       </div>

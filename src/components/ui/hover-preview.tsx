@@ -1,24 +1,25 @@
 'use client';
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { cn } from '@/src/lib/utils';
-import { Headset, MessageSquare, ShieldCheck, Zap } from 'lucide-react';
+import { ShieldCheck, Zap, Code2 } from 'lucide-react';
 
+// --- Dados adaptados para a realidade de uma Agência Tech / Projetos Customizados ---
 const supportDetails = {
-    realtime: {
-        image: "https://images.unsplash.com/photo-1549923746-c502d488b3ea?w=560&h=320&fit=crop",
-        title: "Chat em Tempo Real",
-        subtitle: "Resposta média em menos de 2 minutos com agentes reais.",
+    experts: {
+        image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=560&h=320&fit=crop",
+        title: "Acesso aos Especialistas",
+        subtitle: "Fale diretamente com os sócios e desenvolvedores do seu projeto.",
     },
-    documentation: {
-        image: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=560&h=320&fit=crop",
-        title: "Base de Conhecimento",
-        subtitle: "Mais de 500 artigos detalhados para autoatendimento 24/7.",
+    training: {
+        image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=560&h=320&fit=crop",
+        title: "Handover e Treinamento",
+        subtitle: "Capacitamos a sua equipe para operar as novas automações com maestria.",
     },
-    priority: {
-        image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=560&h=320&fit=crop",
-        title: "Suporte VIP",
-        subtitle: "Gerente de conta dedicado para planos Enterprise.",
+    evolution: {
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=560&h=320&fit=crop",
+        title: "Manutenção Evolutiva",
+        subtitle: "Monitoramento ativo, atualizações de segurança e novas features.",
     },
 };
 
@@ -36,6 +37,7 @@ const styles = `
     font-family: 'Space Grotesk', sans-serif;
     position: relative;
     overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.05);
   }
 
   .support-grid {
@@ -50,7 +52,6 @@ const styles = `
 
   @media (min-width: 1024px) {
     .support-grid {
-      /* Inverti a proporção: imagem maior à esquerda */
       grid-template-columns: 1.1fr 0.9fr;
     }
   }
@@ -61,10 +62,9 @@ const styles = `
     overflow: hidden;
     aspect-ratio: 1/1;
     background: #0a0a0a;
-    border: 1px solid rgba(255,255,255,0.12); /* Aumentei um pouco o contraste da borda */
+    border: 1px solid rgba(59, 130, 246, 0.2); /* Borda com leve tom de azul */
   }
 
-  /* Para telas menores, inverto a ordem para o texto aparecer antes */
   @media (max-width: 1023px) {
     .support-image-wrapper {
       order: 2;
@@ -78,8 +78,14 @@ const styles = `
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(10%) contrast(1.15); /* Imagem um pouco mais "viva" */
-    opacity: 0.95;
+    filter: grayscale(20%) contrast(1.15);
+    opacity: 0.90;
+    transition: all 0.5s ease;
+  }
+  
+  .support-image-wrapper:hover img {
+    filter: grayscale(0%) contrast(1.1);
+    transform: scale(1.05);
   }
 
   .support-link {
@@ -87,15 +93,17 @@ const styles = `
     font-weight: 700;
     cursor: help;
     position: relative;
-    padding: 0 4px;
-    background: rgba(255,255,255,0.07);
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    padding: 2px 6px;
+    background: rgba(59, 130, 246, 0.15); /* Fundo azul translúcido */
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(59, 130, 246, 0.3);
   }
 
   .support-link:hover {
-    background: #fff;
-    color: #000;
+    background: #3b82f6; /* Azul vibrante no hover */
+    color: #fff;
+    border-color: #3b82f6;
   }
 
   .support-card-preview {
@@ -113,29 +121,30 @@ const styles = `
   }
 
   .preview-inner {
-    background: #111;
-    border: 1px solid rgba(255,255,255,0.2); /* Borda mais visível no dark */
+    background: #0a0a0a;
+    border: 1px solid rgba(59, 130, 246, 0.3);
     border-radius: 20px;
     padding: 10px;
-    width: 260px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+    width: 280px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 40px rgba(59,130,246,0.1);
     backdrop-filter: blur(12px);
   }
 
   .preview-inner img {
     width: 100%;
-    height: 140px;
+    height: 150px;
     object-fit: cover;
     border-radius: 12px;
     margin-bottom: 12px;
   }
 
   .feature-icon-box {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: #fff;
-    color: #000;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #3b82f6;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,23 +172,26 @@ export default function SupportHoverSection() {
             <section className="support-section-container" onMouseMove={handleMouseMove}>
                 <div className="support-grid">
                     
-                    {/* Lado Esquerdo: Imagem Arredondada (AGORA PRIMEIRO) */}
-                    <div className="support-image-wrapper shadow-2xl">
+                    {/* Lado Esquerdo: Imagem Arredondada */}
+                    <div className="support-image-wrapper shadow-[0_0_50px_rgba(37,99,235,0.1)]">
                         <img 
-                            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000" 
-                            alt="Equipe de Suporte"
+                            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1000" 
+                            alt="Código e Estrutura Digital"
                         />
-                        {/* Gradiente um pouco mais escuro para garantir contraste do texto */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-black/40 to-black/80" />
-                        <div className="absolute bottom-10 left-10 right-10 z-20">
-                            {/* Card de Testemunho Premium */}
-                            <div className="bg-zinc-900/60 backdrop-blur-md border border-white/20 p-6 rounded-3xl shadow-xl">
-                                <p className="text-white text-base italic leading-relaxed">"O melhor suporte que já experimentamos em uma plataforma SaaS. Eles realmente se importam."</p>
-                                <div className="mt-5 flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-zinc-800 border border-white/30 flex items-center justify-center font-bold text-white text-xs">TF</div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-black/40 to-black/90" />
+                        <div className="absolute bottom-10 left-8 right-8 md:left-10 md:right-10 z-20">
+                            {/* Card de Testemunho focado em Parceria Técnica */}
+                            <div className="bg-zinc-950/80 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-3xl shadow-2xl">
+                                <p className="text-white text-base md:text-lg italic leading-relaxed">
+                                    "A maior diferença não foi apenas o código entregue, mas o fato de não sermos abandonados após o lançamento. A parceria técnica é real."
+                                </p>
+                                <div className="mt-6 flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-full bg-blue-600/20 border border-blue-500/50 flex items-center justify-center font-bold text-blue-400 text-sm">
+                                        RC
+                                    </div>
                                     <div className="flex flex-col">
-                                        <span className="text-xs font-black uppercase tracking-widest text-white">— Diretor de Operações</span>
-                                        <span className="text-xs text-zinc-400">TechFlow Soluções</span>
+                                        <span className="text-xs font-black uppercase tracking-widest text-white">— Diretor Comercial</span>
+                                        <span className="text-xs text-zinc-400">Operação Escalada em 2023</span>
                                     </div>
                                 </div>
                             </div>
@@ -189,61 +201,61 @@ export default function SupportHoverSection() {
                     {/* Lado Direito: Conteúdo de Texto */}
                     <div className="support-text-content flex flex-col">
                         <div className="feature-icon-box">
-                            <Headset size={24} strokeWidth={2.5} />
+                            <Code2 size={28} strokeWidth={2} />
                         </div>
                         
-                        <h2 className="text-5xl md:text-6xl font-bold font-syne tracking-tighter leading-[0.9] mb-8">
-                            Sempre aqui, <br />
-                            <span className="text-zinc-600">quando precisar.</span>
+                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold font-syne tracking-tighter leading-[0.9] mb-8">
+                            Evolução <br />
+                            <span className="text-blue-500">Contínua.</span>
                         </h2>
 
                         <div className="space-y-6 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-xl">
                             <p>
-                                Acreditamos que um produto excelente só é completo com um suporte impecável. Nossa equipe está disponível para garantir que você nunca perca o ritmo, oferecendo 
+                                Acreditamos que o lançamento de um site ou automação é apenas o dia 1. Nossa estrutura garante que você tenha 
                                 <span 
-                                    className="support-link mx-1"
-                                    onMouseEnter={() => triggerPreview('realtime')}
+                                    className="support-link mx-2"
+                                    onMouseEnter={() => triggerPreview('experts')}
                                     onMouseLeave={() => setShowPreview(false)}
                                 >
-                                    atendimento em tempo real
+                                    contato direto com os especialistas
                                 </span> 
-                                focado em resolver problemas técnicos em minutos, não dias.
+                                que construíram o seu projeto, sem "caixa preta" ou terceirização.
                             </p>
 
                             <p>
-                                Para dúvidas rápidas e guias passo a passo, você pode navegar por nossa 
+                                Não entregamos a chave e sumimos. Realizamos processos completos de 
                                 <span 
-                                    className="support-link mx-1"
-                                    onMouseEnter={() => triggerPreview('documentation')}
+                                    className="support-link mx-2"
+                                    onMouseEnter={() => triggerPreview('training')}
                                     onMouseLeave={() => setShowPreview(false)}
                                 >
-                                    central de ajuda
+                                    handover e treinamento
                                 </span>, 
-                                um repositório completo com vídeos e tutoriais criados pelos nossos próprios desenvolvedores.
+                                garantindo que a sua equipe saiba exatamente como extrair o máximo das novas tecnologias implementadas.
                             </p>
 
                             <p>
-                                Grandes empresas contam com a tranquilidade do nosso 
+                                Negócios que escalam rápido contam com a nossa 
                                 <span 
-                                    className="support-link mx-1"
-                                    onMouseEnter={() => triggerPreview('priority')}
+                                    className="support-link mx-2"
+                                    onMouseEnter={() => triggerPreview('evolution')}
                                     onMouseLeave={() => setShowPreview(false)}
                                 >
-                                    Suporte Prioritário
+                                    manutenção evolutiva
                                 </span>, 
-                                que inclui um SLA garantido e acesso direto via Slack ou WhatsApp.
+                                um modelo de parceria focado em estabilidade de servidores, otimização contínua de código e desenvolvimento de novas funcionalidades.
                             </p>
                         </div>
 
                         {/* Badges de Confiança */}
-                        <div className="mt-12 flex flex-wrap gap-6 border-t border-zinc-900 pt-8">
-                            <div className="flex items-center gap-2">
-                                <ShieldCheck className="text-emerald-400" size={18} />
-                                <span className="text-md uppercase tracking-widest font-bold text-zinc-500">99.8% Satisfação</span>
+                        <div className="mt-12 flex flex-wrap gap-8 border-t border-white/10 pt-8">
+                            <div className="flex items-center gap-3">
+                                <ShieldCheck className="text-blue-500" size={24} />
+                                <span className="text-sm uppercase tracking-widest font-bold text-zinc-300">Sem Terceirização</span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <Zap className="text-emerald-400" size={18} />
-                                <span className="text-md uppercase tracking-widest font-bold text-zinc-500">Resposta em &lt; 2min</span>
+                            <div className="flex items-center gap-3">
+                                <Zap className="text-blue-500" size={24} />
+                                <span className="text-sm uppercase tracking-widest font-bold text-zinc-300">Padrão Enterprise</span>
                             </div>
                         </div>
                     </div>
@@ -253,16 +265,16 @@ export default function SupportHoverSection() {
                 <div 
                     className={cn("support-card-preview", showPreview && "active")}
                     style={{ 
-                        left: mousePos.x - 130, 
-                        top: mousePos.y - 320 
+                        left: mousePos.x - 140, 
+                        top: mousePos.y - 340 // Ajustei a altura para não cobrir o cursor
                     }}
                 >
                     {activeItem && (
                         <div className="preview-inner">
                             <img src={activeItem.image} alt={activeItem.title} />
-                            <div className="px-2">
-                                <h4 className="text-white font-bold text-sm uppercase">{activeItem.title}</h4>
-                                <p className="text-zinc-500 text-xs mt-1 leading-snug">{activeItem.subtitle}</p>
+                            <div className="px-3 pb-2 pt-1">
+                                <h4 className="text-blue-400 font-bold text-sm uppercase tracking-wider">{activeItem.title}</h4>
+                                <p className="text-zinc-300 text-xs mt-2 leading-relaxed">{activeItem.subtitle}</p>
                             </div>
                         </div>
                     )}

@@ -1,12 +1,8 @@
 
 import { Header } from "../components/Header";
 import { HeroSection } from "../components/ui/hero-section-with-smooth-bg-shader";
-import { ZoomParallax } from "../components/ui/zoom-parallax";
 import type { IconName } from "../components/ui/radial-orbital-timeline";
 import { Gallery4 } from "../components/ui/gallery4";
-import { Calendar, Code, FileText, User, Clock } from "lucide-react";
-import RadialOrbitalTimeline from "../components/ui/radial-orbital-timeline";
-import AboutUsSection from "../components/ui/about-us-section";
 import { Footer } from "../components/ui/footer";
 import ProjectShowcase from "../components/ui/project-showcase";
 import FinalCtaSection from "../components/ui/cta-final";
@@ -16,11 +12,10 @@ import { Carousel } from "../components/ui/carousel-companys";
 import SelectCards from "../components/ui/select-cards";
 import VerticalTabs from "../components/ui/vertical-tabs";
 import Benefits from "../components/ui/benefits";
-import Video from "../components/ui/video";
-import Demo from "../components/ui/video";
+import Demo from "../components/ui/imagem";
 import FlippingCardDemo from "../components/ui/autonomous-agents";
 import { GalleryGridBlock } from "../components/ui/sections-gallery";
-import { PricingSection } from "../components/ui/pricing-details";
+import { Plan, PricingSection } from "../components/ui/pricing-details";
 
 export default function Home() {
   const images = [
@@ -32,57 +27,51 @@ export default function Home() {
     { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
     { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
     { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
-    // ... add up to 7 images
   ];
 
-  const demoData = {
-    title: "Projects",
-    description: "Discover how leading companies and developers are leveraging modern web technologies...",
+  const blogData = {
+    title: "Mavellium Insights",
+    description: "Artigos, tendências e análises profundas sobre como a tecnologia e o design impactam o faturamento da sua empresa.",
     items: [
       {
-        id: "shadcn-ui",
-        title: "shadcn/ui: Building a Modern Component Library",
+        id: "ia-atendimento",
+        title: "A Revolução Silenciosa da IA no Atendimento B2B",
         description:
-          "Explore how shadcn/ui revolutionized React component libraries by providing a unique approach to component distribution and customization, making it easier for developers to build beautiful, accessible applications.",
-        href: "https://ui.shadcn.com",
-        image:
-          "https://images.unsplash.com/photo-1551250928-243dc937c49d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjN8fHx8fHwyfHwxNzIzODA2OTM5fA&ixlib=rb-4.0.3&q=80&w=1080",
+          "Como agentes autônomos estão substituindo o 'atendimento em horário comercial' e garantindo que empresas fechem negócios às 3 da manhã sem perder a humanização.",
+        href: "#",
+        image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1080",
       },
       {
-        id: "tailwind",
-        title: "Tailwind CSS: The Utility-First Revolution",
+        id: "design-conversao",
+        title: "Por que seu site bonito não converte em vendas?",
         description:
-          "Discover how Tailwind CSS transformed the way developers style their applications, offering a utility-first approach that speeds up development while maintaining complete design flexibility.",
-        href: "https://tailwindcss.com",
-        image:
-          "https://images.unsplash.com/photo-1551250928-e4a05afaed1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjR8fHx8fHwyfHwxNzIzODA2OTM5fA&ixlib=rb-4.0.3&q=80&w=1080",
+          "Estética sem estratégia é apenas arte. Descubra como a arquitetura da informação e a remoção de distrações em Landing Pages aumentam a captura de leads em até 300%.",
+        href: "#",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1080",
       },
       {
-        id: "astro",
-        title: "Astro: The All-in-One Web Framework",
+        id: "seo-tecnico",
+        title: "Autoridade Digital não se constrói apenas com redes sociais",
         description:
-          "Learn how Astro's innovative 'Islands Architecture' and zero-JS-by-default approach is helping developers build faster websites while maintaining rich interactivity where needed.",
-        href: "https://astro.build",
-        image:
-          "https://images.unsplash.com/photo-1536735561749-fc87494598cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxNzd8fHx8fHwyfHwxNzIzNjM0NDc0fA&ixlib=rb-4.0.3&q=80&w=1080",
+          "O verdadeiro poder de um Site Institucional Estruturado: como o SEO Técnico e um código limpo garantem que sua empresa seja a primeira resposta no Google.",
+        href: "#",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1080",
       },
       {
-        id: "react",
-        title: "React: Pioneering Component-Based UI",
+        id: "escalabilidade",
+        title: "Sua infraestrutura suporta o seu crescimento?",
         description:
-          "See how React continues to shape modern web development with its component-based architecture, enabling developers to build complex user interfaces with reusable, maintainable code.",
-        href: "https://react.dev",
-        image:
-          "https://images.unsplash.com/photo-1548324215-9133768e4094?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMzF8fHx8fHwyfHwxNzIzNDM1MzA1fA&ixlib=rb-4.0.3&q=80&w=1080",
+          "Os perigos de basear uma grande operação em templates engessados e plataformas lentas. Por que empresas maduras exigem código desenhado cirurgicamente.",
+        href: "#",
+        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1080",
       },
       {
-        id: "nextjs",
-        title: "Next.js: The React Framework for Production",
+        id: "reducao-custos",
+        title: "Automação Operacional vs. Folha de Pagamento",
         description:
-          "Explore how Next.js has become the go-to framework for building full-stack React applications, offering features like server components, file-based routing, and automatic optimization.",
-        href: "https://nextjs.org",
-        image:
-          "https://images.unsplash.com/photo-1550070881-a5d71eda5800?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjV8fHx8fHwyfHwxNzIzNDM1Mjk4fA&ixlib=rb-4.0.3&q=80&w=1080",
+          "O cálculo definitivo: como a implementação de integrações via API e bots contábeis reduz erros humanos a zero e libera sua equipe para o trabalho criativo.",
+        href: "#",
+        image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=1080",
       },
     ],
   };
@@ -148,28 +137,28 @@ export default function Home() {
     },
   ];
 
- const finalCtaData = {
+const finalCtaData = {
     text: {
-      headline: "Ainda na dúvida sobre",
-      highlight: "qual plano escolher?",
-      description: "Não se preocupe! Cada projeto é único e nós sabemos disso. Fale com a nossa equipe para entendermos o seu momento e recomendarmos a solução perfeita para o seu negócio."
+      headline: "Pronto para escalar",
+      highlight: "o seu negócio?",
+      description: "Sabemos que cada empresa é única. Fale com a nossa equipe de especialistas para entendermos o seu momento e desenharmos a arquitetura tecnológica perfeita para a sua operação."
     },
     theme: {
-      bg_color: "#ffffff", // Mantido o seu fundo
-      gold_start: "#89c1f7", // Mantido o seu gradiente azul
-      gold_end: "#8361f4",   // Mantido o seu gradiente roxo
-      button_bg: "#000000"   // Mantido o botão preto
+      bg_color: "#ffffff", // Mantém o fundo branco, combinando com a Galeria
+      gradient_start: "#3b82f6", // Azul vibrante (Tech)
+      gradient_end: "#1e40af",   // Azul escuro profundo
+      button_bg: "#050505"       // Botão preto
     },
     calls_to_action: {
       primary: {
-        label: "Falar com especialista",
-        href: "https://wa.me/5511999999999", // Recomendo colocar o link direto pro seu WhatsApp
-        icon: "mdi:arrow-right" // Troquei para o ícone do WhatsApp, mas pode voltar pro "mdi:arrow-right" se preferir
+        label: "Falar com Especialista",
+        href: "https://wa.me/5514999999999", // Coloque seu WhatsApp
+        icon: "mdi:whatsapp" // Ícone do WhatsApp fica muito melhor para conversão
       },
       secondary: {
-        label: "Ver perguntas frequentes",
-        href: "#faq", // Ou "/faq" dependendo das suas rotas
-        icon: "mdi:chevron-right"
+        label: "Rever Nossa Metodologia",
+        href: "#metodologia", // Volta para a seção de metodologia se o cliente ainda tiver dúvidas
+        icon: "mdi:arrow-up"
       }
     }
   };
@@ -188,120 +177,96 @@ export default function Home() {
     </div>
   );
 
-  const slides = [
+  const slidesProjetos = [
     <SlideWithText
       key="1"
-      image="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4"
-      title="Modern Office"
-      description="A bright and inspiring workspace"
+      image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
+      title="Portal Institucional"
+      description="Site Inteligente desenhado para transmitir credibilidade e comunicar o portfólio global da marca."
     />,
     <SlideWithText
       key="2"
-      image="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
-      title="Team Collaboration"
-      description="Working together to achieve great things"
+      image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200"
+      title="Captura B2B de Alta Conversão"
+      description="Landing Page estratégica, livre de distrações, que maximizou o retorno sobre o investimento em anúncios."
     />,
     <SlideWithText
       key="3"
-      image="https://images.unsplash.com/photo-1557804506-669a67965ba0"
-      title="Creative Solutions"
-      description="Innovative ideas for modern challenges"
+      image="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=1200"
+      title="Automação de Atendimento (IA)"
+      description="Agente autônomo operando 24/7 no setor comercial: qualificação de leads instantânea com redução na folha de custos."
     />,
     <SlideWithText
       key="4"
-      image="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
-      title="Project Management"
-      description="Streamlined workflows for success"
+      image="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=1200"
+      title="Plataforma Customizada"
+      description="Do planejamento estratégico ao código final: um projeto cirúrgico para a realidade de uma grande operação."
     />,
   ];
-  const PLANS = [
-	{
-		id: 'basic',
-		name: 'Basic',
-		info: 'For most individuals',
-		price: {
-			monthly: 7,
-			yearly: Math.round(7 * 12 * (1 - 0.12)),
-		},
-		features: [
-			{ text: 'Up to 3 Blog posts', limit: '100 tags' },
-			{ text: 'Up to 3 Transcriptions' },
-			{ text: 'Up to 3 Posts stored' },
-			{
-				text: 'Markdown support',
-				tooltip: 'Export content in Markdown format',
-			},
-			{
-				text: 'Community support',
-				tooltip: 'Get answers your questions on discord',
-			},
-			{
-				text: 'AI powered suggestions',
-				tooltip: 'Get up to 100 AI powered suggestions',
-			},
-		],
-		btn: {
-			text: 'Start Your Free Trial',
-			href: '#',
-		},
-	},
-	{
-		highlighted: true,
-		id: 'pro',
-		name: 'Pro',
-		info: 'For small businesses',
-		price: {
-			monthly: 17.99,
-			yearly: Math.round(17.99 * 12 * (1 - 0.12)),
-		},
-		features: [
-			{ text: 'Up to 500 Blog Posts', limit: '500 tags' },
-			{ text: 'Up to 500 Transcriptions' },
-			{ text: 'Up to 500 Posts stored' },
-			{
-				text: 'Unlimited Markdown support',
-				tooltip: 'Export content in Markdown format',
-			},
-			{ text: 'SEO optimization tools' },
-			{ text: 'Priority support', tooltip: 'Get 24/7 chat support' },
-			{
-				text: 'AI powered suggestions',
-				tooltip: 'Get up to 500 AI powered suggestions',
-			},
-		],
-		btn: {
-			text: 'Get started',
-			href: '#',
-		},
-	},
-	{
-		name: 'Business',
-		info: 'For large organizations',
-		price: {
-			monthly: 69.99,
-			yearly: Math.round(49.99 * 12 * (1 - 0.12)),
-		},
-		features: [
-			{ text: 'Unlimited Blog Posts' },
-			{ text: 'Unlimited Transcriptions' },
-			{ text: 'Unlimited Posts stored' },
-			{ text: 'Unlimited Markdown support' },
-			{
-				text: 'SEO optimization tools',
-				tooltip: 'Advanced SEO optimization tools',
-			},
-			{ text: 'Priority support', tooltip: 'Get 24/7 chat support' },
-			{
-				text: 'AI powered suggestions',
-				tooltip: 'Get up to 500 AI powered suggestions',
-			},
-		],
-		btn: {
-			text: 'Contact team',
-			href: '#',
-		},
-	},
+
+  const PLANS: Plan[] = [
+  {
+    name: 'Landing Pages',
+    info: 'Alta conversão para campanhas específicas e infoprodutos.',
+    price: {
+      mensal: '1.497', // Exemplo de valor fictício
+      anual: 'Sob Medida',
+    },
+    features: [
+      { text: 'Design livre de distrações' },
+      { text: 'Copywriting Estratégico', tooltip: 'Textos focados em conversão e gatilhos mentais.' },
+      { text: 'Integração com CRM/Email' },
+      { text: 'Otimização de Velocidade' },
+      { text: 'Suporte pós-lançamento' },
+    ],
+    btn: {
+      text: 'Orçar Landing Page',
+      href: 'https://wa.me/5514999999999',
+    },
+  },
+  {
+    highlighted: true,
+    name: 'Site Inteligente',
+    info: 'A sede digital oficial da sua empresa com autoridade máxima.',
+    price: {
+      mensal: '3.990',
+      anual: 'Sob Medida',
+    },
+    features: [
+      { text: 'Design Exclusivo e Responsivo' },
+      { text: 'Painel de Gestão de Conteúdo (CMS)' },
+      { text: 'SEO Técnico Otimizado', tooltip: 'Estrutura pronta para rankear no Google.' },
+      { text: 'Animações Premium (Framer Motion)' },
+      { text: 'Arquitetura Escalável' },
+      { text: 'Reuniões de Alinhamento' },
+    ],
+    btn: {
+      text: 'Construir Autoridade',
+      href: 'https://wa.me/5514999999999',
+    },
+  },
+  {
+    name: 'Automação & IA',
+    info: 'Agentes autônomos para escalar suas operações 24/7.',
+    price: {
+      mensal: 'Sob Medida',
+      anual: 'Sob Medida',
+    },
+    features: [
+      { text: 'Agente Comercial 24/7' },
+      { text: 'Integração via WhatsApp/Site' },
+      { text: 'Qualificação de Leads com IA' },
+      { text: 'Processamento de Dados Contábeis' },
+      { text: 'Redução de Custos Operacionais', tooltip: 'Automatiza tarefas que consumiriam horas da sua equipe.' },
+      { text: 'Manutenção Evolutiva' },
+    ],
+    btn: {
+      text: 'Consultoria de IA',
+      href: 'https://wa.me/5514999999999',
+    },
+  },
 ];
+
   return (
     <>
       <Header
@@ -313,10 +278,10 @@ export default function Home() {
       <HeroSection />
       <Pricing />
       <Carousel
-        slides={slides}
+        slides={slidesProjetos}
         options={{ loop: true }}
-        title="Featured Projects"
-        description="Discover our latest work and success stories."
+        title="Projetos Customizados"
+        description="Veja como aplicamos inovações tecnológicas para transformar visitantes em clientes e otimizar operações na prática."
       />
       <SelectCards />
       <VerticalTabs />
@@ -328,19 +293,19 @@ export default function Home() {
       />
       <GalleryGridBlock />
       <PricingSection
-				plans={PLANS}
-				heading="Plans that Scale with You"
-				description="Whether you're just starting out or growing fast, our flexible pricing has you covered — with no hidden costs."
-			/>
+        plans={PLANS}
+        heading="Investimento na sua Escala"
+        description="Sem custos ocultos. Tecnologias de ponta aplicadas à realidade do seu negócio, seja em projetos fechados ou manutenção evolutiva."
+      />
       <FinalCtaSection data={finalCtaData} />
       <HoverPreview />
       <ProjectShowcase />
-      <Gallery4  {...demoData}
+      <Gallery4  {...blogData}
         cta={{
-          label: "Ver todos os cases",
-          href: "/cases",
-          variant: "default"
-        }} />
+          label: "Acessar Todos os Artigos",
+          href: "/blog",
+        }} 
+      />
       {/* <ZoomParallax
         title="Meu Título Dinâmico"
         titleClassName="text-4xl md:text-7xl font-black text-white drop-shadow-lg"

@@ -14,34 +14,35 @@ interface Service {
   tag: string;
 }
 
+// Dados mapeados para a história e pilares da sua empresa
 const SERVICES: Service[] = [
   {
     id: "01",
-    tag: "Automação",
-    title: "Produtividade com IA",
-    description: "Automatize processos repetitivos e ganhe escala sem precisar aumentar sua equipe.",
-    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200",
+    tag: "A Empresa",
+    title: "DNA Jovem e Dinâmico",
+    description: "Estabelecida no polo tecnológico de Garça-SP, somos focados no futuro e estritamente alinhados às inovações do mercado.",
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200", // Representando modernidade
   },
   {
     id: "02",
-    tag: "Conversão",
-    title: "Landing Pages de Elite",
-    description: "Páginas pensadas para conversão, com copy estratégica que realmente gera leads qualificados.",
-    image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=1200",
+    tag: "Liderança",
+    title: "Três Sócios Especialistas",
+    description: "Nossa estrutura é fundamentada na expertise: cada departamento chave é comandado por um especialista focado em excelência técnica.",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200", // Representando a equipe/sócios
   },
   {
     id: "03",
-    tag: "Presença",
-    title: "Ativos Digitais 24h",
-    description: "Um site que trabalha por você: posiciona sua marca e gera oportunidades de negócio constantes.",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200",
+    tag: "Execução",
+    title: "Sem Terceirização Cega",
+    description: "Do planejamento estratégico ao código final, cada etapa do seu projeto passa pelas mãos de quem realmente entende do assunto.",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", // Representando o código/mão na massa
   },
   {
     id: "04",
-    tag: "Escala",
-    title: "Crescimento Contínuo",
-    description: "Integramos dados e automações para criar uma estrutura sólida, escalável e lucrativa.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200",
+    tag: "Resultado",
+    title: "Projetos Sob Medida",
+    description: "Desenhamos soluções cirurgicamente para a realidade e necessidade de cada cliente, independentemente do porte da empresa.",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200", // Representando dados e resultados
   },
 ];
 
@@ -72,7 +73,8 @@ export default function VerticalTabs() {
   }, [activeIndex, isPaused, isInView, handleNext]);
 
   return (
-    <section ref={containerRef} className="w-full bg-white py-20 lg:py-32 overflow-hidden border-t border-zinc-100">
+    // Adicionado o id="quem-somos" para a âncora do menu funcionar
+    <section id="quem-somos" ref={containerRef} className="w-full bg-white py-20 lg:py-32 overflow-hidden border-t border-zinc-100">
       <div className="max-w-7xl px-6 mx-auto">
         
         {/* Header da Seção */}
@@ -82,9 +84,10 @@ export default function VerticalTabs() {
             whileInView={{ opacity: 1, y: 0 }}
             className="flex flex-col gap-4"
           >
-            <span className="text-amber-600 text-xs font-bold uppercase tracking-[0.3em]">Processos & Resultados</span>
+            {/* Tag ajustada para azul para manter a paleta das seções anteriores */}
+            <span className="text-blue-600 text-xs font-bold uppercase tracking-[0.3em]">Quem Somos</span>
             <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-zinc-900 max-w-3xl leading-[0.9]">
-              Como transformamos <br/> <span className="text-zinc-400">sua operação digital</span>
+              Nascemos no futuro. <br/> <span className="text-zinc-400">Construímos o seu agora.</span>
             </h2>
           </motion.div>
         </div>
@@ -145,7 +148,7 @@ export default function VerticalTabs() {
 
                 {/* Tag Flutuante na Imagem */}
                 <div className="absolute top-8 left-8 z-30">
-                  <div className="px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-zinc-200 text-[10px] font-bold text-amber-600 uppercase tracking-widest shadow-sm">
+                  <div className="px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-zinc-200 text-[10px] font-bold text-blue-600 uppercase tracking-widest shadow-sm">
                     {SERVICES[activeIndex].tag}
                   </div>
                 </div>
@@ -179,7 +182,7 @@ const TabButton = memo(({ service, isActive, isInView, isPaused, onClick }: any)
             duration: AUTO_PLAY_DURATION / 1000,
             ease: "linear",
           }}
-          className="h-full w-full bg-amber-500 origin-top"
+          className="h-full w-full bg-blue-600 origin-top" // Trocado de amber-500 para blue-600
         />
       )}
     </div>
@@ -215,7 +218,7 @@ TabButton.displayName = "TabButton";
 const NavButton = memo(({ onClick, icon }: { onClick: () => void, icon: any }) => (
   <button
     onClick={(e) => { e.stopPropagation(); onClick(); }}
-    className="w-12 h-12 rounded-xl bg-white/90 backdrop-blur-md border border-zinc-200 flex items-center justify-center text-zinc-900 hover:bg-amber-500 hover:text-white hover:border-amber-500 shadow-sm transition-all active:scale-95"
+    className="w-12 h-12 rounded-xl bg-white/90 backdrop-blur-md border border-zinc-200 flex items-center justify-center text-zinc-900 hover:bg-blue-600 hover:text-white hover:border-blue-600 shadow-sm transition-all active:scale-95" // Hover em azul
   >
     <HugeiconsIcon icon={icon} size={20} />
   </button>
