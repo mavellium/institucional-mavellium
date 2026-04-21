@@ -96,7 +96,7 @@ export function Header({
     };
   }, [variant]);
 
-  // Estilo do header com base em scroll e menu aberto
+  // SEU ESTILO ORIGINAL INTACTO
   const headerStyles = useMemo(() => {
     if (menuOpen) return "bg-[#050505] py-5 border-b border-white/10";
     return scrolled
@@ -119,8 +119,9 @@ export function Header({
       >
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between gap-4">
-            {/* LOGO */}
-            <div className="flex-shrink-0">
+            
+            {/* LOGO - Com Mix Blend e forçada para branco */}
+            <div className="flex-shrink-0 mix-blend-difference">
               <Link
                 href="/"
                 className="flex items-center group transition-transform active:scale-95"
@@ -133,32 +134,30 @@ export function Header({
                   width={160}
                   height={40}
                   priority
-                  className={`w-28 sm:w-32 md:w-36 lg:w-45 h-auto object-contain transition-all duration-300 group-hover:opacity-80 ${theme.logoFilter}`}
+                  className={`w-28 sm:w-32 md:w-36 lg:w-45 h-auto object-contain transition-all duration-300 group-hover:opacity-80 brightness-0 invert ${theme.logoFilter}`}
                 />
               </Link>
             </div>
 
-            {/* NAVEGAÇÃO DESKTOP */}
-            <nav aria-label="Menu principal" className="hidden xl:flex items-center gap-x-8">
+            {/* NAVEGAÇÃO DESKTOP - Com Mix Blend e forçada para branco */}
+            <nav aria-label="Menu principal" className="hidden xl:flex items-center gap-x-8 mix-blend-difference">
               {links.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-lg font-medium tracking-tight transition-all duration-300 relative group ${
-                    pathname === link.href ? "text-white" : "text-gray-400 hover:text-white"
-                  }`}
+                  className={`text-lg font-medium tracking-tight transition-all duration-300 relative group text-white hover:opacity-80`}
                   aria-current={pathname === link.href ? "page" : undefined}
                 >
                   {link.name}
                   <span
-                    className={`absolute -bottom-1 left-0 w-0 h-[1.5px] ${theme.underline} transition-all duration-300 group-hover:w-full`}
+                    className={`absolute -bottom-1 left-0 w-0 h-[1.5px] bg-white transition-all duration-300 group-hover:w-full`}
                   />
                 </Link>
               ))}
             </nav>
 
-            {/* AÇÕES (CTA + MENU MOBILE) */}
-            <div className="flex items-center gap-3 sm:gap-6">
+            {/* AÇÕES (CTA + MENU MOBILE) - Com Mix Blend */}
+            <div className="flex items-center gap-3 sm:gap-6 mix-blend-difference">
               <Link
                 href={ctaLink}
                 target="_blank"
@@ -167,7 +166,7 @@ export function Header({
                 aria-label={ctaText}
               >
                 <div
-                  className={`absolute -inset-0.5 rounded-full opacity-30 blur-sm transition duration-500 group-hover:opacity-60 ${theme.underline}`}
+                  className={`absolute -inset-0.5 rounded-full opacity-30 blur-sm transition duration-500 group-hover:opacity-60 bg-white`}
                 />
                 <button
                   className={`relative inline-flex cursor-pointer h-9 lg:h-11 items-center justify-center overflow-hidden rounded-full px-5 lg:px-8 py-2 font-bold text-[10px] lg:text-xs tracking-[0.1em] transition-all duration-300 hover:scale-105 active:scale-95 border border-white/10 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`}
@@ -177,7 +176,7 @@ export function Header({
                 </button>
               </Link>
 
-              {/* BOTÃO MENU MOBILE */}
+              {/* BOTÃO MENU MOBILE - Forçado para branco para inverter */}
               <Button
                 ref={menuButtonRef}
                 size="icon"
@@ -197,7 +196,7 @@ export function Header({
           </div>
         </div>
 
-        {/* MENU MOBILE OVERLAY */}
+        {/* MENU MOBILE OVERLAY - Intacto */}
         {menuOpen && (
           <div
             className="fixed inset-0 xl:hidden z-[99]"
