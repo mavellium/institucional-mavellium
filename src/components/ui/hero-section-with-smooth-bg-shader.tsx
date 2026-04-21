@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
 import { ChevronRight, MessageCircle } from 'lucide-react'
+import { siteConfig } from '@/src/lib/constants'
 
 export function HeroSection() {
     return (
@@ -61,7 +62,7 @@ export function HeroSection() {
                                 variant="outline"
                                 className="h-14 w-full rounded-full border-2 border-blue-600/30 bg-transparent px-8 text-base font-semibold text-white transition-all hover:border-blue-500 hover:bg-blue-500/10 hover:text-white sm:w-auto"
                             >
-                                <Link href="https://wa.me/5514999999999" target="_blank" rel="noopener noreferrer">
+                                <Link href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer">
                                     <MessageCircle className="mr-2 h-5 w-5 text-blue-400" />
                                     <span>Falar com Especialista</span>
                                 </Link>

@@ -1,13 +1,13 @@
 "use client";
 
 import type React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { EmblaCarouselType, EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
-import { Button } from "../ui/button";
+import { Pause, Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/src/lib/utils";
+import { useInView } from "react-intersection-observer";
 
 type PropType = {
   slides: React.ReactNode[];
@@ -19,195 +19,277 @@ type PropType = {
 const Carousel: React.FC<PropType> = (props) => {
   const { slides, options, title, description } = props;
 
-  // Autoplay configurado para 6000ms (6 segundos)
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({ playOnInit: true, delay: 6000, stopOnInteraction: false }),
+  // 1. Estado para saber se o usuário pausou manualmente
+  const [isManualPause, setIsManualPause] = useState(false);
+
+  const { ref: sectionRef, inView } = useInView({
+    threshold: 0.1,
+  });
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({ ...options, align: "start" }, [
+    Autoplay({ playOnInit: false, delay: 6000, stopOnInteraction: false }),
   ]);
 
-  const { autoplayIsPlaying, toggleAutoplay, onAutoplayButtonClick } =
-    useAutoplay(emblaApi);
+  const { autoplayIsPlaying, onAutoplayButtonClick } = useAutoplay(emblaApi);
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
+  const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = usePrevNextButtons(emblaApi);
 
-  const { selectedIndex, scrollSnaps, onDotButtonClick } =
-    useDotButton(emblaApi);
+  // 2. Função de Toggle aprimorada para respeitar a vontade do usuário
+  const handleToggleAutoplay = useCallback(() => {
+    const autoplay = emblaApi?.plugins()?.autoplay;
+    if (!autoplay) return;
+
+    if (autoplay.isPlaying()) {
+      autoplay.stop();
+      setIsManualPause(true); // Bloqueia o autoplay automático
+    } else {
+      autoplay.play();
+      setIsManualPause(false); // Libera o autoplay automático
+    }
+  }, [emblaApi]);
+
+  // 3. Efeito de visibilidade agora checa se existe uma pausa manual
+  useEffect(() => {
+    if (!emblaApi) return;
+    const autoplay = emblaApi.plugins()?.autoplay;
+    if (!autoplay) return;
+
+    if (inView && !isManualPause) {
+      autoplay.play(); 
+    } else {
+      autoplay.stop();
+    }
+  }, [emblaApi, inView, isManualPause]);
 
   return (
-    <div className="bg-white py-16 md:py-24 border-t border-zinc-100">
-      {/* Header Geral da Seção - Tamanhos Ampliados */}
-      {(title || description) && (
-        <div className="text-center mb-16 px-6">
-          {title && (
-            <h2 className="text-5xl md:text-7xl font-extrabold text-zinc-900 mb-6 tracking-tighter">
-              {title}
-            </h2>
-          )}
-          {description && (
-            <p className="text-zinc-500 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed font-medium">
-              {description}
-            </p>
-          )}
-        </div>
-      )}
+    <div ref={sectionRef} id="metodologia" className="bg-white py-16 md:py-24 border-t border-zinc-100">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
+        
+        {/* Header */}
+        {(title || description) && (
+          <div className="text-center mb-12 md:mb-16">
+            {title && (
+              <h2 className="text-4xl md:text-6xl font-extrabold text-zinc-900 mb-6 tracking-tighter">
+                {title}
+              </h2>
+            )}
+            {description && (
+              <p className="text-zinc-500 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
+                {description}
+              </p>
+            )}
+          </div>
+        )}
 
-      {/* Container dos Slides */}
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex touch-pan-y touch-pinch-zoom">
-          {slides.map((slideContent, index) => (
-            <div 
-              className="flex-[0_0_85%] md:flex-[0_0_75%] pl-4 transform-gpu" 
-              key={index}
-            >
-              {/* FORÇANDO TAMANHOS NOS SLIDES:
-                O seletor abaixo garante que títulos (h1, h2, h3) e parágrafos 
-                dentro do conteúdo injetado fiquem grandes e legíveis.
-              */}
-              <div className="
-                [&_h1]:text-4xl [&_h1]:md:text-6xl [&_h1]:font-bold [&_h1]:mb-4 [&_h1]:px-5 [&_h1]:text-white
-                [&_h2]:text-3xl [&_h2]:md:text-5xl [&_h2]:font-bold [&_h2]:mb-4 [&_h2]:px-5 [&_h2]:text-white
-                [&_h3]:text-2xl [&_h3]:md:text-4xl [&_h3]:font-bold [&_h3]:mb-3 [&_h3]:px-5 [&_h3]:text-white
-                [&_p]:text-lg [&_p]:md:text-xl [&_p]:text-white/80 [&_p]:px-5 [&_p]:leading-relaxed
-              ">
+        {/* Slides */}
+        <div className="overflow-hidden w-full" ref={emblaRef}>
+          <div className="flex touch-pan-y touch-pinch-zoom -ml-4 md:-ml-6">
+            {slides.map((slideContent, index) => (
+              <div 
+                className="flex-[0_0_100%] md:flex-[0_0_50%] pl-4 md:pl-6 transform-gpu" 
+                key={index}
+              >
                 {slideContent}
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Controles de Navegação e Autoplay */}
-      <div className="flex mx-auto max-w-md justify-center items-center gap-8 mt-12">
-        {/* Dots de Navegação */}
-        <div className="flex justify-center gap-3">
-          {scrollSnaps.map((_, index) => (
-            <DotButton
-              key={index}
-              onClick={() =>
-                onAutoplayButtonClick(() => onDotButtonClick(index))
-              }
-              className={cn(
-                "w-3.5 h-3.5 rounded-full border-2 transition-all duration-300",
-                index === selectedIndex
-                  ? "bg-zinc-900 border-zinc-900 scale-125 shadow-md"
-                  : "bg-transparent border-zinc-300 hover:border-zinc-500"
-              )}
-            />
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Play/Pause Button */}
-        <Button 
-          size={'icon'} 
-          variant={"outline"} 
-          onClick={toggleAutoplay} 
-          type="button"
-          className="rounded-full w-14 h-14 border-2 border-zinc-200 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all shadow-sm active:scale-95"
-        >
-          {autoplayIsPlaying ? (
-            <Pause className="w-6 h-6" fill="currentColor" />
-          ) : (
-            <Play className="w-6 h-6 ml-1" fill="currentColor" />
-          )}
-        </Button>
+       {/* Barra de Controles (Dark Glassmorphism) */}
+        <div className="flex mx-auto mt-12 w-fit items-center gap-4 rounded-full border border-zinc-800 bg-zinc-950/90 backdrop-blur-md px-6 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.15)] md:mt-16 md:gap-5">
+          
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => onAutoplayButtonClick(onPrevButtonClick)}
+              disabled={prevBtnDisabled}
+              className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-400 transition-all hover:bg-zinc-800 hover:text-white disabled:opacity-30"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={() => onAutoplayButtonClick(onNextButtonClick)}
+              disabled={nextBtnDisabled}
+              className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-400 transition-all hover:bg-zinc-800 hover:text-white disabled:opacity-30"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="h-6 w-[1px] bg-zinc-800" />
+
+          <div className="flex items-center gap-2">
+            {scrollSnaps.map((_, index) => (
+              <DotButton
+                key={index}
+                onClick={() => onAutoplayButtonClick(() => onDotButtonClick(index))}
+                className={cn(
+                  "h-2 rounded-full outline-none transition-all duration-500",
+                  index === selectedIndex
+                    ? "w-6 bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.6)]"
+                    : "w-2 bg-zinc-700 hover:bg-zinc-500"
+                )}
+              />
+            ))}
+          </div>
+
+          <div className="h-6 w-[1px] bg-zinc-800" />
+
+          <button 
+            onClick={handleToggleAutoplay} // Usando a nova função handleToggle
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-400 transition-all hover:bg-zinc-800 hover:text-white active:scale-95"
+          >
+            {autoplayIsPlaying ? (
+              <Pause className="h-4 w-4 fill-current" />
+            ) : (
+              <Play className="ml-1 h-4 w-4 fill-current" />
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-// ---------- HOOKS E HELPERS ----------
+// ... Restante dos hooks (usePrevNextButtons, useDotButton, useAutoplay, DotButton) permanecem iguais
+// Apenas certifique-se de manter as exportações corretas abaixo deles.
 
-type UseDotButtonType = {
-  selectedIndex: number;
-  scrollSnaps: number[];
-  onDotButtonClick: (index: number) => void;
-};
-
-export const useDotButton = (
-  emblaApi: EmblaCarouselType | undefined
-): UseDotButtonType => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-
-  const onDotButtonClick = useCallback(
-    (index: number) => {
+type UsePrevNextButtonsType = {
+    prevBtnDisabled: boolean;
+    nextBtnDisabled: boolean;
+    onPrevButtonClick: () => void;
+    onNextButtonClick: () => void;
+  };
+  
+  export const usePrevNextButtons = (
+    emblaApi: EmblaCarouselType | undefined
+  ): UsePrevNextButtonsType => {
+    const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
+    const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
+  
+    const onPrevButtonClick = useCallback(() => {
       if (!emblaApi) return;
-      emblaApi.scrollTo(index);
-    },
-    [emblaApi]
-  );
-
-  const onInit = useCallback((emblaApi: EmblaCarouselType) => {
-    setScrollSnaps(emblaApi.scrollSnapList());
-  }, []);
-
-  const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, []);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    onInit(emblaApi);
-    onSelect(emblaApi);
-    emblaApi.on("reInit", onInit).on("reInit", onSelect).on("select", onSelect);
-  }, [emblaApi, onInit, onSelect]);
-
-  return { selectedIndex, scrollSnaps, onDotButtonClick };
-};
-
-type UseAutoplayType = {
-  autoplayIsPlaying: boolean;
-  toggleAutoplay: () => void;
-  onAutoplayButtonClick: (callback: () => void) => void;
-};
-
-export const useAutoplay = (
-  emblaApi: EmblaCarouselType | undefined
-): UseAutoplayType => {
-  const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false);
-
-  const onAutoplayButtonClick = useCallback(
-    (callback: () => void) => {
+      emblaApi.scrollPrev();
+    }, [emblaApi]);
+  
+    const onNextButtonClick = useCallback(() => {
+      if (!emblaApi) return;
+      emblaApi.scrollNext();
+    }, [emblaApi]);
+  
+    const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
+      setPrevBtnDisabled(!emblaApi.canScrollPrev());
+      setNextBtnDisabled(!emblaApi.canScrollNext());
+    }, []);
+  
+    useEffect(() => {
+      if (!emblaApi) return;
+      onSelect(emblaApi);
+      emblaApi.on("reInit", onSelect).on("select", onSelect);
+    }, [emblaApi, onSelect]);
+  
+    return {
+      prevBtnDisabled,
+      nextBtnDisabled,
+      onPrevButtonClick,
+      onNextButtonClick
+    };
+  };
+  
+  type UseDotButtonType = {
+    selectedIndex: number;
+    scrollSnaps: number[];
+    onDotButtonClick: (index: number) => void;
+  };
+  
+  export const useDotButton = (
+    emblaApi: EmblaCarouselType | undefined
+  ): UseDotButtonType => {
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  
+    const onDotButtonClick = useCallback(
+      (index: number) => {
+        if (!emblaApi) return;
+        emblaApi.scrollTo(index);
+      },
+      [emblaApi]
+    );
+  
+    const onInit = useCallback((emblaApi: EmblaCarouselType) => {
+      setScrollSnaps(emblaApi.scrollSnapList());
+    }, []);
+  
+    const onSelect = useCallback((emblaApi: EmblaCarouselType) => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    }, []);
+  
+    useEffect(() => {
+      if (!emblaApi) return;
+      onInit(emblaApi);
+      onSelect(emblaApi);
+      emblaApi.on("reInit", onInit).on("reInit", onSelect).on("select", onSelect);
+    }, [emblaApi, onInit, onSelect]);
+  
+    return { selectedIndex, scrollSnaps, onDotButtonClick };
+  };
+  
+  type UseAutoplayType = {
+    autoplayIsPlaying: boolean;
+    toggleAutoplay: () => void;
+    onAutoplayButtonClick: (callback: () => void) => void;
+  };
+  
+  export const useAutoplay = (
+    emblaApi: EmblaCarouselType | undefined
+  ): UseAutoplayType => {
+    const [autoplayIsPlaying, setAutoplayIsPlaying] = useState(false);
+  
+    const onAutoplayButtonClick = useCallback(
+      (callback: () => void) => {
+        const autoplay = emblaApi?.plugins()?.autoplay;
+        if (!autoplay) return;
+        const resetOrStop = autoplay.options.stopOnInteraction === false ? autoplay.reset : autoplay.stop;
+        resetOrStop();
+        callback();
+      },
+      [emblaApi]
+    );
+  
+    const toggleAutoplay = useCallback(() => {
       const autoplay = emblaApi?.plugins()?.autoplay;
       if (!autoplay) return;
-      const resetOrStop = autoplay.options.stopOnInteraction === false ? autoplay.reset : autoplay.stop;
-      resetOrStop();
-      callback();
-    },
-    [emblaApi]
-  );
-
-  const toggleAutoplay = useCallback(() => {
-    const autoplay = emblaApi?.plugins()?.autoplay;
-    if (!autoplay) return;
-    const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play;
-    playOrStop();
-  }, [emblaApi]);
-
-  useEffect(() => {
-    const autoplay = emblaApi?.plugins()?.autoplay;
-    if (!autoplay) return;
-    setAutoplayIsPlaying(autoplay.isPlaying());
-    emblaApi
-      .on("autoplay:play", () => setAutoplayIsPlaying(true))
-      .on("autoplay:stop", () => setAutoplayIsPlaying(false))
-      .on("reInit", () => setAutoplayIsPlaying(autoplay.isPlaying()));
-  }, [emblaApi]);
-
-  return { autoplayIsPlaying, toggleAutoplay, onAutoplayButtonClick };
-};
-
-type PropTypeButton = React.PropsWithChildren<
-  React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  >
->;
-
-export const DotButton: React.FC<PropTypeButton> = (props) => {
-  const { children, ...restProps } = props;
-  return (
-    <button type="button" {...restProps}>
-      {children}
-    </button>
-  );
-};
-
-export { Carousel };
+      const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play;
+      playOrStop();
+    }, [emblaApi]);
+  
+    useEffect(() => {
+      const autoplay = emblaApi?.plugins()?.autoplay;
+      if (!autoplay) return;
+      setAutoplayIsPlaying(autoplay.isPlaying());
+      emblaApi
+        .on("autoplay:play", () => setAutoplayIsPlaying(true))
+        .on("autoplay:stop", () => setAutoplayIsPlaying(false))
+        .on("reInit", () => setAutoplayIsPlaying(autoplay.isPlaying()));
+    }, [emblaApi]);
+  
+    return { autoplayIsPlaying, toggleAutoplay, onAutoplayButtonClick };
+  };
+  
+  type PropTypeButton = React.PropsWithChildren<
+    React.DetailedHTMLProps<
+      React.ButtonHTMLAttributes<HTMLButtonElement>,
+      HTMLButtonElement
+    >
+  >;
+  
+  export const DotButton: React.FC<PropTypeButton> = (props) => {
+    const { children, ...restProps } = props;
+    return (
+      <button type="button" {...restProps}>
+        {children}
+      </button>
+    );
+  };
+  
+  export { Carousel };

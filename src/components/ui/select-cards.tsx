@@ -94,7 +94,6 @@ export default function PremiumStyleSelector() {
                 {/* HEADER COM SELECT INLINE */}
                 <div className="flex flex-col gap-2 mb-16">
                     <div className="flex items-center gap-2 text-zinc-500 text-sm font-medium uppercase tracking-[0.2em] mb-4">
-                        <Sparkles size={14} className="text-blue-500" />
                         <span>Portfólio Customizado</span>
                     </div>
                     

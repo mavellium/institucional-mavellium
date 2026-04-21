@@ -9,20 +9,14 @@ import {
     TooltipTrigger,
 } from '../ui/tooltip';
 import { cn } from '@/src/lib/utils';
-import { CheckCircle2, Sparkles } from 'lucide-react'; // Ícones mais modernos
+import { CheckCircle2, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-
-type FREQUENCY = 'mensal' | 'anual';
-const frequencies: FREQUENCY[] = ['mensal', 'anual'];
 
 export interface Plan {
     name: string;
     info: string;
-    price: {
-        mensal: number | string;
-        anual: number | string;
-    };
+    label: string; // <-- Substituímos o "price" por uma label conceitual
     features: {
         text: string;
         tooltip?: string;
@@ -46,8 +40,6 @@ export function PricingSection({
     description,
     ...props
 }: PricingSectionProps) {
-    const [frequency, setFrequency] = React.useState<FREQUENCY>('mensal');
-
     return (
         <section
             id="planos"
@@ -60,7 +52,7 @@ export function PricingSection({
             <div className="mx-auto max-w-2xl space-y-4 text-center">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">
                     <Sparkles className="w-3 h-3" />
-                    Modelos de Parceria
+                    Nossas Frentes
                 </div>
                 <h2 className="text-white text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
                     {heading}
@@ -72,68 +64,21 @@ export function PricingSection({
                 )}
             </div>
 
-            <PricingFrequencyToggle
-                frequency={frequency}
-                setFrequency={setFrequency}
-            />
-
-            <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-3 mt-8">
                 {plans.map((plan) => (
-                    <PricingCard plan={plan} key={plan.name} frequency={frequency} />
+                    <PricingCard plan={plan} key={plan.name} />
                 ))}
             </div>
         </section>
     );
 }
 
-export function PricingFrequencyToggle({
-    frequency,
-    setFrequency,
-    ...props
-}: { frequency: FREQUENCY, setFrequency: (f: FREQUENCY) => void } & React.ComponentProps<'div'>) {
-    return (
-        <div
-            className={cn(
-                'bg-zinc-900/80 backdrop-blur-md mx-auto flex w-fit rounded-full border border-white/10 p-1.5 shadow-xl',
-                props.className,
-            )}
-            {...props}
-        >
-            {frequencies.map((freq) => (
-                <button
-                    key={freq}
-                    onClick={() => setFrequency(freq)}
-                    className="relative px-8 py-3 text-sm font-bold uppercase tracking-wider transition-colors outline-none"
-                >
-                    <span className={cn(
-                        "relative z-10 transition-colors duration-300",
-                        frequency === freq ? "text-white" : "text-zinc-500 hover:text-white"
-                    )}>
-                        {freq}
-                    </span>
-                    {frequency === freq && (
-                        <motion.span
-                            layoutId="frequencyToggle"
-                            transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                            className="bg-blue-600 absolute inset-0 z-0 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                        />
-                    )}
-                </button>
-            ))}
-        </div>
-    );
-}
-
 export function PricingCard({
     plan,
     className,
-    frequency = frequencies[0],
     ...props
-}: { plan: Plan; frequency?: FREQUENCY } & React.ComponentProps<'div'>) {
+}: { plan: Plan } & React.ComponentProps<'div'>) {
     
-    // Verifica se é texto (ex: "Sob Medida") ou número (ex: 1500)
-    const isCustomPrice = typeof plan.price[frequency] === 'string' && isNaN(Number(plan.price[frequency]));
-
     return (
         <div
             key={plan.name}
@@ -146,7 +91,7 @@ export function PricingCard({
         >
             {plan.highlighted && (
                 <BorderTrail
-                    style={{ backgroundColor: '#3b82f6' }} // Azul do Tailwind
+                    style={{ backgroundColor: '#3b82f6' }}
                     size={150}
                 />
             )}
@@ -156,22 +101,17 @@ export function PricingCard({
                     <div className="text-2xl font-bold text-white tracking-tight">{plan.name}</div>
                     {plan.highlighted && (
                         <span className="bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
-                            Recomendado
+                            Mais Procurado
                         </span>
                     )}
                 </div>
                 <p className="text-zinc-400 text-sm leading-relaxed">{plan.info}</p>
                 
-                <div className="mt-8 flex items-end gap-2 h-14">
-                    {!isCustomPrice && <span className="text-2xl font-semibold text-zinc-500 mb-1">R$</span>}
-                    <span className={cn("font-bold text-white tracking-tight", isCustomPrice ? "text-4xl" : "text-5xl")}>
-                        {plan.price[frequency]}
+                {/* Aqui entra a Label (ex: "Sob Medida") no lugar do preço numérico */}
+                <div className="mt-8 flex items-end gap-2 h-10">
+                    <span className="text-2xl font-bold text-white tracking-tight">
+                        {plan.label}
                     </span>
-                    {!isCustomPrice && (
-                        <span className="text-zinc-500 text-sm font-medium mb-2">
-                            /{frequency}
-                        </span>
-                    )}
                 </div>
             </div>
 
@@ -216,7 +156,7 @@ export function PricingCard({
                     )}
                     asChild
                 >
-                    <Link href={plan.btn.href}>{plan.btn.text}</Link>
+                    <Link href={plan.btn.href} target="_blank" rel="noopener noreferrer">{plan.btn.text}</Link>
                 </Button>
             </div>
         </div>

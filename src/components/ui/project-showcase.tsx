@@ -4,6 +4,7 @@ import type React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Plus } from "lucide-react";
 import { useInView } from "react-intersection-observer";
+import { siteConfig } from "@/src/lib/constants";
 
 interface FAQItem {
   question: string;
@@ -191,7 +192,7 @@ export default function ImmersiveFAQ() {
 
         <div className="mt-16 text-center">
             <p className="text-zinc-500 text-xl md:text-2xl font-medium">
-                Sua dúvida não está aqui? <a href="https://wa.me/5514999999999" target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold hover:text-blue-700 hover:underline underline-offset-4 transition-colors">Fale com a nossa equipe.</a>
+                Sua dúvida não está aqui? <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold hover:text-blue-700 hover:underline underline-offset-4 transition-colors">Fale com a nossa equipe.</a>
             </p>
         </div>
       </div>

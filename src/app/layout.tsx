@@ -26,8 +26,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning // Adicione isso para evitar warnings de hidratação
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scroll-smooth scroll-pt-24`}
+      suppressHydrationWarning 
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

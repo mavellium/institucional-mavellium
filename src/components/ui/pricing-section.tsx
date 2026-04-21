@@ -9,6 +9,7 @@ import { Badge } from "../ui/badge";
 // ---- minimal craft-ds inline (single-file helper) ----------------
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { siteConfig } from "@/src/lib/constants";
 const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 type SectionProps = { children: React.ReactNode; className?: string; id?: string };
@@ -52,7 +53,7 @@ const pricingData: PricingCardProps[] = [
       "Fidelização do seu público-alvo"
     ],
     cta: "Construir Minha Autoridade",
-    href: "https://wa.me/5514999999999", // Link do WhatsApp
+    href: `${siteConfig.whatsappUrl}`, // Link do WhatsApp
   },
   {
     title: "Landing Pages",
@@ -65,7 +66,7 @@ const pricingData: PricingCardProps[] = [
       "Maximização do retorno em anúncios"
     ],
     cta: "Acelerar Minhas Vendas",
-    href: "https://wa.me/5514999999999",
+    href: `${siteConfig.whatsappUrl}`,
     featured: true, // Destaque para a solução mais procurada
   },
   {
@@ -79,7 +80,7 @@ const pricingData: PricingCardProps[] = [
       "Qualificação de leads e processamento de dados"
     ],
     cta: "Automatizar Minha Operação",
-    href: "https://wa.me/5514999999999",
+    href: `${siteConfig.whatsappUrl}`,
   },
 ];
 

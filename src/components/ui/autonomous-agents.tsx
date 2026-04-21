@@ -148,27 +148,32 @@ function GenericCardFront({ data }: { data: CardData["front"] }) {
 
 function GenericCardBack({ data }: { data: CardData["back"] }) {
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full p-8 md:p-10 text-center bg-zinc-950 rounded-2xl border border-blue-500/30 shadow-[inset_0_0_50px_rgba(37,99,235,0.1)]">
+    <div className="flex flex-col items-center justify-center h-full w-full overflow-hidden p-5 md:p-6 text-center bg-zinc-950 rounded-2xl border border-blue-500/30 shadow-[inset_0_0_50px_rgba(37,99,235,0.15)]">
       
-      <div className="w-16 h-16 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center mb-6 -rotate-3 group-hover:rotate-0 transition-all duration-500">
-        <Code className="w-8 h-8 text-blue-500" />
+      {/* Ícone ajustado e com margem segura */}
+      <div className="w-12 h-12 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center mb-5 shrink-0 -rotate-3 group-hover:rotate-0 transition-all duration-500">
+        <Code className="w-6 h-6 text-blue-500" />
       </div>
 
-      <p className="text-base md:text-lg leading-relaxed text-neutral-300 mb-8 font-medium">
+      {/* Texto centralizado com respiro */}
+      <p className="text-sm md:text-base leading-relaxed text-neutral-300 font-medium mb-6">
         {data.description}
       </p>
 
-      {/* Recomendo adicionar uma ação (onClick) aqui ou envolver em um Link do Next.js */}
-      <button 
-        onClick={(e) => e.stopPropagation()} 
-        className="w-full bg-blue-600 text-white px-8 py-4 rounded-xl text-sm font-bold shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:bg-blue-500 active:scale-95"
-      >
-        {data.buttonText}
-      </button>
+      {/* Botão ancorado com segurança (shrink-0 impede que ele seja esmagado) */}
+      <div className="w-full shrink-0">
+        <button 
+          onClick={(e) => e.stopPropagation()} 
+          className="w-full bg-blue-600 text-white px-6 py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-500/20 transition-all hover:bg-blue-500 active:scale-95"
+        >
+          {data.buttonText}
+        </button>
 
-      <span className="mt-6 text-[10px] text-neutral-600 uppercase tracking-widest lg:hidden">
-        Toque fora para voltar
-      </span>
+        <span className="block mt-3 text-[10px] text-neutral-500 uppercase tracking-widest lg:hidden">
+          Toque fora para voltar
+        </span>
+      </div>
+
     </div>
   );
 }

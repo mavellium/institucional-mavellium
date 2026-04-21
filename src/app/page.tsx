@@ -16,6 +16,7 @@ import Demo from "../components/ui/imagem";
 import FlippingCardDemo from "../components/ui/autonomous-agents";
 import { GalleryGridBlock } from "../components/ui/sections-gallery";
 import { Plan, PricingSection } from "../components/ui/pricing-details";
+import { siteConfig } from "../lib/constants";
 
 export default function Home() {
   const images = [
@@ -137,7 +138,7 @@ export default function Home() {
     },
   ];
 
-const finalCtaData = {
+  const finalCtaData = {
     text: {
       headline: "Pronto para escalar",
       highlight: "o seu negócio?",
@@ -152,7 +153,7 @@ const finalCtaData = {
     calls_to_action: {
       primary: {
         label: "Falar com Especialista",
-        href: "https://wa.me/5514999999999", // Coloque seu WhatsApp
+        href: siteConfig.whatsappUrl, // Coloque seu WhatsApp
         icon: "mdi:whatsapp" // Ícone do WhatsApp fica muito melhor para conversão
       },
       secondary: {
@@ -164,138 +165,147 @@ const finalCtaData = {
   };
 
   const SlideWithText = ({ image, title, description }: { image: string; title: string; description: string }) => (
-    <div className="relative h-156 w-full overflow-hidden rounded-[40px] group">
+    <div className="relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] group border border-black/5 shadow-lg">
       <img
         src={image}
         alt={title}
-        className="object-cover transition-transform duration-500 group-hover:scale-110"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-4 pt-12">
-        <h3 className="text-white text-xl font-semibold mb-1">{title}</h3>
-        <p className="text-white/80 text-sm">{description}</p>
+      {/* Gradiente ampliado para garantir que o texto branco sempre tenha contraste */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90" />
+      
+      {/* Espaçamento interno (padding) muito maior: p-8 no mobile e p-12 no desktop */}
+      <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-8 md:p-12 h-full">
+        <h3 className="text-white text-2xl md:text-3xl font-bold mb-3 tracking-tight">{title}</h3>
+        <p className="text-white/80 text-base md:text-lg leading-relaxed">{description}</p>
       </div>
     </div>
   );
 
-  const slidesProjetos = [
+  const slidesMetodologia = [
     <SlideWithText
       key="1"
-      image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
-      title="Portal Institucional"
-      description="Site Inteligente desenhado para transmitir credibilidade e comunicar o portfólio global da marca."
+      image="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200"
+      title="1. Imersão e Briefing"
+      description="Sentamos com você para entender a fundo a sua dor, o seu modelo de negócio e o que você espera de resultado."
     />,
     <SlideWithText
       key="2"
-      image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200"
-      title="Captura B2B de Alta Conversão"
-      description="Landing Page estratégica, livre de distrações, que maximizou o retorno sobre o investimento em anúncios."
+      image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
+      title="2. Análise de Viabilidade"
+      description="Nossa equipe técnica seleciona as melhores tecnologias atuais para resolver a sua demanda com o melhor custo-benefício."
     />,
     <SlideWithText
       key="3"
-      image="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=1200"
-      title="Automação de Atendimento (IA)"
-      description="Agente autônomo operando 24/7 no setor comercial: qualificação de leads instantânea com redução na folha de custos."
+      image="https://images.unsplash.com/photo-1507925922894-de9f1cb965e1?auto=format&fit=crop&q=80&w=1200"
+      title="3. Cronograma de Entregas"
+      description="O projeto é fatiado em etapas. Criamos um calendário transparente para que você acompanhe visualmente o progresso."
     />,
     <SlideWithText
       key="4"
-      image="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=1200"
-      title="Plataforma Customizada"
-      description="Do planejamento estratégico ao código final: um projeto cirúrgico para a realidade de uma grande operação."
+      image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
+      title="4. Desenvolvimento"
+      description="Você tem visão total do andamento do projeto, validando e acompanhando cada fase concluída pela nossa equipe."
+    />,
+    <SlideWithText
+      key="5"
+      image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200"
+      title="5. Entrega Final"
+      description="O projeto só é finalizado quando atinge os nossos rigorosos padrões de excelência e a sua total satisfação."
     />,
   ];
 
   const PLANS: Plan[] = [
-  {
-    name: 'Landing Pages',
-    info: 'Alta conversão para campanhas específicas e infoprodutos.',
-    price: {
-      mensal: '1.497', // Exemplo de valor fictício
-      anual: 'Sob Medida',
+    {
+      name: 'Landing Pages',
+      info: 'Páginas desenvolvidas com um único objetivo: transformar visitantes em clientes reais.',
+      label: 'Alta Conversão', // Substitui o preço
+      features: [
+        { text: 'Design livre de distrações' },
+        { text: 'Copywriting Estratégico', tooltip: 'Textos focados em conversão e gatilhos mentais.' },
+        { text: 'Integração com CRM/Email' },
+        { text: 'Otimização de Velocidade' },
+        { text: 'Maximização de anúncios' },
+      ],
+      btn: {
+        text: 'Acelerar Vendas',
+        href: siteConfig.whatsappUrl,
+      },
     },
-    features: [
-      { text: 'Design livre de distrações' },
-      { text: 'Copywriting Estratégico', tooltip: 'Textos focados em conversão e gatilhos mentais.' },
-      { text: 'Integração com CRM/Email' },
-      { text: 'Otimização de Velocidade' },
-      { text: 'Suporte pós-lançamento' },
-    ],
-    btn: {
-      text: 'Orçar Landing Page',
-      href: 'https://wa.me/5514999999999',
+    {
+      highlighted: true,
+      name: 'Site Inteligente',
+      info: 'A sede digital oficial da sua empresa, estruturada para transmitir credibilidade 24h por dia.',
+      label: 'Autoridade Digital', // Substitui o preço
+      features: [
+        { text: 'Design Exclusivo e Responsivo' },
+        { text: 'Painel de Gestão de Conteúdo (CMS)' },
+        { text: 'SEO Técnico Otimizado', tooltip: 'Estrutura pronta para rankear no Google.' },
+        { text: 'Animações Premium' },
+        { text: 'Arquitetura Escalável' },
+        { text: 'Posicionamento global da marca' },
+      ],
+      btn: {
+        text: 'Construir Autoridade',
+        href: siteConfig.whatsappUrl,
+      },
     },
-  },
-  {
-    highlighted: true,
-    name: 'Site Inteligente',
-    info: 'A sede digital oficial da sua empresa com autoridade máxima.',
-    price: {
-      mensal: '3.990',
-      anual: 'Sob Medida',
+    {
+      name: 'Automação & IA',
+      info: 'Agentes autônomos impulsionados por Inteligência Artificial para operar seu negócio.',
+      label: 'Operação 24/7', // Substitui o preço
+      features: [
+        { text: 'Agente Comercial 24/7' },
+        { text: 'Integração via WhatsApp/Site' },
+        { text: 'Qualificação de Leads com IA' },
+        { text: 'Processamento de Dados Contábeis' },
+        { text: 'Redução de Custos Operacionais', tooltip: 'Automatiza tarefas que consumiriam horas da sua equipe.' },
+        { text: 'Atendimento instantâneo' },
+      ],
+      btn: {
+        text: 'Automatizar Operação',
+        href: siteConfig.whatsappUrl,
+      },
     },
-    features: [
-      { text: 'Design Exclusivo e Responsivo' },
-      { text: 'Painel de Gestão de Conteúdo (CMS)' },
-      { text: 'SEO Técnico Otimizado', tooltip: 'Estrutura pronta para rankear no Google.' },
-      { text: 'Animações Premium (Framer Motion)' },
-      { text: 'Arquitetura Escalável' },
-      { text: 'Reuniões de Alinhamento' },
-    ],
-    btn: {
-      text: 'Construir Autoridade',
-      href: 'https://wa.me/5514999999999',
-    },
-  },
-  {
-    name: 'Automação & IA',
-    info: 'Agentes autônomos para escalar suas operações 24/7.',
-    price: {
-      mensal: 'Sob Medida',
-      anual: 'Sob Medida',
-    },
-    features: [
-      { text: 'Agente Comercial 24/7' },
-      { text: 'Integração via WhatsApp/Site' },
-      { text: 'Qualificação de Leads com IA' },
-      { text: 'Processamento de Dados Contábeis' },
-      { text: 'Redução de Custos Operacionais', tooltip: 'Automatiza tarefas que consumiriam horas da sua equipe.' },
-      { text: 'Manutenção Evolutiva' },
-    ],
-    btn: {
-      text: 'Consultoria de IA',
-      href: 'https://wa.me/5514999999999',
-    },
-  },
-];
+  ];
 
   return (
     <>
       <Header
         logo={"/logo-mavellium-header.svg"}
-        logoAlt={"Mavellium"}
-        links={[{ name: "Início", href: "/" }]}
-        ctaLink={""}
-        ctaText={"Entre em contato"} />
+        logoAlt={"Mavellium - Tecnologia e Inovação"}
+        links={[
+          { name: "Início", href: "#inicio" },
+          { name: "Quem Somos", href: "#quem-somos" },
+          { name: "Soluções", href: "#solucoes" },
+          { name: "Metodologia", href: "#metodologia" }
+        ]}
+        ctaLink={siteConfig.whatsappUrl}
+        ctaText={"Falar com Especialista"}
+      />
       <HeroSection />
       <Pricing />
-      <Carousel
-        slides={slidesProjetos}
-        options={{ loop: true }}
-        title="Projetos Customizados"
-        description="Veja como aplicamos inovações tecnológicas para transformar visitantes em clientes e otimizar operações na prática."
-      />
+      <div id="metodologia">
+        <Carousel
+          slides={slidesMetodologia}
+          options={{ loop: false, align: "start" }}
+          title="Nossa Metodologia"
+          description="Transparência e previsibilidade. Você nunca fica no escuro: nosso processo de ponta a ponta é dividido em 5 passos claros."
+        />
+      </div>
       <SelectCards />
       <VerticalTabs />
       <Benefits />
       <Demo />
       <FlippingCardDemo
         title="Soluções Inteligentes"
-        description="Combinamos design centrado no usuário com análise de dados poderosa para impulsionar seu sucesso digital." 
+        description="Combinamos design centrado no usuário com análise de dados poderosa para impulsionar seu sucesso digital."
       />
       <GalleryGridBlock />
       <PricingSection
         plans={PLANS}
-        heading="Investimento na sua Escala"
-        description="Sem custos ocultos. Tecnologias de ponta aplicadas à realidade do seu negócio, seja em projetos fechados ou manutenção evolutiva."
+        heading="Modelos de Projeto"
+        description="Desenhados cirurgicamente para a realidade do seu negócio. Do planejamento estratégico ao código final, sem terceirização cega."
       />
       <FinalCtaSection data={finalCtaData} />
       <HoverPreview />
@@ -304,7 +314,7 @@ const finalCtaData = {
         cta={{
           label: "Acessar Todos os Artigos",
           href: "/blog",
-        }} 
+        }}
       />
       {/* <ZoomParallax
         title="Meu Título Dinâmico"

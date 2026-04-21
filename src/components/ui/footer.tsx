@@ -3,14 +3,16 @@
 
 import React from 'react';
 import type { ComponentProps, ReactNode } from 'react';
-import { motion, useReducedMotion } from 'framer-motion'; // Ajustado import do framer-motion
+import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
+import { siteConfig } from '@/src/lib/constants';
 
 interface FooterLink {
     title: string;
     href: string;
     icon?: string;
+    isExternal?: boolean; // Adicionado para controlar como o link abre
 }
 
 interface FooterSection {
@@ -26,7 +28,8 @@ const footerLinks: FooterSection[] = [
             { title: 'Sites Inteligentes', href: '#solucoes' },
             { title: 'Landing Pages', href: '#solucoes' },
             { title: 'Automação & IA', href: '#solucoes' },
-            { title: 'Consultoria Técnica', href: 'https://wa.me/5514999999999' },
+            // WhatsApp aqui também é externo
+            { title: 'Consultoria Técnica', href: `${siteConfig.whatsappUrl}`, isExternal: true }, 
         ],
     },
     {
@@ -50,10 +53,10 @@ const footerLinks: FooterSection[] = [
     {
         label: 'Conecte-se',
         links: [
-            { title: 'WhatsApp', href: 'https://wa.me/5514999999999', icon: 'mdi:whatsapp' },
-            { title: 'LinkedIn', href: '#', icon: 'mdi:linkedin' },
-            { title: 'Instagram', href: '#', icon: 'mdi:instagram' },
-            { title: 'E-mail', href: 'mailto:contato@mavellium.com.br', icon: 'mdi:email-outline' },
+            { title: 'WhatsApp', href: siteConfig.whatsappUrl, icon: 'mdi:whatsapp', isExternal: true },
+            { title: 'LinkedIn', href: siteConfig.linkedinUrl, icon: 'mdi:linkedin', isExternal: true },
+            { title: 'Instagram', href: siteConfig.instagramUrl, icon: 'mdi:instagram', isExternal: true },
+            { title: 'E-mail', href: `mailto:${siteConfig.email}`, icon: 'mdi:email-outline', isExternal: true },
         ],
     },
 ];
@@ -99,6 +102,9 @@ export function Footer() {
                                         <li key={link.title}>
                                             <a
                                                 href={link.href}
+                                                // Aplicação condicional do target e rel para links externos
+                                                target={link.isExternal ? "_blank" : undefined}
+                                                rel={link.isExternal ? "noopener noreferrer" : undefined}
                                                 className="hover:text-white inline-flex items-center gap-2 transition-colors duration-300 group"
                                             >
                                                 {link.icon && (
