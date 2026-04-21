@@ -6,7 +6,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
-import { siteConfig } from '@/src/lib/constants';
+import { getWhatsappUrl, siteConfig } from '@/src/lib/constants';
 
 interface FooterLink {
     title: string;
@@ -20,7 +20,7 @@ interface FooterSection {
     links: FooterLink[];
 }
 
-// --- Textos e Links Adaptados para a Agência ---
+
 const footerLinks: FooterSection[] = [
     {
         label: 'Soluções',
@@ -28,8 +28,12 @@ const footerLinks: FooterSection[] = [
             { title: 'Sites Inteligentes', href: '#solucoes' },
             { title: 'Landing Pages', href: '#solucoes' },
             { title: 'Automação & IA', href: '#solucoes' },
-            // WhatsApp aqui também é externo
-            { title: 'Consultoria Técnica', href: `${siteConfig.whatsappUrl}`, isExternal: true }, 
+            // Mensagem direta para Consultoria Técnica
+            { 
+              title: 'Consultoria Técnica', 
+              href: getWhatsappUrl("Olá! Gostaria de agendar uma Consultoria Técnica para entender as melhores soluções para o meu negócio."), 
+              isExternal: true 
+            }, 
         ],
     },
     {
@@ -53,7 +57,13 @@ const footerLinks: FooterSection[] = [
     {
         label: 'Conecte-se',
         links: [
-            { title: 'WhatsApp', href: siteConfig.whatsappUrl, icon: 'mdi:whatsapp', isExternal: true },
+            // Mensagem de contato geral para quem clica nas redes sociais
+            { 
+              title: 'WhatsApp', 
+              href: getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de tirar algumas dúvidas."), 
+              icon: 'mdi:whatsapp', 
+              isExternal: true 
+            },
             { title: 'LinkedIn', href: siteConfig.linkedinUrl, icon: 'mdi:linkedin', isExternal: true },
             { title: 'Instagram', href: siteConfig.instagramUrl, icon: 'mdi:instagram', isExternal: true },
             { title: 'E-mail', href: `mailto:${siteConfig.email}`, icon: 'mdi:email-outline', isExternal: true },

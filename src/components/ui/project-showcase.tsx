@@ -4,7 +4,7 @@ import type React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Plus } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-import { siteConfig } from "@/src/lib/constants";
+import { getWhatsappUrl, siteConfig } from "@/src/lib/constants";
 
 interface FAQItem {
   question: string;
@@ -48,7 +48,7 @@ export default function ImmersiveFAQ() {
   const [smoothPosition, setSmoothPosition] = useState({ x: 0, y: 0 });
   const [isHoverVisible, setIsHoverVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  
+
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
 
@@ -93,16 +93,15 @@ export default function ImmersiveFAQ() {
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full bg-white py-16 lg:py-24 overflow-hidden border-t border-zinc-100" id="faq" 
+      className="relative w-full bg-white py-16 lg:py-24 overflow-hidden border-t border-zinc-100" id="faq"
     >
       <div className="relative w-full max-w-5xl mx-auto px-6">
-        
+
         {/* Header */}
         <div
           ref={headerRef}
-          className={`mb-16 lg:mb-24 transition-all duration-1000 ease-out ${
-            headerInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`mb-16 lg:mb-24 transition-all duration-1000 ease-out ${headerInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
         >
           <h2 className="text-4xl lg:text-7xl font-bold text-zinc-950 text-center tracking-tighter mb-6">
             Dúvidas <span className="text-blue-600 italic">Frequentes.</span>
@@ -163,7 +162,7 @@ export default function ImmersiveFAQ() {
                         {item.question}
                       </h3>
                     </div>
-                    
+
                     <div className={`p-2 rounded-full border transition-all duration-500 ${isOpen ? "border-blue-600 bg-blue-600 text-white rotate-45 shadow-md" : "border-zinc-200 text-zinc-400"}`}>
                       <Plus size={18} />
                     </div>
@@ -173,9 +172,9 @@ export default function ImmersiveFAQ() {
                   <div className={`grid transition-all duration-500 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100 mt-6" : "grid-rows-[0fr] opacity-0"}`}>
                     <div className="overflow-hidden">
                       {isMobile && (
-                        <img 
-                          src={item.image} 
-                          alt="" 
+                        <img
+                          src={item.image}
+                          alt=""
                           className="w-full h-48 object-cover rounded-xl mb-6 border border-zinc-100"
                         />
                       )}
@@ -191,9 +190,17 @@ export default function ImmersiveFAQ() {
         </div>
 
         <div className="mt-16 text-center">
-            <p className="text-zinc-500 text-xl md:text-2xl font-medium">
-                Sua dúvida não está aqui? <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 font-bold hover:text-blue-700 hover:underline underline-offset-4 transition-colors">Fale com a nossa equipe.</a>
-            </p>
+          <p className="text-zinc-500 text-xl md:text-2xl font-medium">
+            Sua dúvida não está aqui?{" "}
+            <a
+              href={getWhatsappUrl("Olá, equipe Mavellium! Eu estava lendo as dúvidas frequentes no site, mas ainda tenho uma pergunta específica sobre como vocês podem me ajudar.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 font-bold hover:text-blue-700 hover:underline underline-offset-4 transition-colors"
+            >
+              Fale com a nossa equipe.
+            </a>
+          </p>
         </div>
       </div>
     </section>

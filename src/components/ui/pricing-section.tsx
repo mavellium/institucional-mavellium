@@ -9,7 +9,7 @@ import { Badge } from "../ui/badge";
 // ---- minimal craft-ds inline (single-file helper) ----------------
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { siteConfig } from "@/src/lib/constants";
+import { getWhatsappUrl, siteConfig } from "@/src/lib/constants";
 const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 type SectionProps = { children: React.ReactNode; className?: string; id?: string };
@@ -53,7 +53,8 @@ const pricingData: PricingCardProps[] = [
       "Fidelização do seu público-alvo"
     ],
     cta: "Construir Minha Autoridade",
-    href: `${siteConfig.whatsappUrl}`, // Link do WhatsApp
+    // Mensagem focada em presença digital e credibilidade
+    href: getWhatsappUrl("Olá! Quero elevar o posicionamento da minha marca com um Site Inteligente focado em Autoridade Digital."), 
   },
   {
     title: "Landing Pages",
@@ -66,8 +67,9 @@ const pricingData: PricingCardProps[] = [
       "Maximização do retorno em anúncios"
     ],
     cta: "Acelerar Minhas Vendas",
-    href: `${siteConfig.whatsappUrl}`,
-    featured: true, // Destaque para a solução mais procurada
+    featured: true,
+    // Mensagem focada em tráfego pago e conversão de vendas
+    href: getWhatsappUrl("Olá! Gostaria de acelerar minhas vendas com uma Landing Page de Alta Conversão para as minhas campanhas."),
   },
   {
     title: "Automação (IA)",
@@ -80,7 +82,8 @@ const pricingData: PricingCardProps[] = [
       "Qualificação de leads e processamento de dados"
     ],
     cta: "Automatizar Minha Operação",
-    href: `${siteConfig.whatsappUrl}`,
+    // Mensagem focada em eficiência operacional e IA
+    href: getWhatsappUrl("Olá! Tenho interesse em implementar Agentes de IA e Automação para otimizar a operação do meu negócio."),
   },
 ];
 

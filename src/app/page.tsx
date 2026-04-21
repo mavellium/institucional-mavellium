@@ -16,7 +16,7 @@ import Demo from "../components/ui/imagem";
 import FlippingCardDemo from "../components/ui/autonomous-agents";
 import { GalleryGridBlock } from "../components/ui/sections-gallery";
 import { Plan, PricingSection } from "../components/ui/pricing-details";
-import { siteConfig } from "../lib/constants";
+import { getWhatsappUrl, siteConfig } from "../lib/constants";
 
 export default function Home() {
   const images = [
@@ -153,8 +153,9 @@ export default function Home() {
     calls_to_action: {
       primary: {
         label: "Falar com Especialista",
-        href: siteConfig.whatsappUrl, // Coloque seu WhatsApp
-        icon: "mdi:whatsapp" // Ícone do WhatsApp fica muito melhor para conversão
+
+        href: getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de agendar uma conversa com um especialista para escalar meu negócio."),
+        icon: "mdi:whatsapp" 
       },
       secondary: {
         label: "Rever Nossa Metodologia",
@@ -185,31 +186,31 @@ export default function Home() {
   const slidesMetodologia = [
     <SlideWithText
       key="1"
-      image="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200"
+      image="/imagem-1.png"
       title="1. Imersão e Briefing"
       description="Sentamos com você para entender a fundo a sua dor, o seu modelo de negócio e o que você espera de resultado."
     />,
     <SlideWithText
       key="2"
-      image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200"
+      image="/imagem-2.png"
       title="2. Análise de Viabilidade"
       description="Nossa equipe técnica seleciona as melhores tecnologias atuais para resolver a sua demanda com o melhor custo-benefício."
     />,
     <SlideWithText
       key="3"
-      image="https://images.unsplash.com/photo-1507925922894-de9f1cb965e1?auto=format&fit=crop&q=80&w=1200"
+      image="/imagem-3.png"
       title="3. Cronograma de Entregas"
       description="O projeto é fatiado em etapas. Criamos um calendário transparente para que você acompanhe visualmente o progresso."
     />,
     <SlideWithText
       key="4"
-      image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"
+      image="/imagem-4.png"
       title="4. Desenvolvimento"
       description="Você tem visão total do andamento do projeto, validando e acompanhando cada fase concluída pela nossa equipe."
     />,
     <SlideWithText
       key="5"
-      image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200"
+      image="/imagem-5.png"
       title="5. Entrega Final"
       description="O projeto só é finalizado quando atinge os nossos rigorosos padrões de excelência e a sua total satisfação."
     />,
@@ -219,7 +220,7 @@ export default function Home() {
     {
       name: 'Landing Pages',
       info: 'Páginas desenvolvidas com um único objetivo: transformar visitantes em clientes reais.',
-      label: 'Alta Conversão', // Substitui o preço
+      label: 'Alta Conversão',
       features: [
         { text: 'Design livre de distrações' },
         { text: 'Copywriting Estratégico', tooltip: 'Textos focados em conversão e gatilhos mentais.' },
@@ -229,14 +230,15 @@ export default function Home() {
       ],
       btn: {
         text: 'Acelerar Vendas',
-        href: siteConfig.whatsappUrl,
+        // Mensagem focada em Landing Pages e conversão
+        href: getWhatsappUrl("Olá! Gostaria de saber mais sobre o desenvolvimento de uma Landing Page de Alta Conversão para escalar minhas vendas."),
       },
     },
     {
       highlighted: true,
       name: 'Site Inteligente',
       info: 'A sede digital oficial da sua empresa, estruturada para transmitir credibilidade 24h por dia.',
-      label: 'Autoridade Digital', // Substitui o preço
+      label: 'Autoridade Digital',
       features: [
         { text: 'Design Exclusivo e Responsivo' },
         { text: 'Painel de Gestão de Conteúdo (CMS)' },
@@ -247,13 +249,14 @@ export default function Home() {
       ],
       btn: {
         text: 'Construir Autoridade',
-        href: siteConfig.whatsappUrl,
+        // Mensagem focada em Institucional e posicionamento
+        href: getWhatsappUrl("Olá, equipe Mavellium! Quero construir a Autoridade Digital da minha empresa com um Site Inteligente de alto padrão."),
       },
     },
     {
       name: 'Automação & IA',
       info: 'Agentes autônomos impulsionados por Inteligência Artificial para operar seu negócio.',
-      label: 'Operação 24/7', // Substitui o preço
+      label: 'Operação 24/7',
       features: [
         { text: 'Agente Comercial 24/7' },
         { text: 'Integração via WhatsApp/Site' },
@@ -264,7 +267,8 @@ export default function Home() {
       ],
       btn: {
         text: 'Automatizar Operação',
-        href: siteConfig.whatsappUrl,
+        // Mensagem focada em eficiência e Inteligência Artificial
+        href: getWhatsappUrl("Olá! Vi no site sobre as soluções de Automação e Inteligência Artificial e gostaria de entender como aplicar na minha operação."),
       },
     },
   ];
@@ -280,7 +284,7 @@ export default function Home() {
           { name: "Soluções", href: "#solucoes" },
           { name: "Metodologia", href: "#metodologia" }
         ]}
-        ctaLink={siteConfig.whatsappUrl}
+        ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
         ctaText={"Falar com Especialista"}
       />
       <HeroSection />

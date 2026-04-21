@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
 import { ChevronRight, MessageCircle } from 'lucide-react'
-import { siteConfig } from '@/src/lib/constants'
+import { getWhatsappUrl, siteConfig } from '@/src/lib/constants'
 
 export function HeroSection() {
     return (
@@ -55,14 +55,19 @@ export function HeroSection() {
                                 </Link>
                             </Button>
 
-                            {/* BOTÃO SECUNDÁRIO (BORDA REFINADA) */}
+                            {/* BOTÃO SECUNDÁRIO (BORDA REFINADA) - COM LINK ATUALIZADO */}
                             <Button
                                 asChild
                                 size="lg"
                                 variant="outline"
                                 className="h-14 w-full rounded-full border-2 border-blue-600/30 bg-transparent px-8 text-base font-semibold text-white transition-all hover:border-blue-500 hover:bg-blue-500/10 hover:text-white sm:w-auto"
                             >
-                                <Link href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                                <Link 
+                                    // A MÁGICA ENTRA AQUI:
+                                    href={getWhatsappUrl("Olá! Acabei de acessar o site da Mavellium e gostaria de falar com um especialista sobre como usar a tecnologia para escalar meu negócio.")} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                >
                                     <MessageCircle className="mr-2 h-5 w-5 text-blue-400" />
                                     <span>Falar com Especialista</span>
                                 </Link>
