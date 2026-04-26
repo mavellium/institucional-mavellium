@@ -10,6 +10,7 @@ import { Icon } from "@iconify/react";
 // --- Props simplificadas ---
 export interface HeaderProps {
   variant?: "default" | "marketing";
+  lightBg?: boolean;
   logo: string;
   logoAlt: string;
   links: Array<{ name: string; href: string }>;
@@ -19,6 +20,7 @@ export interface HeaderProps {
 
 export function Header({
   variant = "default",
+  lightBg = false,
   logo,
   logoAlt,
   links,
@@ -99,10 +101,15 @@ export function Header({
   // SEU ESTILO ORIGINAL INTACTO
   const headerStyles = useMemo(() => {
     if (menuOpen) return "bg-[#050505] py-5 border-b border-white/10";
+    if (lightBg) {
+      return scrolled
+        ? "bg-white/95 backdrop-blur-xl border-b border-zinc-200 shadow-sm py-3"
+        : "bg-white border-b border-zinc-100 py-6";
+    }
     return scrolled
       ? "bg-black/20 backdrop-blur-2xl backdrop-saturate-[1.5] bg-gradient-to-b from-white/[0.08] via-transparent to-white/[0.03] border-b border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3),inset_0_1px_1px_0_rgba(255,255,255,0.15),inset_0_-1px_1px_0_rgba(255,255,255,0.1)] py-3"
       : "bg-transparent border-b border-transparent py-6";
-  }, [scrolled, menuOpen]);
+  }, [scrolled, menuOpen, lightBg]);
 
   const handleMenuToggle = () => {
     const newState = !menuOpen;
@@ -120,8 +127,8 @@ export function Header({
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between gap-4">
             
-            {/* LOGO - Com Mix Blend e forçada para branco */}
-            <div className="flex-shrink-0 mix-blend-difference">
+            {/* LOGO */}
+            <div className={`flex-shrink-0 ${!lightBg ? "mix-blend-difference" : ""}`}>
               <Link
                 href="/"
                 className="flex items-center group transition-transform active:scale-95"
@@ -134,30 +141,33 @@ export function Header({
                   width={160}
                   height={40}
                   priority
-                  className={`w-28 sm:w-32 md:w-36 lg:w-45 h-auto object-contain transition-all duration-300 group-hover:opacity-80 brightness-0 invert ${theme.logoFilter}`}
+                  className={`w-28 sm:w-32 md:w-36 lg:w-45 h-auto object-contain transition-all duration-300 group-hover:opacity-80 brightness-0 ${!lightBg ? "invert" : ""} ${theme.logoFilter}`}
                 />
               </Link>
             </div>
 
-            {/* NAVEGAÇÃO DESKTOP - Com Mix Blend e forçada para branco */}
-            <nav aria-label="Menu principal" className="hidden xl:flex items-center gap-x-8 mix-blend-difference">
+            {/* NAVEGAÇÃO DESKTOP */}
+            <nav
+              aria-label="Menu principal"
+              className={`hidden xl:flex items-center gap-x-8 ${!lightBg ? "mix-blend-difference" : ""}`}
+            >
               {links.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-lg font-medium tracking-tight transition-all duration-300 relative group text-white hover:opacity-80`}
+                  className={`text-lg font-medium tracking-tight transition-all duration-300 relative group ${lightBg ? "text-zinc-800 hover:text-zinc-900" : "text-white hover:opacity-80"}`}
                   aria-current={pathname === link.href ? "page" : undefined}
                 >
                   {link.name}
                   <span
-                    className={`absolute -bottom-1 left-0 w-0 h-[1.5px] bg-white transition-all duration-300 group-hover:w-full`}
+                    className={`absolute -bottom-1 left-0 w-0 h-[1.5px] transition-all duration-300 group-hover:w-full ${lightBg ? "bg-zinc-900" : "bg-white"}`}
                   />
                 </Link>
               ))}
             </nav>
 
-            {/* AÇÕES (CTA + MENU MOBILE) - Com Mix Blend */}
-            <div className="flex items-center gap-3 sm:gap-6 mix-blend-difference">
+            {/* AÇÕES (CTA + MENU MOBILE) */}
+            <div className={`flex items-center gap-3 sm:gap-6 ${!lightBg ? "mix-blend-difference" : ""}`}>
               <Link
                 href={ctaLink}
                 target="_blank"
@@ -166,22 +176,26 @@ export function Header({
                 aria-label={ctaText}
               >
                 <div
-                  className={`absolute -inset-0.5 rounded-full opacity-30 blur-sm transition duration-500 group-hover:opacity-60 bg-white`}
+                  className={`absolute -inset-0.5 rounded-full opacity-30 blur-sm transition duration-500 group-hover:opacity-60 ${lightBg ? "bg-blue-500" : "bg-white"}`}
                 />
                 <button
-                  className={`relative inline-flex cursor-pointer h-9 lg:h-11 items-center justify-center overflow-hidden rounded-full px-5 lg:px-8 py-2 font-bold text-[10px] lg:text-xs tracking-[0.1em] transition-all duration-300 hover:scale-105 active:scale-95 border border-white/10 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`}
+                  className={`relative inline-flex cursor-pointer h-9 lg:h-11 items-center justify-center overflow-hidden rounded-full px-5 lg:px-8 py-2 font-bold text-[10px] lg:text-xs tracking-[0.1em] transition-all duration-300 hover:scale-105 active:scale-95 border ${
+                    lightBg
+                      ? "bg-blue-600 text-white hover:bg-blue-500 border-blue-600"
+                      : `border-white/10 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`
+                  }`}
                 >
                   <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10" />
                   <span className="relative z-20 uppercase">{ctaText}</span>
                 </button>
               </Link>
 
-              {/* BOTÃO MENU MOBILE - Forçado para branco para inverter */}
+              {/* BOTÃO MENU MOBILE */}
               <Button
                 ref={menuButtonRef}
                 size="icon"
                 variant="ghost"
-                className="xl:hidden text-white hover:bg-white/5 rounded-full z-[110]"
+                className={`xl:hidden rounded-full z-[110] ${lightBg ? "text-zinc-700 hover:bg-zinc-100" : "text-white hover:bg-white/5"}`}
                 onClick={handleMenuToggle}
                 aria-label={menuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
                 aria-expanded={menuOpen}

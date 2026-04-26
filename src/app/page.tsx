@@ -39,7 +39,7 @@ export default function Home() {
         title: "A Revolução Silenciosa da IA no Atendimento B2B",
         description:
           "Como agentes autônomos estão substituindo o 'atendimento em horário comercial' e garantindo que empresas fechem negócios às 3 da manhã sem perder a humanização.",
-        href: "#",
+        href: "/blog/ia-atendimento-b2b",
         image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1080",
       },
       {
@@ -47,7 +47,7 @@ export default function Home() {
         title: "Por que seu site bonito não converte em vendas?",
         description:
           "Estética sem estratégia é apenas arte. Descubra como a arquitetura da informação e a remoção de distrações em Landing Pages aumentam a captura de leads em até 300%.",
-        href: "#",
+        href: "/blog/design-conversao",
         image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1080",
       },
       {
@@ -55,7 +55,7 @@ export default function Home() {
         title: "Autoridade Digital não se constrói apenas com redes sociais",
         description:
           "O verdadeiro poder de um Site Institucional Estruturado: como o SEO Técnico e um código limpo garantem que sua empresa seja a primeira resposta no Google.",
-        href: "#",
+        href: "/blog/seo-autoridade-digital",
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1080",
       },
       {
@@ -63,7 +63,7 @@ export default function Home() {
         title: "Sua infraestrutura suporta o seu crescimento?",
         description:
           "Os perigos de basear uma grande operação em templates engessados e plataformas lentas. Por que empresas maduras exigem código desenhado cirurgicamente.",
-        href: "#",
+        href: "/blog/escalabilidade-infraestrutura",
         image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1080",
       },
       {
@@ -71,7 +71,7 @@ export default function Home() {
         title: "Automação Operacional vs. Folha de Pagamento",
         description:
           "O cálculo definitivo: como a implementação de integrações via API e bots contábeis reduz erros humanos a zero e libera sua equipe para o trabalho criativo.",
-        href: "#",
+        href: "/blog/reducao-custos-automacao",
         image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=1080",
       },
     ],
@@ -282,6 +282,7 @@ export default function Home() {
           { name: "Início", href: "#inicio" },
           { name: "Quem Somos", href: "#quem-somos" },
           { name: "Soluções", href: "#solucoes" },
+          { name: "Blog", href: "/blog" },
           { name: "Metodologia", href: "#metodologia" }
         ]}
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
