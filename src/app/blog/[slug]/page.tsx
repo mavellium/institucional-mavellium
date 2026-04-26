@@ -48,8 +48,8 @@ const NAV_LINKS = [
   { name: "Início", href: "/" },
   { name: "Quem Somos", href: "/#quem-somos" },
   { name: "Soluções", href: "/#solucoes" },
+  { name: "Metodologia", href: "/#metodologia" },
   { name: "Blog", href: "/blog" },
-  { name: "Contato", href: getWhatsappUrl("Olá! Vim pelo blog da Mavellium e gostaria de conversar.") },
 ];
 
 export default async function ArticlePage({ params }: Props) {

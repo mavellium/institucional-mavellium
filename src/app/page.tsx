@@ -282,8 +282,8 @@ export default function Home() {
           { name: "Início", href: "#inicio" },
           { name: "Quem Somos", href: "#quem-somos" },
           { name: "Soluções", href: "#solucoes" },
+          { name: "Metodologia", href: "#metodologia" },
           { name: "Blog", href: "/blog" },
-          { name: "Metodologia", href: "#metodologia" }
         ]}
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
         ctaText={"Falar com Especialista"}
