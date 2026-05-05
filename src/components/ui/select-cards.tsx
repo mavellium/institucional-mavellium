@@ -21,7 +21,7 @@ export default function PremiumStyleSelector() {
                         <span>Portfólio Customizado</span>
                     </div>
                     
-                    <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight flex flex-wrap items-center gap-x-4">
+                    <h2 className="text-4xl md:text-6xl font-medium tracking-tight leading-tight flex flex-wrap items-center gap-x-4">
                         Projetos desenhados para
                         <div className="inline-block mt-2 md:mt-0">
                             <Select value={selected} onValueChange={setSelected}>

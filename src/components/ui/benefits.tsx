@@ -21,7 +21,7 @@ const CardWrapper = ({ children, className = "" }: { children: React.ReactNode, 
 const SectionHeader = memo(() => (
   <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
     <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-2xl">
-      <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+      <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-white">
         Arquitetura de <span className="text-[#00D26A]">Alta Performance</span>
       </h2>
       <p className="text-zinc-400 mt-4 text-lg text-balance font-light leading-relaxed">
