@@ -93,7 +93,7 @@ export default function ImmersiveFAQ() {
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full bg-white py-16 lg:py-24 overflow-hidden border-t border-zinc-100" id="faq"
+      className="relative w-full bg-white py-16 lg:py-24 overflow-hidden border-t border-zinc-200" id="faq"
     >
       <div className="relative w-full max-w-5xl mx-auto px-6">
 
@@ -103,15 +103,15 @@ export default function ImmersiveFAQ() {
           className={`mb-16 lg:mb-24 transition-all duration-1000 ease-out ${headerInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}
         >
-          <h2 className="text-4xl lg:text-7xl font-bold text-zinc-950 text-center tracking-tighter mb-6">
-            Dúvidas <span className="text-blue-600 italic">Frequentes.</span>
+          <h2 className="text-4xl lg:text-7xl font-medium text-zinc-950 text-center tracking-tighter mb-6">
+            Dúvidas <span className="text-[#00D26A]">Frequentes.</span>
           </h2>
         </div>
 
         {/* Imagem Flutuante (Desktop Only) */}
         {!isMobile && (
           <div
-            className="pointer-events-none absolute z-50 overflow-hidden rounded-2xl border border-zinc-200 shadow-2xl bg-white"
+            className="pointer-events-none absolute z-50 overflow-hidden rounded-md border border-zinc-200 shadow-2xl bg-white"
             style={{
               left: 0,
               top: 0,
@@ -155,15 +155,16 @@ export default function ImmersiveFAQ() {
                 <div className="relative py-8 lg:py-10 px-2 lg:px-4 cursor-pointer">
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex-1">
-                      <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest block mb-2">
+                      {/* Cor do texto da categoria com um verde mais fechado para leitura no fundo claro */}
+                      <span className="text-[10px] font-bold text-[#00b35a] uppercase tracking-widest block mb-2">
                         {item.category}
                       </span>
-                      <h3 className={`text-xl lg:text-3xl font-medium tracking-tight transition-colors duration-300 ${isOpen ? "text-zinc-950" : "text-zinc-500"}`}>
+                      <h3 className={`text-xl lg:text-3xl font-bold tracking-tight transition-colors duration-300 ${isOpen ? "text-zinc-950" : "text-zinc-500"}`}>
                         {item.question}
                       </h3>
                     </div>
 
-                    <div className={`p-2 rounded-full border transition-all duration-500 ${isOpen ? "border-blue-600 bg-blue-600 text-white rotate-45 shadow-md" : "border-zinc-200 text-zinc-400"}`}>
+                    <div className={`p-2 rounded-md border transition-all duration-500 ${isOpen ? "border-[#00D26A] bg-[#00D26A] text-black rotate-45 shadow-sm" : "border-zinc-200 text-zinc-400"}`}>
                       <Plus size={18} />
                     </div>
                   </div>
@@ -175,10 +176,10 @@ export default function ImmersiveFAQ() {
                         <img
                           src={item.image}
                           alt=""
-                          className="w-full h-48 object-cover rounded-xl mb-6 border border-zinc-100"
+                          className="w-full h-48 object-cover rounded-md mb-6 border border-zinc-200"
                         />
                       )}
-                      <p className="text-zinc-600 text-base lg:text-lg max-w-2xl leading-relaxed pb-4">
+                      <p className="text-zinc-600 text-base lg:text-lg font-light max-w-2xl leading-relaxed pb-4">
                         {item.answer}
                       </p>
                     </div>
@@ -190,13 +191,13 @@ export default function ImmersiveFAQ() {
         </div>
 
         <div className="mt-16 text-center">
-          <p className="text-zinc-500 text-xl md:text-2xl font-medium">
+          <p className="text-zinc-500 text-xl md:text-2xl font-light">
             Sua dúvida não está aqui?{" "}
             <a
               href={getWhatsappUrl("Olá, equipe Mavellium! Eu estava lendo as dúvidas frequentes no site, mas ainda tenho uma pergunta específica sobre como vocês podem me ajudar.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 font-bold hover:text-blue-700 hover:underline underline-offset-4 transition-colors"
+              className="text-[#00b35a] font-bold hover:text-[#00D26A] hover:underline underline-offset-4 transition-colors"
             >
               Fale com a nossa equipe.
             </a>

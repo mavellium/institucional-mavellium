@@ -37,7 +37,7 @@ const agencyContent: MediaContent = {
 const MediaContentBlock = () => {
   return (
     <div className='max-w-4xl mx-auto py-16 px-6'>
-      <h2 className='text-3xl md:text-5xl font-extrabold mb-8 text-black tracking-tight'>
+      <h2 className='text-3xl md:text-5xl font-medium mb-8 text-black tracking-tight'>
         Nosso Manifesto
       </h2>
       <div className="space-y-6">

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "./card";
-import { Badge } from "./badge";
 import { cn } from "@/src/lib/utils";
 import { type BlogPost, CATEGORY_COLORS, formatDate } from "@/src/lib/blog";
 
@@ -27,7 +26,7 @@ export function BlogCard({
   if (variant === "featured") {
     return (
       <Link href={`/blog/${post.slug}`} className="group block">
-        <Card className="overflow-hidden border-zinc-200 hover:border-blue-300 hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.15)] hover:-translate-y-1 transition-all duration-500 rounded-3xl bg-white">
+        <Card className="overflow-hidden border-zinc-200 hover:border-[#00D26A]/40 hover:shadow-[0_20px_60px_-15px_rgba(0,210,106,0.15)] hover:-translate-y-1 transition-all duration-500 rounded-md bg-white">
           <div className="lg:grid lg:grid-cols-[55%_45%]">
             <div className="relative aspect-[16/10] lg:aspect-auto overflow-hidden min-h-[280px] lg:min-h-[400px]">
               <Image
@@ -46,7 +45,7 @@ export function BlogCard({
                 <div className="flex items-center gap-3 flex-wrap">
                   <div
                     className={cn(
-                      "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold border",
+                      "inline-flex items-center rounded-sm px-3 py-1 text-xs font-bold border tracking-wide",
                       colors.bg,
                       colors.text,
                       colors.border
@@ -54,14 +53,14 @@ export function BlogCard({
                   >
                     {post.category}
                   </div>
-                  <span className="text-xs text-zinc-400 uppercase tracking-wider font-semibold">
+                  <span className="text-xs text-zinc-400 uppercase tracking-widest font-bold">
                     Artigo em Destaque
                   </span>
                 </div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 leading-snug group-hover:text-blue-600 transition-colors duration-300">
+                <h2 className="text-2xl lg:text-3xl font-bold text-zinc-900 leading-snug group-hover:text-[#00b35a] transition-colors duration-300">
                   {post.title}
                 </h2>
-                <p className="text-zinc-500 leading-relaxed line-clamp-4">
+                <p className="text-zinc-500 font-light leading-relaxed line-clamp-4">
                   {post.description}
                 </p>
               </div>
@@ -77,7 +76,7 @@ export function BlogCard({
                     {post.author.avatarInitials}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-zinc-800">
+                    <p className="text-sm font-bold text-zinc-800">
                       {post.author.name}
                     </p>
                     <p className="text-xs text-zinc-400">
@@ -87,7 +86,7 @@ export function BlogCard({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all duration-300">
+                <div className="flex items-center gap-2 text-[#00b35a] font-bold text-sm group-hover:gap-3 transition-all duration-300 uppercase tracking-widest">
                   Ler artigo completo <ArrowRight className="size-4" />
                 </div>
               </div>
@@ -104,9 +103,10 @@ export function BlogCard({
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.08, duration: 0.6, ease: "easeOut" }}
+      className="h-full"
     >
       <Link href={`/blog/${post.slug}`} className="group block h-full">
-        <Card className="h-full flex flex-col overflow-hidden border-zinc-200 hover:border-blue-300 hover:shadow-[0_10px_40px_-10px_rgba(59,130,246,0.15)] hover:-translate-y-1 transition-all duration-500 rounded-2xl bg-white">
+        <Card className="h-full flex flex-col overflow-hidden border-zinc-200 hover:border-[#00D26A]/40 hover:shadow-[0_10px_40px_-10px_rgba(0,210,106,0.15)] hover:-translate-y-1 transition-all duration-500 rounded-md bg-white">
           <div className="relative aspect-[16/9] overflow-hidden flex-shrink-0">
             <Image
               src={post.coverImage}
@@ -119,7 +119,7 @@ export function BlogCard({
             <div className="absolute top-4 left-4">
               <div
                 className={cn(
-                  "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold border",
+                  "inline-flex items-center rounded-sm px-2.5 py-1 text-[10px] uppercase tracking-widest font-bold border shadow-sm",
                   colors.bg,
                   colors.text,
                   colors.border
@@ -131,10 +131,10 @@ export function BlogCard({
           </div>
 
           <CardContent className="flex flex-col flex-1 p-6 space-y-3">
-            <h3 className="text-lg font-bold text-zinc-900 leading-snug group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
+            <h3 className="text-lg font-bold text-zinc-900 leading-snug group-hover:text-[#00b35a] transition-colors duration-300 line-clamp-2">
               {post.title}
             </h3>
-            <p className="text-sm text-zinc-500 leading-relaxed line-clamp-3 flex-1">
+            <p className="text-sm font-light text-zinc-500 leading-relaxed line-clamp-3 flex-1">
               {post.description}
             </p>
 
@@ -148,11 +148,11 @@ export function BlogCard({
                 >
                   {post.author.avatarInitials}
                 </div>
-                <span className="text-xs text-zinc-500 truncate max-w-[120px]">
+                <span className="text-xs font-medium text-zinc-600 truncate max-w-[120px]">
                   {post.author.name}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-xs text-zinc-400 flex-shrink-0">
+              <div className="flex items-center gap-2 text-xs font-light text-zinc-400 flex-shrink-0">
                 <span>{formatDate(post.publishedAt)}</span>
                 <span>·</span>
                 <span>{post.readingTimeMinutes} min</span>

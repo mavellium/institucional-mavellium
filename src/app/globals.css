@@ -6,12 +6,16 @@
   font-style: normal;
 }
 
+body {
+  font-family: var(--font-satoshi), sans-serif;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans); /* Adicione esta linha */
+  --font-sans: var(--font-satoshi), sans-serif;
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);

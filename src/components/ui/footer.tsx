@@ -12,14 +12,13 @@ interface FooterLink {
     title: string;
     href: string;
     icon?: string;
-    isExternal?: boolean; // Adicionado para controlar como o link abre
+    isExternal?: boolean;
 }
 
 interface FooterSection {
     label: string;
     links: FooterLink[];
 }
-
 
 const footerLinks: FooterSection[] = [
     {
@@ -28,7 +27,6 @@ const footerLinks: FooterSection[] = [
             { title: 'Sites Inteligentes', href: '#solucoes' },
             { title: 'Landing Pages', href: '#solucoes' },
             { title: 'Automação & IA', href: '#solucoes' },
-            // Mensagem direta para Consultoria Técnica
             { 
               title: 'Consultoria Técnica', 
               href: getWhatsappUrl("Olá! Gostaria de agendar uma Consultoria Técnica para entender as melhores soluções para o meu negócio."), 
@@ -57,7 +55,6 @@ const footerLinks: FooterSection[] = [
     {
         label: 'Conecte-se',
         links: [
-            // Mensagem de contato geral para quem clica nas redes sociais
             { 
               title: 'WhatsApp', 
               href: getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de tirar algumas dúvidas."), 
@@ -73,15 +70,15 @@ const footerLinks: FooterSection[] = [
 
 export function Footer() {
     return (
-        <footer className="bg-black relative w-full max-w-full mx-auto flex flex-col items-center justify-center border-t border-white/5 bg-[radial-gradient(35%_128px_at_50%_0%,theme(backgroundColor.white/8%),transparent)] px-6 py-16 lg:py-24">
-            {/* Linha de brilho superior */}
-            <div className="bg-blue-500/20 absolute top-0 right-1/2 left-1/2 h-px w-1/3 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[2px]" />
+        <footer className="bg-[#050505] relative w-full max-w-full mx-auto flex flex-col items-center justify-center border-t border-white/5 bg-[radial-gradient(35%_128px_at_50%_0%,rgba(0,210,106,0.05),transparent)] px-6 py-16 lg:py-24">
+            
+            {/* Linha de brilho superior verde neon */}
+            <div className="bg-[#00D26A]/40 absolute top-0 right-1/2 left-1/2 h-[1px] w-1/3 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[2px]" />
 
             <div className="grid w-full max-w-7xl gap-12 xl:grid-cols-3 xl:gap-8">
                 
                 {/* Logo e Copyright */}
                 <AnimatedContainer className="space-y-6">
-                    {/* Substitua pela sua Logo Real */}
                     <div className="flex items-center gap-3">
                         <Image 
                             src="/logo-mavellium-header.svg" 
@@ -91,10 +88,10 @@ export function Footer() {
                             className="h-8 w-auto object-contain" 
                         />
                     </div>
-                    <p className="text-zinc-500 text-sm max-w-xs leading-relaxed">
+                    <p className="text-zinc-400 font-light text-sm max-w-xs leading-relaxed">
                         Desenhando o futuro digital de empresas com tecnologia de ponta, direto do polo tecnológico de Garça-SP.
                     </p>
-                    <p className="text-zinc-600 text-xs mt-8">
+                    <p className="text-zinc-600 font-light text-xs mt-8">
                         © {new Date().getFullYear()} Mavellium. Todos os direitos reservados.
                     </p>
                 </AnimatedContainer>
@@ -104,15 +101,15 @@ export function Footer() {
                     {footerLinks.map((section, index) => (
                         <AnimatedContainer key={section.label} delay={0.1 + index * 0.1}>
                             <div className="mb-10 md:mb-0">
-                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-500 mb-6">
+                                {/* Títulos das colunas na cor da marca */}
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#00D26A] mb-6">
                                     {section.label}
                                 </h3>
-                                <ul className="text-zinc-400 space-y-4 text-sm font-medium">
+                                <ul className="text-zinc-400 space-y-4 text-sm font-light">
                                     {section.links.map((link) => (
                                         <li key={link.title}>
                                             <a
                                                 href={link.href}
-                                                // Aplicação condicional do target e rel para links externos
                                                 target={link.isExternal ? "_blank" : undefined}
                                                 rel={link.isExternal ? "noopener noreferrer" : undefined}
                                                 className="hover:text-white inline-flex items-center gap-2 transition-colors duration-300 group"
@@ -120,7 +117,7 @@ export function Footer() {
                                                 {link.icon && (
                                                     <Icon 
                                                         icon={link.icon} 
-                                                        className="size-4 text-zinc-500 group-hover:text-blue-400 transition-colors" 
+                                                        className="size-4 text-zinc-500 group-hover:text-[#00D26A] transition-colors duration-300" 
                                                     />
                                                 )}
                                                 {link.title}

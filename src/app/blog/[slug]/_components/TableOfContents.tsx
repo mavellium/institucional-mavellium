@@ -60,7 +60,7 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
 
   return (
     <nav aria-label="Índice do artigo" className="sticky top-28 space-y-1">
-      <p className="text-xs uppercase tracking-widest font-bold text-zinc-400 mb-4">
+      <p className="text-[10px] uppercase tracking-widest font-bold text-zinc-400 mb-4">
         Neste artigo
       </p>
       {headings.map((h) => (
@@ -68,11 +68,11 @@ export function TableOfContents({ sections }: TableOfContentsProps) {
           key={h.id}
           href={`#${h.id}`}
           className={cn(
-            "block py-1 text-sm transition-all duration-200 border-l-2",
+            "block py-1 text-sm transition-all duration-300 border-l-2",
             h.level === 3 ? "pl-7" : "pl-4",
             activeId === h.id
-              ? "border-blue-500 text-blue-600 font-semibold"
-              : "border-transparent text-zinc-400 hover:text-zinc-700 hover:border-zinc-300"
+              ? "border-[#00D26A] text-[#00b35a] font-bold"
+              : "border-transparent text-zinc-400 hover:text-[#00b35a] hover:border-[#00D26A]/40"
           )}
         >
           {h.content}

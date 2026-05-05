@@ -9,7 +9,7 @@ import { Badge } from "../ui/badge";
 // ---- minimal craft-ds inline (single-file helper) ----------------
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { getWhatsappUrl, siteConfig } from "@/src/lib/constants";
+import { getWhatsappUrl } from "@/src/lib/constants";
 const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
 type SectionProps = { children: React.ReactNode; className?: string; id?: string };
@@ -40,7 +40,6 @@ interface PricingCardProps {
   featured?: boolean;
 }
 
-// Dados mapeados diretamente das suas frentes de atuação
 const pricingData: PricingCardProps[] = [
   {
     title: "Sites Inteligentes",
@@ -53,7 +52,6 @@ const pricingData: PricingCardProps[] = [
       "Fidelização do seu público-alvo"
     ],
     cta: "Construir Minha Autoridade",
-    // Mensagem focada em presença digital e credibilidade
     href: getWhatsappUrl("Olá! Quero elevar o posicionamento da minha marca com um Site Inteligente focado em Autoridade Digital."), 
   },
   {
@@ -68,7 +66,6 @@ const pricingData: PricingCardProps[] = [
     ],
     cta: "Acelerar Minhas Vendas",
     featured: true,
-    // Mensagem focada em tráfego pago e conversão de vendas
     href: getWhatsappUrl("Olá! Gostaria de acelerar minhas vendas com uma Landing Page de Alta Conversão para as minhas campanhas."),
   },
   {
@@ -82,24 +79,22 @@ const pricingData: PricingCardProps[] = [
       "Qualificação de leads e processamento de dados"
     ],
     cta: "Automatizar Minha Operação",
-    // Mensagem focada em eficiência operacional e IA
     href: getWhatsappUrl("Olá! Tenho interesse em implementar Agentes de IA e Automação para otimizar a operação do meu negócio."),
   },
 ];
 
 export default function Pricing() {
   return (
-    // Adicionado o id="solucoes" para linkar com o Header e Hero
-    <Section id="solucoes" className="bg-black z-10">
+    <Section id="solucoes" className="bg-[#050505] z-10 border-t border-white/5">
       <Container className="flex flex-col items-center gap-4 text-center">
-        <h2 className="!my-0 text-3xl md:text-5xl font-extrabold text-white tracking-tight">
-          Soluções Estratégicas
+        <h2 className="!my-0 text-4xl md:text-5xl font-medium text-white tracking-tight">
+          Soluções <span className="text-[#00D26A]">Estratégicas</span>
         </h2>
-        <p className="text-lg opacity-80 md:text-xl text-white max-w-2xl mt-2">
-          Desenvolvemos projetos desenhados cirurgicamente para a realidade e necessidade de cada cliente, independentemente do porte da sua empresa.
+        <p className="text-lg opacity-70 md:text-xl text-zinc-300 max-w-2xl mt-2 font-light">
+          Projetos desenhados cirurgicamente para a realidade e necessidade de cada cliente, escalando negócios no ambiente digital.
         </p>
 
-        <div className="not-prose mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="not-prose mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3 w-full">
           {pricingData.map((plan) => (
             <PricingCard key={plan.title} plan={plan} />
           ))}
@@ -113,10 +108,12 @@ function PricingCard({ plan }: { plan: PricingCardProps }) {
   return (
     <div
       className={cn(
-        "flex flex-col rounded-2xl border p-8 text-left transition-all duration-300 hover:-translate-y-2",
+        "flex flex-col rounded-md border p-8 text-left transition-all duration-300 hover:-translate-y-2",
         plan.featured 
-          ? "border-blue-500 bg-blue-950/10 shadow-[0_0_30px_rgba(37,99,235,0.15)] ring-1 ring-blue-500/50" 
-          : "border-white/10 bg-zinc-900/30"
+          // Card em Destaque: Borda verde, glow verde sutil e fundo levemente esverdeado
+          ? "border-[#00D26A]/50 bg-[#00D26A]/[0.03] shadow-[0_0_30px_rgba(0,210,106,0.1)] ring-1 ring-[#00D26A]/50" 
+          // Card Normal: Borda sutil branca/cinza
+          : "border-white/10 bg-zinc-900/20"
       )}
       aria-label={`Solução: ${plan.title}`}
     >
@@ -125,41 +122,48 @@ function PricingCard({ plan }: { plan: PricingCardProps }) {
           <Badge 
             variant={plan.featured ? "default" : "secondary"} 
             className={cn(
-              "text-sm px-3 py-1",
-              plan.featured ? "bg-blue-600 hover:bg-blue-500 text-white" : "bg-white/10 text-white hover:bg-white/20"
+              "text-sm px-3 py-1 font-medium rounded-sm border-0",
+              plan.featured 
+                ? "bg-[#00D26A] hover:bg-[#00b35a] text-black" 
+                : "bg-white/10 text-white hover:bg-white/20"
             )}
           >
             {plan.title}
           </Badge>
+          
           {plan.featured && (
-            <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-300 border border-blue-500/30">
+            <span className="rounded-sm bg-[#00D26A]/10 px-3 py-1 text-xs font-medium text-[#00D26A] border border-[#00D26A]/20">
               Mais Solicitado
             </span>
           )}
         </div>
-        <h4 className="mb-3 mt-6 text-3xl font-bold text-white">{plan.price}</h4>
-        {plan.description && <p className="text-base leading-relaxed opacity-70 text-white min-h-[4rem]">{plan.description}</p>}
+        
+        <h4 className="mb-3 mt-8 text-3xl font-medium text-white tracking-tight">{plan.price}</h4>
+        <p className="text-base leading-relaxed text-zinc-400 font-light min-h-[4rem]">{plan.description}</p>
       </div>
 
-      <div className={cn("my-6 border-t", plan.featured ? "border-blue-500/20" : "border-white/10")} />
+      <div className={cn("my-8 border-t", plan.featured ? "border-[#00D26A]/20" : "border-white/10")} />
 
       <ul className="space-y-4">
         {plan.features.map((feature) => (
-          <li key={feature} className="flex items-start text-sm leading-tight opacity-80 text-white">
-            <CircleCheck className={cn("mr-3 h-5 w-5 shrink-0", plan.featured ? "text-blue-400" : "text-white/50")} aria-hidden />
+          <li key={feature} className="flex items-start text-sm leading-tight text-zinc-300 font-light">
+            <CircleCheck 
+              className={cn("mr-3 h-5 w-5 shrink-0", plan.featured ? "text-[#00D26A]" : "text-white/40")} 
+              aria-hidden 
+            />
             <span className="pt-0.5">{feature}</span>
           </li>
         ))}
       </ul>
 
-      <div className="mt-auto pt-8">
-        <Link href={plan.href} target="_blank" rel="noreferrer noopener" className="w-full">
+      <div className="mt-auto pt-10">
+        <Link href={plan.href} target="_blank" rel="noreferrer noopener" className="w-full block">
           <Button 
             size="lg" 
             className={cn(
-              "w-full cursor-pointer font-bold transition-all",
+              "w-full cursor-pointer font-bold transition-colors rounded-md h-12 text-base",
               plan.featured 
-                ? "bg-blue-600 text-white hover:bg-blue-500 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]" 
+                ? "bg-[#00D26A] text-black hover:bg-[#00b35a]" 
                 : "bg-white text-black hover:bg-zinc-200"
             )}
           >

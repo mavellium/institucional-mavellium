@@ -35,16 +35,17 @@ export function ShareBar({ post }: ShareBarProps) {
   }
 
   return (
-    <div className="mt-12 pt-8 border-t border-zinc-100">
-      <p className="text-sm font-semibold text-zinc-500 mb-4 uppercase tracking-widest">
+    <div className="mt-12 pt-8 border-t border-zinc-200">
+      <p className="text-[10px] font-bold text-zinc-400 mb-4 uppercase tracking-widest">
         Compartilhar artigo
       </p>
       <div className="flex flex-wrap gap-3">
+        {/* LinkedIn mantém sua cor de marca natural por usabilidade, mas com o formato Mavellium */}
         <a
           href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 text-sm font-semibold text-zinc-600 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2 rounded-md border border-zinc-200 text-sm font-bold text-zinc-600 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200"
           aria-label="Compartilhar no LinkedIn"
         >
           <Icon icon="mdi:linkedin" className="size-4" />
@@ -55,18 +56,19 @@ export function ShareBar({ post }: ShareBarProps) {
           href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 text-sm font-semibold text-zinc-600 hover:border-zinc-800 hover:text-zinc-900 hover:bg-zinc-50 transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2 rounded-md border border-zinc-200 text-sm font-bold text-zinc-600 hover:border-zinc-900 hover:text-zinc-900 hover:bg-zinc-50 transition-all duration-200"
           aria-label="Compartilhar no X (Twitter)"
         >
           <Icon icon="ri:twitter-x-fill" className="size-4" />
           Twitter / X
         </a>
 
+        {/* WhatsApp puxando a identidade de hover verde da Mavellium */}
         <a
           href={`https://wa.me/?text=${encodeURIComponent(post.title + " — " + pageUrl)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 text-sm font-semibold text-zinc-600 hover:border-green-400 hover:text-green-600 hover:bg-green-50 transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2 rounded-md border border-zinc-200 text-sm font-bold text-zinc-600 hover:border-[#00D26A]/50 hover:text-[#00b35a] hover:bg-[#00D26A]/5 transition-all duration-200"
           aria-label="Compartilhar no WhatsApp"
         >
           <Icon icon="mdi:whatsapp" className="size-4" />
@@ -75,13 +77,13 @@ export function ShareBar({ post }: ShareBarProps) {
 
         <button
           onClick={handleCopy}
-          className="flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 text-sm font-semibold text-zinc-600 hover:border-zinc-400 hover:bg-zinc-50 transition-all duration-200"
+          className="flex items-center gap-2 px-4 py-2 rounded-md border border-zinc-200 text-sm font-bold text-zinc-600 hover:border-[#00D26A]/50 hover:text-[#00b35a] hover:bg-[#00D26A]/5 transition-all duration-200"
           aria-label="Copiar link"
         >
           {copied ? (
             <>
-              <Check className="size-4 text-emerald-600" />
-              <span className="text-emerald-600">Copiado!</span>
+              <Check className="size-4 text-[#00b35a]" />
+              <span className="text-[#00b35a]">Copiado!</span>
             </>
           ) : (
             <>

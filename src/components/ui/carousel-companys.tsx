@@ -69,7 +69,7 @@ const Carousel: React.FC<PropType> = (props) => {
         {(title || description) && (
           <div className="text-center mb-12 md:mb-16">
             {title && (
-              <h2 className="text-4xl md:text-6xl font-extrabold text-zinc-900 mb-6 tracking-tighter">
+              <h2 className="text-4xl md:text-6xl font-medium text-zinc-900 mb-6 tracking-tighter">
                 {title}
               </h2>
             )}
@@ -95,27 +95,28 @@ const Carousel: React.FC<PropType> = (props) => {
           </div>
         </div>
 
-       {/* Barra de Controles (Dark Glassmorphism) */}
-        <div className="flex mx-auto mt-12 w-fit items-center gap-4 rounded-full border border-zinc-800 bg-zinc-950/90 backdrop-blur-md px-6 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.15)] md:mt-16 md:gap-5">
+       {/* Barra de Controles (Light Glassmorphism) */}
+        <div className="flex mx-auto mt-12 w-fit items-center gap-4 rounded-full border-[1.5] border-zinc-300 bg-white/90 backdrop-blur-md px-6 py-3 shadow-[0_10px_40px_rgba(0,0,0,0.08)] md:mt-16 md:gap-5">
           
           <div className="flex items-center gap-1">
             <button
               onClick={() => onAutoplayButtonClick(onPrevButtonClick)}
               disabled={prevBtnDisabled}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-400 transition-all hover:bg-zinc-800 hover:text-white disabled:opacity-30"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 transition-all hover:bg-zinc-100 hover:text-zinc-900 disabled:opacity-30"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={() => onAutoplayButtonClick(onNextButtonClick)}
               disabled={nextBtnDisabled}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-400 transition-all hover:bg-zinc-800 hover:text-white disabled:opacity-30"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 transition-all hover:bg-zinc-100 hover:text-zinc-900 disabled:opacity-30"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
 
-          <div className="h-6 w-[1px] bg-zinc-800" />
+          {/* Separador Claro */}
+          <div className="h-6 w-[1px] bg-zinc-200" />
 
           <div className="flex items-center gap-2">
             {scrollSnaps.map((_, index) => (
@@ -125,19 +126,22 @@ const Carousel: React.FC<PropType> = (props) => {
                 className={cn(
                   "h-2 rounded-full outline-none transition-all duration-500",
                   index === selectedIndex
-                    ? "w-6 bg-blue-500 shadow-[0_0_12px_rgba(59,130,246,0.6)]"
-                    : "w-2 bg-zinc-700 hover:bg-zinc-500"
+                    // Verde Mavellium em vez do Azul para combinar com sua marca
+                    ? "w-6 bg-[#00D26A] shadow-[0_0_12px_rgba(0,210,106,0.4)]"
+                    // Pontos inativos mais claros
+                    : "w-2 bg-zinc-300 hover:bg-zinc-400"
                 )}
               />
             ))}
           </div>
 
-          <div className="h-6 w-[1px] bg-zinc-800" />
+          {/* Separador Claro */}
+          <div className="h-6 w-[1px] bg-zinc-200" />
 
           <button 
-            onClick={handleToggleAutoplay} // Usando a nova função handleToggle
+            onClick={handleToggleAutoplay}
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-400 transition-all hover:bg-zinc-800 hover:text-white active:scale-95"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 transition-all hover:bg-zinc-100 hover:text-zinc-900 active:scale-95"
           >
             {autoplayIsPlaying ? (
               <Pause className="h-4 w-4 fill-current" />
@@ -150,9 +154,6 @@ const Carousel: React.FC<PropType> = (props) => {
     </div>
   );
 };
-
-// ... Restante dos hooks (usePrevNextButtons, useDotButton, useAutoplay, DotButton) permanecem iguais
-// Apenas certifique-se de manter as exportações corretas abaixo deles.
 
 type UsePrevNextButtonsType = {
     prevBtnDisabled: boolean;

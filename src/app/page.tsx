@@ -1,6 +1,6 @@
 
 import { Header } from "../components/Header";
-import { HeroSection } from "../components/ui/hero-section-with-smooth-bg-shader";
+import { HeroSection, HeroSlide } from "../components/ui/hero-section-with-smooth-bg-shader";
 import type { IconName } from "../components/ui/radial-orbital-timeline";
 import { Gallery4 } from "../components/ui/gallery4";
 import { Footer } from "../components/ui/footer";
@@ -17,6 +17,7 @@ import FlippingCardDemo from "../components/ui/autonomous-agents";
 import { GalleryGridBlock } from "../components/ui/sections-gallery";
 import { Plan, PricingSection } from "../components/ui/pricing-details";
 import { getWhatsappUrl, siteConfig } from "../lib/constants";
+import heroSlidesData from '@/src/JSON/heroData.json'
 
 export default function Home() {
   const images = [
@@ -145,15 +146,14 @@ export default function Home() {
       description: "Sabemos que cada empresa é única. Fale com a nossa equipe de especialistas para entendermos o seu momento e desenharmos a arquitetura tecnológica perfeita para a sua operação."
     },
     theme: {
-      bg_color: "#ffffff", // Mantém o fundo branco, combinando com a Galeria
-      gradient_start: "#3b82f6", // Azul vibrante (Tech)
-      gradient_end: "#1e40af",   // Azul escuro profundo
-      button_bg: "#050505"       // Botão preto
+      bg_color: "#ffffff",       // Fundo escuro premium da Mavellium
+      gradient_start: "#00D26A", // Verde Neon oficial da marca
+      gradient_end: "#009b4d",   // Verde levemente mais escuro para dar profundidade ao degradê
+      button_bg: "#09090b"       // Um tom de preto/zinco quase absoluto para o estado inicial do botão
     },
     calls_to_action: {
       primary: {
         label: "Falar com Especialista",
-
         href: getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de agendar uma conversa com um especialista para escalar meu negócio."),
         icon: "mdi:whatsapp" 
       },
@@ -164,7 +164,6 @@ export default function Home() {
       }
     }
   };
-
   const SlideWithText = ({ image, title, description }: { image: string; title: string; description: string }) => (
     <div className="relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] group border border-black/5 shadow-lg">
       <img
@@ -288,7 +287,7 @@ export default function Home() {
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
         ctaText={"Falar com Especialista"}
       />
-      <HeroSection />
+      <HeroSection slides={heroSlidesData as HeroSlide[]} />
       <Pricing />
       <div id="metodologia">
         <Carousel

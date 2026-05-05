@@ -76,18 +76,18 @@ export default async function ArticlePage({ params }: Props) {
       />
 
       <main className="bg-white">
-        {/* Breadcrumb */}
-        <nav className="pt-28 pb-4 px-6 border-b border-zinc-100">
-          <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-zinc-400">
-            <Link href="/blog" className="hover:text-zinc-700 transition-colors">
+        {/* Breadcrumb - Tipografia sofisticada */}
+        <nav className="pt-28 pb-4 px-6 border-b border-zinc-200">
+          <div className="max-w-7xl mx-auto flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-zinc-400">
+            <Link href="/blog" className="hover:text-zinc-800 transition-colors">
               Blog
             </Link>
-            <ChevronRight className="size-3.5 flex-shrink-0" />
-            <span className={cn("font-medium", colors.text)}>
+            <ChevronRight className="size-3 flex-shrink-0" />
+            <span className={cn(colors.text)}>
               {post.category}
             </span>
-            <ChevronRight className="size-3.5 flex-shrink-0" />
-            <span className="text-zinc-600 line-clamp-1 font-medium">
+            <ChevronRight className="size-3 flex-shrink-0" />
+            <span className="text-zinc-600 line-clamp-1">
               {post.title}
             </span>
           </div>
@@ -100,16 +100,16 @@ export default async function ArticlePage({ params }: Props) {
               {/* Back link */}
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-900 transition-colors mb-8 group"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-[#00D26A] transition-colors mb-8 group"
               >
-                <ArrowLeft className="size-4 group-hover:-translate-x-0.5 transition-transform" />
+                <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
                 Voltar ao blog
               </Link>
 
               {/* Category badge */}
               <div
                 className={cn(
-                  "flex-col w-fit items-center rounded-full mx-2 px-3 py-1 text-xs font-semibold border mb-5",
+                  "flex-col w-fit items-center rounded-sm mx-0 px-3 py-1 text-[10px] uppercase tracking-widest font-bold border shadow-sm mb-5",
                   colors.bg,
                   colors.text,
                   colors.border
@@ -124,39 +124,39 @@ export default async function ArticlePage({ params }: Props) {
               </h1>
 
               {/* Meta row */}
-              <div className="flex flex-wrap items-center gap-4 mb-10 pb-8 border-b border-zinc-100">
+              <div className="flex flex-wrap items-center gap-4 mb-10 pb-8 border-b border-zinc-200">
                 <div className="flex items-center gap-3">
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0",
+                      "w-10 h-10 rounded-sm flex items-center justify-center text-sm font-bold text-white flex-shrink-0",
                       post.author.avatarColor
                     )}
                   >
                     {post.author.avatarInitials}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-zinc-900">
+                    <p className="text-sm font-bold text-zinc-900">
                       {post.author.name}
                     </p>
-                    <p className="text-xs text-zinc-400">{post.author.role}</p>
+                    <p className="text-xs font-light text-zinc-500">{post.author.role}</p>
                   </div>
                 </div>
                 <div className="hidden sm:block w-px h-8 bg-zinc-200" />
                 <time
                   dateTime={post.publishedAt}
-                  className="text-sm text-zinc-500"
+                  className="text-sm font-light text-zinc-500"
                 >
                   {formatDate(post.publishedAt)}
                 </time>
                 <div className="hidden sm:block w-px h-8 bg-zinc-200" />
-                <div className="flex items-center gap-1.5 text-sm text-zinc-500">
+                <div className="flex items-center gap-1.5 text-sm font-light text-zinc-500">
                   <Clock className="size-4" />
                   {post.readingTimeMinutes} min de leitura
                 </div>
               </div>
 
-              {/* Cover image */}
-              <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-12">
+              {/* Cover image - Bordas retas corporativas */}
+              <div className="relative aspect-[16/9] rounded-md overflow-hidden mb-12 border border-zinc-200 shadow-sm">
                 <Image
                   src={post.coverImage}
                   alt={post.coverImageAlt}
@@ -173,12 +173,12 @@ export default async function ArticlePage({ params }: Props) {
               {/* Share bar */}
               <ShareBar post={post} />
 
-              {/* WhatsApp CTA */}
-              <div className="mt-12 p-8 rounded-3xl bg-gradient-to-br from-blue-50 to-white border border-blue-100">
-                <h3 className="text-xl font-bold text-zinc-900 mb-2">
+              {/* WhatsApp CTA - Adaptado para a marca */}
+              <div className="mt-12 p-8 rounded-md bg-gradient-to-br from-[#00D26A]/[0.05] to-zinc-50 border border-[#00D26A]/20 shadow-sm">
+                <h3 className="text-xl font-extrabold tracking-tight text-zinc-900 mb-2">
                   Quer implementar isso no seu negócio?
                 </h3>
-                <p className="text-zinc-500 mb-6">
+                <p className="text-zinc-600 font-light mb-6">
                   Converse com nossa equipe de especialistas e descubra como
                   aplicar essas estratégias na realidade da sua empresa.
                 </p>
@@ -186,9 +186,9 @@ export default async function ArticlePage({ params }: Props) {
                   href={whatsappMsg}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.4)]"
+                  className="inline-flex items-center gap-2 bg-[#00D26A] hover:bg-[#00b35a] text-black font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-md transition-all duration-300 shadow-[0_0_15px_rgba(0,210,106,0.2)] hover:shadow-[0_0_25px_rgba(0,210,106,0.4)]"
                 >
-                  Falar com Especialista no WhatsApp
+                  Falar com Especialista
                 </a>
               </div>
             </article>
@@ -202,9 +202,9 @@ export default async function ArticlePage({ params }: Props) {
 
         {/* Related posts */}
         {related.length > 0 && (
-          <section className="border-t border-zinc-100 bg-zinc-50 py-16 px-6">
+          <section className="border-t border-zinc-200 bg-zinc-50/50 py-16 px-6">
             <div className="max-w-7xl mx-auto">
-              <h2 className="text-2xl font-bold text-zinc-900 mb-8">
+              <h2 className="text-2xl font-extrabold tracking-tight text-zinc-900 mb-8">
                 Artigos relacionados
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

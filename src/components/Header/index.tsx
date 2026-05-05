@@ -78,22 +78,22 @@ export function Header({
     }
   }, [menuOpen]);
 
-  // Cores por variante
+  // Cores por variante (Alterado apenas a cor do CTA para o Verde Mavellium)
   const theme = useMemo(() => {
     if (variant === "marketing") {
       return {
-        primary: "bg-[#E31B63]",
-        hoverBg: "hover:bg-[#FF1758]",
-        textOnPrimary: "text-white",
-        underline: "bg-[#E31B63]",
+        primary: "bg-[#00D26A]",
+        hoverBg: "hover:bg-[#00b35a]",
+        textOnPrimary: "text-black",
+        underline: "bg-[#00D26A]",
         logoFilter: "brightness-0 invert",
       };
     }
     return {
-      primary: "bg-[#FFFFFF]",
-      hoverBg: "hover:bg-white/90",
+      primary: "bg-[#00D26A]",
+      hoverBg: "hover:bg-[#00b35a]",
       textOnPrimary: "text-black",
-      underline: "bg-[#ffffff]",
+      underline: "bg-[#00D26A]",
       logoFilter: "",
     };
   }, [variant]);
@@ -175,17 +175,18 @@ export function Header({
                 className="hidden sm:block group relative"
                 aria-label={ctaText}
               >
+                {/* Glow alterado para verde */}
                 <div
-                  className={`absolute -inset-0.5 rounded-full opacity-30 blur-sm transition duration-500 group-hover:opacity-60 ${lightBg ? "bg-blue-500" : "bg-white"}`}
+                  className={`absolute -inset-0.5 rounded-full opacity-30 blur-sm transition duration-500 group-hover:opacity-60 bg-[#00D26A]`}
                 />
                 <button
                   className={`relative inline-flex cursor-pointer h-9 lg:h-11 items-center justify-center overflow-hidden rounded-full px-5 lg:px-8 py-2 font-bold text-[10px] lg:text-xs tracking-[0.1em] transition-all duration-300 hover:scale-105 active:scale-95 border ${
                     lightBg
-                      ? "bg-blue-600 text-white hover:bg-blue-500 border-blue-600"
-                      : `border-white/10 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`
+                      ? "bg-[#00D26A] text-black hover:bg-[#00b35a] border-[#00D26A]"
+                      : `border-[#00D26A]/20 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`
                   }`}
                 >
-                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10" />
+                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
                   <span className="relative z-20 uppercase">{ctaText}</span>
                 </button>
               </Link>
@@ -265,7 +266,7 @@ export function Header({
                   <div className="h-[1px] w-12 bg-white/20" aria-hidden="true" />
                   <Link
                     href={ctaLink}
-                    className={`w-full text-center py-4 rounded-full font-bold uppercase tracking-widest text-sm border border-white/10 shadow-2xl shadow-white/5 focus:outline-none focus:ring-2 focus:ring-white/30 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`}
+                    className={`w-full text-center py-4 rounded-full font-bold uppercase tracking-widest text-sm border border-[#00D26A]/20 shadow-2xl shadow-[#00D26A]/20 focus:outline-none focus:ring-2 focus:ring-[#00D26A]/30 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`}
                     onClick={() => setMenuOpen(false)}
                     aria-label={ctaText}
                   >

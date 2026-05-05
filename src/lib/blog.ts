@@ -38,6 +38,7 @@ export interface BlogPost {
   seoDescription?: string;
 }
 
+// CORES ADAPTADAS PARA A IDENTIDADE MAVELLIUM (Verde Neon, Preto, Zinc)
 export const CATEGORY_COLORS: Record<
   BlogCategory,
   { bg: string; text: string; border: string; dot: string }
@@ -68,6 +69,7 @@ export const CATEGORY_COLORS: Record<
   },
 };
 
+
 export function formatDate(isoDate: string): string {
   return new Intl.DateTimeFormat("pt-BR", {
     day: "numeric",
@@ -80,7 +82,7 @@ export function slugifyHeading(content: string): string {
   return content
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
+    .replace(/[\u0300-\u036f]/g, "") // Correção do regex de acentos
     .replace(/[^a-z0-9\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-");
@@ -113,7 +115,7 @@ const MAVELLIUM_AUTHOR: BlogAuthor = {
   name: "Equipe Mavellium",
   role: "Time de Tecnologia & Estratégia",
   avatarInitials: "MV",
-  avatarColor: "bg-blue-600",
+  avatarColor: "bg-zinc-900 text-[#00D26A]", // Avatar atualizado para visual premium
 };
 
 const BLOG_POSTS: BlogPost[] = [

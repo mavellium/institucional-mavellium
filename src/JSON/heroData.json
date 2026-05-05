@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "headline": "Impulsione seu negócio com a ",
+    "headlineHighlight": "Inteligência da Mavellium",
+    "description": "Desenvolvimento de soluções inteligentes e exclusivas para escalar o seu negócio e dominar o ambiente digital.",
+    "primaryButtonText": "Conhecer Soluções",
+    "primaryButtonLink": "#solucoes",
+    "secondaryButtonText": "Falar com Especialista",
+    "secondaryButtonLink": "https://wa.me/5514991779502?text=Ol%C3%A1!+Gostaria+de+falar+com+um+especialista+sobre+como+usar+a+tecnologia+da+Mavellium+para+escalar+meu+neg%C3%B3cio.",
+    "mediaType": "video",
+    "mediaUrl": "https://www.youtube.com/embed/9thKG053Tyk?autoplay=1&loop=1&mute=1&controls=0&showinfo=0&modestbranding=1&disablekb=1&playsinline=1&playlist=9thKG053Tyk"
+  },
+  {
+    "id": "2",
+    "headline": "Visite a Mavellium na ",
+    "headlineHighlight": "FITEC\u00A02026",
+    "description": "Estaremos nos dias 14 e 15 de maio no Grêmio Teatral Leopoldo Fróes. Venha descobrir ao vivo como a Inteligência Artificial pode automatizar suas vendas.",
+    "primaryButtonText": "Sobre a Feira",
+    "primaryButtonLink": "#",
+    "secondaryButtonText": "Agendar Reunião no Estande",
+    "secondaryButtonLink": "https://wa.me/5514991779502?text=Ol%C3%A1!+Gostaria+de+agendar+um+hor%C3%A1rio+no+estande+da+Mavellium+durante+a+FITEC+2026.",
+    "mediaType": "image",
+    "mediaUrl": "https://images.unsplash.com/photo-1620825937374-87fc7d62828e?auto=format&fit=crop&q=80&w=1920"
+  },
+  {
+    "id": "3",
+    "headline": "Pare de perder vendas no ",
+    "headlineHighlight": "Ambiente Digital",
+    "description": "Tenha sua empresa 24 horas por dia no ar. Construímos sites de alta conversão e implementamos agentes de IA que qualificam leads enquanto você dorme.",
+    "primaryButtonText": "Automatizar Operação",
+    "primaryButtonLink": "#solucoes",
+    "secondaryButtonText": "Solicitar Orçamento",
+    "secondaryButtonLink": "https://wa.me/5514991779502?text=Ol%C3%A1!+Quero+parar+de+perder+vendas+e+gostaria+de+um+or%C3%A7amento+para+o+meu+neg%C3%B3cio.",
+    "mediaType": "image",
+    "mediaUrl": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920"
+  }
+]

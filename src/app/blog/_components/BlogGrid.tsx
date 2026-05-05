@@ -33,10 +33,10 @@ export function BlogGrid({ posts }: BlogGridProps) {
             key={cat}
             onClick={() => setActive(cat as FilterValue)}
             className={cn(
-              "px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 border",
+              "px-5 py-2 rounded-sm text-sm font-bold transition-all duration-300 border", // rounded-sm para visual mais corporativo
               active === cat
-                ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                : "bg-white text-zinc-600 border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50"
+                ? "bg-[#00D26A] text-black border-[#00D26A] shadow-sm" // Verde Mavellium com texto preto (contraste perfeito)
+                : "bg-white text-zinc-600 border-zinc-200 hover:border-[#00D26A]/50 hover:bg-[#00D26A]/5 hover:text-[#00b35a]"
             )}
           >
             {cat}
@@ -64,7 +64,7 @@ export function BlogGrid({ posts }: BlogGridProps) {
             key="empty"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center text-zinc-400 py-20"
+            className="text-center font-light text-zinc-400 py-20"
           >
             Nenhum artigo nessa categoria ainda.
           </motion.p>
