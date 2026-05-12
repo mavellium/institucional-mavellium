@@ -18,8 +18,10 @@ import { GalleryGridBlock } from "../components/ui/sections-gallery";
 import { Plan, PricingSection } from "../components/ui/pricing-details";
 import { getWhatsappUrl, siteConfig } from "../lib/constants";
 import heroSlidesData from '@/src/JSON/heroData.json'
+import { FitecLeadsGallery } from "../components/ui/FitecLeadsGallery";
+import { fetchFitecLeads } from "@/src/lib/fitec-api";
 
-export default function Home() {
+export default async function Home() {
   const images = [
     { src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1280&h=720&fit=crop', alt: 'Modern architecture' },
     { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
@@ -272,6 +274,14 @@ export default function Home() {
     },
   ];
 
+//   const FITEC_LEADS = [
+//   { id: "1", name: "Carlos Eduardo", image: "/placeholder-lead-1.jpg" },
+//   { id: "2", name: "Mariana Souza", image: "/placeholder-lead-2.jpg" },
+//   { id: "3", name: "", image: "/placeholder-lead-3.jpg" }, // Nome opcional
+//   { id: "4", name: "Roberto Alves", image: "/placeholder-lead-4.jpg" },
+// ];
+const fitecLeads = await fetchFitecLeads();
+
   return (
     <>
       <Header
@@ -283,6 +293,7 @@ export default function Home() {
           { name: "Soluções", href: "#solucoes" },
           { name: "Metodologia", href: "#metodologia" },
           { name: "Blog", href: "/blog" },
+          { name: "FITEC 2026", href: "/fitec-2026" },
         ]}
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
         ctaText={"Falar com Especialista"}
@@ -328,6 +339,13 @@ export default function Home() {
         title="Minha Timeline Interativa"
         description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
         timelineData={timelineData} /> */}
+        {fitecLeads.length > 0 && (
+        <FitecLeadsGallery 
+          title="Conexões FITEC 2026"
+          description="Pessoas incríveis que conhecemos na feira, gerenciadas via Janus CMS."
+          items={fitecLeads.map(lead => ({ ...lead, role: lead.role ?? undefined }))}
+        />
+      )}
       <Footer />
     </>
   );

@@ -24,6 +24,7 @@ const NAV_LINKS = [
   { name: "Soluções", href: "/#solucoes" },
   { name: "Metodologia", href: "/#metodologia" },
   { name: "Blog", href: "/blog" },
+  { name: "FITEC - 2026", href: "/fitec-2026" },
 ];
 
 export default function BlogPage() {

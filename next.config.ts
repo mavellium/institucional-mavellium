@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: 'https',
+        hostname: 'tegbe-cdn.b-cdn.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
