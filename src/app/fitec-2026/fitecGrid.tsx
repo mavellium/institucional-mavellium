@@ -66,7 +66,7 @@ export function FitecGrid({ leads }: FitecGridProps) {
     }
   };
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!pendingDownload) return;
 
@@ -74,16 +74,20 @@ export function FitecGrid({ leads }: FitecGridProps) {
     setFormError(null);
 
     try {
-      const res = await fetch("/api/fitec-register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone }),
-      });
+      const hasAnyField = name.trim() || email.trim() || phone.trim();
 
-      if (!res.ok) {
-        const data = await res.json();
-        setFormError(data.error ?? "Erro ao enviar. Tente novamente.");
-        return;
+      if (hasAnyField) {
+        const res = await fetch("/api/fitec-register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, phone }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          setFormError(data.error ?? "Erro ao enviar. Tente novamente.");
+          return;
+        }
       }
 
       setShowFormModal(false);
