@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/ui/footer";
 import { getWhatsappUrl } from "../../lib/constants";
 import { fetchFitecLeads } from "@/src/lib/fitec-api";
+import { FitecGrid } from "./fitecGrid";
 
 export const metadata: Metadata = {
   title: "Fitec 2026 | Mavellium",
@@ -52,39 +52,8 @@ export default async function FitecPage() {
             </p>
           </div>
 
-          {leads.length === 0 ? (
-            <div className="text-center py-12 border border-dashed border-zinc-300 rounded-md">
-              <p className="text-zinc-500 font-light">Nenhum dado encontrado no momento.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {leads.map((lead) => (
-                <div 
-                  key={lead.id} 
-                  className="group relative flex flex-col bg-white rounded-md overflow-hidden border border-zinc-200 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <div className="relative aspect-square w-full overflow-hidden bg-zinc-100">
-                    <Image
-                      src={lead.image}
-                      alt={lead.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-4 border-t border-zinc-100">
-                    <h3 className="font-bold text-zinc-900 text-sm uppercase tracking-wide line-clamp-1">
-                      {lead.name}
-                    </h3>
-                    {lead.role && (
-                      <p className="text-xs text-zinc-500 mt-1 font-light line-clamp-1">
-                        {lead.role}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          {/* Renderiza o Client Component interativo aqui */}
+          <FitecGrid leads={leads} />
         </div>
       </main>
 

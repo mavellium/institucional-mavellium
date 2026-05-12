@@ -66,6 +66,9 @@ export function FitecLeadsGallery({
   description = "Conheça os líderes e inovadores que passaram pelo nosso estande e interajiram com a integração Janus.",
   items,
 }: FitecLeadsGalleryProps) {
+  // LIMITA O ARRAY A 5 ITENS NO MÁXIMO
+  const displayItems = items.slice(0, 5);
+
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
@@ -129,7 +132,8 @@ export function FitecLeadsGallery({
 
         <Carousel setApi={setCarouselApi} opts={{ align: "start", loop: false }} className="w-full">
           <CarouselContent className="-ml-5">
-            {items.map((item) => (
+            {/* AGORA ITERA SOBRE 'displayItems' EM VEZ DE 'items' */}
+            {displayItems.map((item) => (
               <LeadCard key={item.id} item={item} />
             ))}
           </CarouselContent>
@@ -138,9 +142,9 @@ export function FitecLeadsGallery({
         {/* Área inferior com dots de navegação e botão CTA */}
         <div className="mt-16 flex flex-col items-center justify-between gap-8 border-t border-white/5 pt-12 md:flex-row">
           
-          {/* Indicadores de Slide (Dots) */}
+          {/* Indicadores de Slide (Dots) limitados a 5 */}
           <div className="flex gap-2">
-            {items.map((_, index) => (
+            {displayItems.map((_, index) => (
               <button
                 key={index}
                 onClick={() => carouselApi?.scrollTo(index)}
