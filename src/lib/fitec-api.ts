@@ -37,7 +37,7 @@ export interface CmsFitecResponse {
 export interface FitecLead {
   id: string;
   name: string;
-  role: string | null;
+  text: string | null;
   image: string;
 }
 
@@ -46,11 +46,9 @@ export interface FitecLead {
 function cmsToFitecLead(lead: CmsFitecLead): FitecLead {
   return {
     id: lead.id,
-    // Garante um fallback caso o nome não seja preenchido (já que é opcional)
     name: lead.name?.trim() ? lead.name : "Visitante FITEC",
-    role: lead.role ?? null,
-    // Imagem de fallback caso não venha do Janus
-    image: lead.image ?? "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1280", 
+    text: lead.role ?? null,
+    image: lead.image ?? "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1280",
   };
 }
 

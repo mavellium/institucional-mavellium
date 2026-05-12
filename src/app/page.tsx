@@ -343,7 +343,7 @@ const fitecLeads = await fetchFitecLeads();
         <FitecLeadsGallery 
           title="Conexões FITEC 2026"
           description="Pessoas incríveis que conhecemos na feira, gerenciadas via Janus CMS."
-          items={fitecLeads.map(lead => ({ ...lead, role: lead.role ?? undefined }))}
+          items={fitecLeads.map(lead => ({ ...lead, text: lead.text ?? undefined }))}
         />
       )}
       <Footer />

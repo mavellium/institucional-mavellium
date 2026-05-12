@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Download, X, CheckCircle2, Loader2 } from "lucide-react";
 import type { FitecLead } from "@/src/lib/fitec-api";
 
@@ -137,15 +136,23 @@ export function FitecGrid({ leads }: FitecGridProps) {
                 </button>
               </div>
 
-              <div className="p-4 border-t border-zinc-100">
-                <h3 className="font-bold text-zinc-900 text-sm uppercase tracking-wide line-clamp-1">
-                  {lead.name}
-                </h3>
-                {lead.role && (
-                  <p className="text-xs text-zinc-500 mt-1 font-light line-clamp-1">
-                    {lead.role}
-                  </p>
+              <div className="flex flex-col flex-1 p-5 bg-zinc-50 border-t border-zinc-100">
+                {lead.text ? (
+                  <div className="relative mb-4 flex-1">
+                    <span className="absolute -top-2 -left-1 text-5xl leading-none text-[#00D26A]/25 font-serif select-none pointer-events-none">&ldquo;</span>
+                    <p className="pt-3 text-sm text-zinc-600 font-light italic leading-relaxed line-clamp-5">
+                      {lead.text}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex-1" />
                 )}
+                <div className="flex items-center gap-2 pt-3 border-t border-zinc-200">
+                  <span className="w-4 h-px bg-[#00D26A] flex-shrink-0" />
+                  <h3 className="font-bold text-zinc-900 text-xs uppercase tracking-widest line-clamp-1">
+                    {lead.name}
+                  </h3>
+                </div>
               </div>
             </div>
           ))}
@@ -163,8 +170,8 @@ export function FitecGrid({ leads }: FitecGridProps) {
 
       {/* Modal: formulário de cadastro */}
       {showFormModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md overflow-hidden rounded-lg bg-white p-8 shadow-2xl animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4 sm:pt-24 animate-in fade-in duration-200">
+          <div className="relative w-full max-w-sm overflow-y-auto max-h-[90dvh] sm:max-h-[calc(100dvh-7rem)] rounded-t-2xl sm:rounded-lg bg-white p-5 sm:p-6 shadow-2xl animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-200">
             <button
               onClick={() => setShowFormModal(false)}
               className="absolute right-4 top-4 text-zinc-400 hover:text-zinc-900 transition-colors"
@@ -172,18 +179,18 @@ export function FitecGrid({ leads }: FitecGridProps) {
               <X className="size-5" />
             </button>
 
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#00D26A]/10">
-              <Download className="size-6 text-[#00D26A]" />
+            <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#00D26A]/10">
+              <Download className="size-5 text-[#00D26A]" />
             </div>
 
-            <h2 className="mb-1 text-center text-xl font-extrabold text-zinc-900 tracking-tight">
+            <h2 className="mb-1 text-center text-lg font-extrabold text-zinc-900 tracking-tight">
               Antes de baixar
             </h2>
-            <p className="mb-6 text-center text-sm font-light text-zinc-500">
-              Preencha rapidinho para receber sua foto da FITEC 2026.
+            <p className="mb-4 text-center text-sm font-light text-zinc-500">
+              Preencha rapidinho caso tenha interesse em receber novidades sobre nossas soluções para escalar negócios. Se preferir, pode deixar em branco e ir direto para o download!
             </p>
 
-            <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
+            <form onSubmit={handleFormSubmit} className="flex flex-col gap-3">
               <div>
                 <label className="mb-1 block text-xs font-bold uppercase tracking-wider text-zinc-600">
                   Nome
@@ -267,13 +274,12 @@ export function FitecGrid({ leads }: FitecGridProps) {
               como podemos ajudar o seu negócio a escalar?
             </p>
 
-            <Link
+            <a
               href="/#solucoes"
-              onClick={() => setShowThanksModal(false)}
               className="inline-flex w-full items-center justify-center rounded-md bg-[#00D26A] px-6 py-4 text-xs font-bold uppercase tracking-widest text-black shadow-[0_0_15px_rgba(0,210,106,0.2)] transition-all hover:bg-[#00b35a] hover:shadow-[0_0_25px_rgba(0,210,106,0.4)]"
             >
               Conheça nossas Soluções
-            </Link>
+            </a>
           </div>
         </div>
       )}

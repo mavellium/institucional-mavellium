@@ -15,7 +15,7 @@ import { cn } from "../../lib/utils";
 export interface FitecLeadItem {
   id: string;
   name: string;
-  role?: string;
+  text?: string;
   image: string;
 }
 
@@ -41,15 +41,20 @@ const LeadCard = memo(({ item }: { item: FitecLeadItem }) => (
       <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent opacity-90" />
       
       <div className="absolute inset-x-0 bottom-0 flex flex-col items-start p-6 text-white md:p-8">
-        <h3 className="mb-1 text-xl font-bold leading-tight tracking-tight group-hover:text-[#00D26A] transition-colors">
-          {item.name || "Visitante FITEC"}
-        </h3>
-        {item.role && (
-          <p className="mb-4 text-xs font-light text-zinc-400 transition-colors group-hover:text-zinc-300 uppercase tracking-widest">
-            {item.role}
-          </p>
+        {item.text && (
+          <div className="relative mb-3 w-full">
+            <span className="absolute -top-3 -left-1 text-5xl leading-none text-[#00D26A]/30 font-serif select-none pointer-events-none">&ldquo;</span>
+            <p className="pt-2 pl-1 text-sm font-light italic text-zinc-200 leading-relaxed line-clamp-4">
+              {item.text}
+            </p>
+          </div>
         )}
-        
+        <div className="flex items-center gap-2 mb-3 w-full">
+          <span className="w-4 h-px bg-[#00D26A] flex-shrink-0" />
+          <h3 className="text-base font-bold leading-tight tracking-tight group-hover:text-[#00D26A] transition-colors line-clamp-1">
+            {item.name || "Visitante FITEC"}
+          </h3>
+        </div>
         <div className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-zinc-500 transition-all group-hover:text-[#00D26A]">
           <UserSquare2 className="size-4" />
           Lead Janus
