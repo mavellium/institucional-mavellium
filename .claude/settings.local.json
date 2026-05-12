@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npx tsc *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(sshpass -p 'Nairim@2026#' ssh -o StrictHostKeyChecking=no root@187.77.236.241 'curl -fsSL https://get.docker.com | sh 2>&1 | tail -10')",
+      "Bash(sshpass -p 'Nairim@2026#' ssh -o StrictHostKeyChecking=no root@187.77.236.241 'cd /opt/mavellium && docker compose up -d 2>&1')"
     ]
   }
 }
