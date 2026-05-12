@@ -27,6 +27,11 @@ export interface CmsFitecLead {
   createdAt?: string;
 }
 
+// NOVA INTERFACE: Reflete o novo formato da API que envelopa a lista em "card"
+export interface CmsFitecResponse {
+  card: CmsFitecLead[];
+}
+
 // ─── Normalized Post type (consumed by components) ───────────────────────────
 
 export interface FitecLead {
@@ -67,6 +72,12 @@ async function fetchJson<T>(url: string): Promise<T | null> {
 export async function fetchFitecLeads(): Promise<FitecLead[]> {
   if (!isConfigured()) return [];
 
-  const data = await fetchJson<CmsFitecLead[]>(fitecUrl());
-  return (data ?? []).map(cmsToFitecLead);
+  // Tipamos o fetch para esperar o objeto resposta com a chave 'card'
+  const data = await fetchJson<CmsFitecResponse>(fitecUrl());
+  
+  // Extraímos o array. Se a API falhar ou não retornar 'card', caímos para um array vazio
+  const leadsArray = data?.card ?? [];
+
+  // Mapeamos o array limpo
+  return leadsArray.map(cmsToFitecLead);
 }
