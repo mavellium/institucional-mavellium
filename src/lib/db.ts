@@ -12,9 +12,9 @@ export async function ensureFitecVisitorsTable() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS fitec_visitors (
       id        SERIAL PRIMARY KEY,
-      name      VARCHAR(255) NOT NULL,
-      email     VARCHAR(255) NOT NULL,
-      phone     VARCHAR(50)  NOT NULL,
+      name      VARCHAR(255),
+      email     VARCHAR(255),
+      phone     VARCHAR(50),
       created_at TIMESTAMPTZ DEFAULT NOW()
     )
   `);

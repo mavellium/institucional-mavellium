@@ -185,7 +185,6 @@ export function FitecGrid({ leads }: FitecGridProps) {
                   Nome
                 </label>
                 <input
-                  required
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -199,7 +198,6 @@ export function FitecGrid({ leads }: FitecGridProps) {
                   E-mail
                 </label>
                 <input
-                  required
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -213,7 +211,6 @@ export function FitecGrid({ leads }: FitecGridProps) {
                   Telefone
                 </label>
                 <input
-                  required
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}

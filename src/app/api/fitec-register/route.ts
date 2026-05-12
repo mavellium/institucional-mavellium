@@ -5,18 +5,11 @@ export async function POST(request: NextRequest) {
   try {
     const { name, email, phone } = await request.json();
 
-    if (!name?.trim() || !email?.trim() || !phone?.trim()) {
-      return Response.json(
-        { error: "Nome, e-mail e telefone são obrigatórios." },
-        { status: 400 }
-      );
-    }
-
     await ensureFitecVisitorsTable();
 
     await pool.query(
       "INSERT INTO fitec_visitors (name, email, phone) VALUES ($1, $2, $3)",
-      [name.trim(), email.trim(), phone.trim()]
+      [name?.trim() || null, email?.trim() || null, phone?.trim() || null]
     );
 
     return Response.json({ ok: true }, { status: 201 });
