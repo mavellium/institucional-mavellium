@@ -45,14 +45,17 @@ export interface FitecLead {
 
 // ─── Adapter ─────────────────────────────────────────────────────────────────
 
-function cmsGuestToFitecLead(guest: CmsGuest): FitecLead {
-  const firstPost = guest.posts?.[0];
-  return {
-    id: guest.id,
-    name: guest.name?.trim() || "Visitante FITEC",
-    text: firstPost?.message ?? null,
-    image: firstPost?.imageUrl ?? IMAGE_FALLBACK,
-  };
+function cmsGuestToFitecLeads(guest: CmsGuest): FitecLead[] {
+  const name = guest.name?.trim() || "Visitante FITEC";
+  if (!guest.posts?.length) {
+    return [{ id: guest.id, name, text: null, image: IMAGE_FALLBACK }];
+  }
+  return guest.posts.map((post) => ({
+    id: post.id ?? guest.id,
+    name,
+    text: post.message ?? null,
+    image: post.imageUrl ?? IMAGE_FALLBACK,
+  }));
 }
 
 // ─── Fetch ───────────────────────────────────────────────────────────────────
@@ -63,7 +66,7 @@ export async function fetchFitecLeads(): Promise<FitecLead[]> {
     if (!res.ok) return [];
     const data = (await res.json()) as CmsGuestsResponse;
     if (!data.ok || !Array.isArray(data.data)) return [];
-    return data.data.map(cmsGuestToFitecLead);
+    return data.data.flatMap(cmsGuestToFitecLeads);
   } catch (error) {
     console.error("[fitec-api] Erro ao buscar guests:", error);
     return [];
