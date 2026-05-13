@@ -47,9 +47,7 @@ export interface FitecLead {
 
 function cmsGuestToFitecLeads(guest: CmsGuest): FitecLead[] {
   const name = guest.name?.trim() || "Visitante FITEC";
-  if (!guest.posts?.length) {
-    return [{ id: guest.id, name, text: null, image: IMAGE_FALLBACK }];
-  }
+  if (!guest.posts?.length) return [];
   return guest.posts.map((post) => ({
     id: post.id ?? guest.id,
     name,
