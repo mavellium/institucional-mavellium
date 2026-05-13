@@ -1,38 +1,40 @@
-// src/lib/fitec-api.ts
-// CMS API client — adapta a resposta do endpoint do Janus para o formato consumido pelos componentes.
+const GUESTS_URL = "https://janus.187.77.236.241.nip.io/api/v1/admin/guests";
 
-// ─── Environment ────────────────────────────────────────────────────────────
+const IMAGE_FALLBACK =
+  "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1280";
 
-// Se a API estiver hospedada no mesmo domínio do Next.js, utilize a URL base.
-// Caso seja um domínio externo da VPS/Janus, utilize a env correspondente.
-const API_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+// ─── Raw API types ───────────────────────────────────────────────────────────
 
-function isConfigured(): boolean {
-  return Boolean(API_URL);
-}
-
-function fitecUrl() {
-  return `${API_URL}/api/itc-mavellium/json/fitec-2026`;
-}
-
-// ─── Raw CMS types ───────────────────────────────────────────────────────────
-
-export interface CmsFitecLead {
+interface CmsCompany {
   id: string;
-  name: string | null;
-  role?: string | null;
-  image?: string;
-  email?: string; 
-  phone?: string; 
-  createdAt?: string;
+  name: string;
+  slug: string;
 }
 
-// NOVA INTERFACE: Reflete o novo formato da API que envelopa a lista em "card"
-export interface CmsFitecResponse {
-  card: CmsFitecLead[];
+interface CmsGuest {
+  id: string;
+  name: string;
+  email: string;
+  companyId: string;
+  createdAt: string;
+  updatedAt: string;
+  company: CmsCompany;
+  posts: CmsPost[];
 }
 
-// ─── Normalized Post type (consumed by components) ───────────────────────────
+interface CmsPost {
+  id?: string;
+  imageUrl?: string;
+  message?: string;
+  title?: string;
+}
+
+interface CmsGuestsResponse {
+  ok: boolean;
+  data: CmsGuest[];
+}
+
+// ─── Normalized type (consumed by components) ────────────────────────────────
 
 export interface FitecLead {
   id: string;
@@ -41,41 +43,29 @@ export interface FitecLead {
   image: string;
 }
 
-// ─── Adapter: CmsFitecLead → FitecLead ───────────────────────────────────────
+// ─── Adapter ─────────────────────────────────────────────────────────────────
 
-function cmsToFitecLead(lead: CmsFitecLead): FitecLead {
+function cmsGuestToFitecLead(guest: CmsGuest): FitecLead {
+  const firstPost = guest.posts?.[0];
   return {
-    id: lead.id,
-    name: lead.name?.trim() ? lead.name : "Visitante FITEC",
-    text: lead.role ?? null,
-    image: lead.image ?? "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1280",
+    id: guest.id,
+    name: guest.name?.trim() || "Visitante FITEC",
+    text: firstPost?.message ?? null,
+    image: firstPost?.imageUrl ?? IMAGE_FALLBACK,
   };
 }
 
-// ─── Fetch helpers ───────────────────────────────────────────────────────────
-
-async function fetchJson<T>(url: string): Promise<T | null> {
-  try {
-    const res = await fetch(url, { next: { revalidate: 0 } });
-    if (!res.ok) return null;
-    return (await res.json()) as T;
-  } catch (error) {
-    console.error(`Erro ao buscar dados de ${url}:`, error);
-    return null;
-  }
-}
-
-// ─── Public API ──────────────────────────────────────────────────────────────
+// ─── Fetch ───────────────────────────────────────────────────────────────────
 
 export async function fetchFitecLeads(): Promise<FitecLead[]> {
-  if (!isConfigured()) return [];
-
-  // Tipamos o fetch para esperar o objeto resposta com a chave 'card'
-  const data = await fetchJson<CmsFitecResponse>(fitecUrl());
-  
-  // Extraímos o array. Se a API falhar ou não retornar 'card', caímos para um array vazio
-  const leadsArray = data?.card ?? [];
-
-  // Mapeamos o array limpo
-  return leadsArray.map(cmsToFitecLead);
+  try {
+    const res = await fetch(GUESTS_URL, { cache: "no-store" });
+    if (!res.ok) return [];
+    const data = (await res.json()) as CmsGuestsResponse;
+    if (!data.ok || !Array.isArray(data.data)) return [];
+    return data.data.map(cmsGuestToFitecLead);
+  } catch (error) {
+    console.error("[fitec-api] Erro ao buscar guests:", error);
+    return [];
+  }
 }

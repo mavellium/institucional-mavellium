@@ -34,6 +34,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'mavellium-janus.b-cdn.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
