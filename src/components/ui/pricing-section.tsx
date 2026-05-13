@@ -85,7 +85,7 @@ const pricingData: PricingCardProps[] = [
 
 export default function Pricing() {
   return (
-    <Section id="solucoes" className="bg-[#050505] z-10 border-t border-white/5">
+    <Section id="solucoes" className="bg-[#050505] z-10 border-t border-white/5 scroll-mt-20">
       <Container className="flex flex-col items-center gap-4 text-center">
         <h2 className="!my-0 text-4xl md:text-5xl font-medium text-white tracking-tight">
           Soluções <span className="text-[#00D26A]">Estratégicas</span>

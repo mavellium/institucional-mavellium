@@ -184,10 +184,10 @@ export function FitecGrid({ leads }: FitecGridProps) {
             </div>
 
             <h2 className="mb-1 text-center text-lg font-extrabold text-zinc-900 tracking-tight">
-              Antes de baixar
+              Quase lá!
             </h2>
             <p className="mb-4 text-center text-sm font-light text-zinc-500">
-              Preencha rapidinho caso tenha interesse em receber novidades sobre nossas soluções para escalar negócios. Se preferir, pode deixar em branco e ir direto para o download!
+              Preencha rapidinho e tenha acesso a novidades e soluções pensadas para acelerar os resultados do seu negócio.
             </p>
 
             <form onSubmit={handleFormSubmit} className="flex flex-col gap-3">

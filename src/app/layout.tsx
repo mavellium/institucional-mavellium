@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { HashScroller } from "../components/HashScroller";
 
 // Configuração da fonte Satoshi via next/font/local
 const satoshi = localFont({
@@ -47,6 +48,7 @@ export default function RootLayout({
       suppressHydrationWarning 
     >
       <body className={`min-h-full flex flex-col ${satoshi.variable} font-satoshi bg-[#050505] text-white`}>
+        <HashScroller />
         {children}
       </body>
     </html>

@@ -151,19 +151,29 @@ export function Header({
               aria-label="Menu principal"
               className={`hidden xl:flex items-center gap-x-8 ${!lightBg ? "mix-blend-difference" : ""}`}
             >
-              {links.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-lg font-medium tracking-tight transition-all duration-300 relative group ${lightBg ? "text-zinc-800 hover:text-zinc-900" : "text-white hover:opacity-80"}`}
-                  aria-current={pathname === link.href ? "page" : undefined}
-                >
-                  {link.name}
-                  <span
-                    className={`absolute -bottom-1 left-0 w-0 h-[1.5px] transition-all duration-300 group-hover:w-full ${lightBg ? "bg-zinc-900" : "bg-white"}`}
-                  />
-                </Link>
-              ))}
+              {links.map((link) => {
+                const cls = `text-lg font-medium tracking-tight transition-all duration-300 relative group ${lightBg ? "text-zinc-800 hover:text-zinc-900" : "text-white hover:opacity-80"}`;
+                const underline = <span className={`absolute -bottom-1 left-0 w-0 h-[1.5px] transition-all duration-300 group-hover:w-full ${lightBg ? "bg-zinc-900" : "bg-white"}`} />;
+                if (link.href.startsWith("/#")) {
+                  return (
+                    <a key={link.name} href={link.href} className={cls}>
+                      {link.name}
+                      {underline}
+                    </a>
+                  );
+                }
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={cls}
+                    aria-current={pathname === link.href ? "page" : undefined}
+                  >
+                    {link.name}
+                    {underline}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* AÇÕES (CTA + MENU MOBILE) */}
@@ -242,21 +252,35 @@ export function Header({
                 className="flex flex-col items-center space-y-8 px-6 w-full"
                 aria-label="Navegação principal mobile"
               >
-                {links.map((link, i) => (
-                  <Link
-                    key={link.name}
-                    ref={i === 0 ? firstMenuItemRef : undefined}
-                    href={link.href}
-                    style={{ transitionDelay: menuOpen ? `${i * 70}ms` : "0ms" }}
-                    className={`text-3xl font-light tracking-tighter text-white/70 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/30 focus:rounded-lg ${
-                      menuOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-                    }`}
-                    onClick={() => setMenuOpen(false)}
-                    aria-current={pathname === link.href ? "page" : undefined}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
+                {links.map((link, i) => {
+                  const mobileCls = `text-3xl font-light tracking-tighter text-white/70 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-white/30 focus:rounded-lg ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`;
+                  if (link.href.startsWith("/#")) {
+                    return (
+                      <a
+                        key={link.name}
+                        href={link.href}
+                        style={{ transitionDelay: menuOpen ? `${i * 70}ms` : "0ms" }}
+                        className={mobileCls}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {link.name}
+                      </a>
+                    );
+                  }
+                  return (
+                    <Link
+                      key={link.name}
+                      ref={i === 0 ? firstMenuItemRef : undefined}
+                      href={link.href}
+                      style={{ transitionDelay: menuOpen ? `${i * 70}ms` : "0ms" }}
+                      className={mobileCls}
+                      onClick={() => setMenuOpen(false)}
+                      aria-current={pathname === link.href ? "page" : undefined}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })}
 
                 <div
                   className={`pt-10 flex flex-col items-center gap-8 w-full max-w-xs transition-all duration-700 delay-300 ${
