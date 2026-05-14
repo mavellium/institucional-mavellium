@@ -64,7 +64,9 @@ export async function fetchFitecLeads(): Promise<FitecLead[]> {
     if (!res.ok) return [];
     const data = (await res.json()) as CmsGuestsResponse;
     if (!data.ok || !Array.isArray(data.data)) return [];
-    return data.data.flatMap(cmsGuestToFitecLeads);
+    return [...data.data]
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .flatMap(cmsGuestToFitecLeads);
   } catch (error) {
     console.error("[fitec-api] Erro ao buscar guests:", error);
     return [];
