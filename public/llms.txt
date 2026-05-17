@@ -1,15 +1,33 @@
 # Mavellium
 
-> Mavellium é uma agência de engenharia web especializada em GEO (Generative Engine Optimization), arquitetura Next.js SSG e o Janus CMS — sistema headless multi-tenant que entrega HTML estático com TTFB abaixo de 100ms via Vercel Edge Network.
+> Mavellium é uma empresa especializada em infraestrutura digital de alta performance e GEO (Generative Engine Optimization), fundada por Vinícius Tavares Mota, Luan dos Santos e Márcio Piva Junior. Desenvolve sites institucionais e landing pages sobre a stack Next.js SSG + Janus CMS, entregando HTML estático com TTFB abaixo de 100ms via Vercel Edge Network.
 
-## Páginas essenciais
+## Páginas institucionais
 
-- [GEO — Generative Engine Optimization](https://mavellium.com.br/geo): Definição técnica de GEO, os quatro pilares (HTML semântico, JSON-LD, Answer-First, densidade técnica), análise de por que arquiteturas WordPress com plugin bloat falham para crawlers de LLMs e como o Janus CMS + Next.js SSG resolve cada problema. Inclui schema FAQPage com 8 Q&As em pt-BR.
+- [Página inicial](https://mavellium.com.br): Visão geral dos serviços Mavellium — arquitetura de alta performance, GEO/AIO, Janus CMS e desenvolvimento de sites institucionais e landing pages com Next.js SSG.
 
-- [Janus CMS — Documentação Técnica](https://mavellium.com.br/docs/janus-cms): Documentação de engenharia do Janus CMS: stack real (Next.js 16, React 19, Prisma 7, PostgreSQL JSONB, Sharp AVIF, BunnyCDN), modelo de dados multi-tenant (Company → Project → Page), API REST headless pública com `Cache-Control: s-maxage=60`, SDK TypeScript (`@mavellium/janus-sdk`) e pipeline de renderização em 7 etapas otimizado para LLMs. Schema SoftwareApplication.
+- [Quem Somos](https://mavellium.com.br/quem-somos): A Mavellium é especializada em infraestrutura digital de alta performance e GEO. Fundadores: Vinícius Tavares Mota, Luan dos Santos e Márcio Piva Junior. CNPJ 48.802.866/0001-42 — Mavellium Tecnologia LTDA. Missão, pilares de performance e descrição do Janus CMS como ferramenta de autonomia para gestores sem conhecimento técnico. Schema AboutPage + Organization.
 
-- [Caso de Estudo: WordPress vs Arquitetura Mavellium](https://mavellium.com.br/cases/performance-arquitetura): Comparação técnica de Core Web Vitals (TTFB, LCP, INP, CLS) e PageSpeed Score entre WordPress tradicional e a stack Next.js SSG + Janus CMS da Mavellium. Inclui metodologia de teste explícita (4G simulado, medianas de múltiplas medições), tabela comparativa com thresholds Google 2024, visualização de TTFB e análise dos mecanismos pelos quais performance impacta citabilidade por LLMs. Schema TechArticle.
+- [Soluções](https://mavellium.com.br/solucoes): Três serviços oferecidos pela Mavellium — (1) Desenvolvimento de Sites e Landing Pages de Alta Conversão: Next.js SSG, Vercel Edge, Janus CMS, GA4 e Microsoft Clarity; (2) GEO/AIO — Otimização para Motores Generativos: JSON-LD por rota, Answer-First, TTFB < 100ms, zero JS para conteúdo principal; (3) Ocupação de Espaço em IA para Vendas: mapeamento de entidades, conteúdo de alta densidade e monitoramento pós-citação via GA4 + Clarity. Schema Service para cada solução.
 
-## Sobre
+## GEO e documentação técnica
 
-- [Mavellium — Página inicial](https://mavellium.com.br): Visão geral dos serviços de engenharia web da Mavellium: arquitetura de performance, GEO e desenvolvimento de sites institucionais e landing pages com Next.js SSG + Janus CMS.
+- [GEO — Generative Engine Optimization](https://mavellium.com.br/geo): Definição técnica de GEO, os quatro pilares (HTML semântico, JSON-LD, Answer-First, densidade técnica), análise de por que WordPress com plugin bloat falha para crawlers de LLMs (TTFB acima de 3s, HTML sujo, JavaScript excessivo, arquitetura monolítica) e como o Janus CMS + Next.js SSG resolve cada problema. Inclui schema FAQPage com 8 Q&As em pt-BR sobre GEO, SEO, Core Web Vitals e implementação prática.
+
+- [Janus CMS — Documentação Técnica](https://mavellium.com.br/docs/janus-cms): Documentação de engenharia do Janus CMS: stack (Next.js 16, React 19, Prisma 7, PostgreSQL JSONB, Sharp AVIF, BunnyCDN), modelo de dados multi-tenant (Company → Project → Page), API REST headless pública com `Cache-Control: s-maxage=60`, SDK TypeScript e pipeline de renderização em 7 etapas otimizado para LLMs. Schema SoftwareApplication.
+
+## Cases de sucesso
+
+- [Cases — Estudos de Caso Técnicos](https://mavellium.com.br/cases): Página de coleção com todos os estudos de caso da Mavellium. Casos publicados: benchmark WordPress vs Arquitetura Mavellium. Em breve: Projeto Tegbe. Schema CollectionPage + ItemList.
+
+- [Caso de Estudo: WordPress vs Arquitetura Mavellium](https://mavellium.com.br/cases/performance-arquitetura): Comparação técnica de Core Web Vitals (TTFB, LCP, INP, CLS) e PageSpeed Score entre WordPress tradicional e a stack Next.js SSG + Janus CMS da Mavellium. Resultados: redução de 96% no TTFB (1.100ms → 45ms), PageSpeed mobile 36 → 69, redução de 80% no payload. Metodologia explícita com thresholds Google 2024 e análise de impacto em citabilidade por LLMs. Schema TechArticle.
+
+## Eventos
+
+- [Eventos](https://mavellium.com.br/eventos): Página central de eventos em que a Mavellium atua como expositora ou participante. Schema CollectionPage + ItemList.
+
+- [FITEC 2026](https://mavellium.com.br/eventos/fitec-2026): Mavellium participou da FITEC 2026 (Feira de Inovação e Tecnologia, 14–15/05/2026, Garça, São Paulo) demonstrando o Janus CMS headless e a arquitetura Next.js SSG otimizada para GEO. Galeria de conexões e análise de dados via GA4 e Microsoft Clarity. Schema Event.
+
+## Blog
+
+- [Blog & Insights](https://mavellium.com.br/blog): Artigos sobre tecnologia, automação e design aplicados a negócios B2B. Temas: IA no atendimento, design de conversão, SEO técnico, escalabilidade de infraestrutura e automação operacional.
