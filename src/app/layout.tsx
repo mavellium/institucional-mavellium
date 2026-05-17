@@ -45,7 +45,8 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       className={`${satoshi.variable} h-full antialiased scroll-smooth scroll-pt-24`}
-      suppressHydrationWarning 
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
       <body className={`min-h-full flex flex-col ${satoshi.variable} font-satoshi bg-[#050505] text-white`}>
         <HashScroller />

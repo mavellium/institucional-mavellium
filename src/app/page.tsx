@@ -1,4 +1,5 @@
 
+import Image from "next/image";
 import { Header } from "../components/Header";
 import { HeroSection, HeroSlide } from "../components/ui/hero-section-with-smooth-bg-shader";
 import type { IconName } from "../components/ui/radial-orbital-timeline";
@@ -20,8 +21,20 @@ import { getWhatsappUrl, siteConfig } from "../lib/constants";
 import heroSlidesData from '@/src/JSON/heroData.json'
 import { FitecLeadsGallery } from "../components/ui/FitecLeadsGallery";
 import { fetchFitecLeads } from "@/src/lib/fitec-api";
+import { JanusClient } from "@mavellium/janus-sdk";
+
+const janus = new JanusClient({
+  baseUrl: process.env.BLOG_API_URL ?? 'http://localhost:3000',
+})
 
 export default async function Home() {
+  let heroSlides: HeroSlide[] = heroSlidesData as HeroSlide[]
+  try {
+    heroSlides = await janus.getHeroContent<HeroSlide>('mavellium-main/home')
+  } catch {
+    // API unavailable or page not published — static fallback keeps the site working.
+  }
+
   const images = [
     { src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1280&h=720&fit=crop', alt: 'Modern architecture' },
     { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
@@ -157,7 +170,7 @@ export default async function Home() {
       primary: {
         label: "Falar com Especialista",
         href: getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de agendar uma conversa com um especialista para escalar meu negócio."),
-        icon: "mdi:whatsapp" 
+        icon: "mdi:whatsapp"
       },
       secondary: {
         label: "Rever Nossa Metodologia",
@@ -166,16 +179,18 @@ export default async function Home() {
       }
     }
   };
-  const SlideWithText = ({ image, title, description }: { image: string; title: string; description: string }) => (
+  const SlideWithText = ({ image, title, description, imageAlt }: { image: string; title: string; description: string; imageAlt: string }) => (
     <div className="relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] group border border-black/5 shadow-lg">
-      <img
+      <Image
         src={image}
-        alt={title}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        alt={imageAlt}
+        fill
+        sizes="(max-width: 768px) 100vw, 60vw"
+        className="object-cover transition-transform duration-700 group-hover:scale-105"
       />
       {/* Gradiente ampliado para garantir que o texto branco sempre tenha contraste */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90" />
-      
+
       {/* Espaçamento interno (padding) muito maior: p-8 no mobile e p-12 no desktop */}
       <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-8 md:p-12 h-full">
         <h3 className="text-white text-2xl md:text-3xl font-bold mb-3 tracking-tight">{title}</h3>
@@ -187,32 +202,37 @@ export default async function Home() {
   const slidesMetodologia = [
     <SlideWithText
       key="1"
-      image="/imagem-1.png"
+      image="/imagem-1.webp"
       title="1. Imersão e Briefing"
+      imageAlt="Reunião de imersão e briefing — equipe Mavellium alinhando metas de performance e arquitetura GEO com o cliente"
       description="Sentamos com você para entender a fundo a sua dor, o seu modelo de negócio e o que você espera de resultado."
     />,
     <SlideWithText
       key="2"
-      image="/imagem-2.png"
+      image="/imagem-2.webp"
       title="2. Análise de Viabilidade"
+      imageAlt="Análise de viabilidade técnica — seleção de stack Next.js SSG e infraestrutura headless para otimização de TTFB e LCP"
       description="Nossa equipe técnica seleciona as melhores tecnologias atuais para resolver a sua demanda com o melhor custo-benefício."
     />,
     <SlideWithText
       key="3"
-      image="/imagem-3.png"
+      image="/imagem-3.webp"
       title="3. Cronograma de Entregas"
+      imageAlt="Cronograma iterativo de entregas — planejamento de projeto web com marcos de Core Web Vitals por fase"
       description="O projeto é fatiado em etapas. Criamos um calendário transparente para que você acompanhe visualmente o progresso."
     />,
     <SlideWithText
       key="4"
-      image="/imagem-4.png"
+      image="/imagem-4.webp"
       title="4. Desenvolvimento"
+      imageAlt="Desenvolvimento com Next.js SSG e Janus CMS — implementação de site institucional com foco em performance e GEO"
       description="Você tem visão total do andamento do projeto, validando e acompanhando cada fase concluída pela nossa equipe."
     />,
     <SlideWithText
       key="5"
-      image="/imagem-5.png"
+      image="/imagem-5.webp"
       title="5. Entrega Final"
+      imageAlt="Entrega final do projeto Mavellium — site institucional com PageSpeed Score otimizado e HTML semântico para crawlers de LLMs"
       description="O projeto só é finalizado quando atinge os nossos rigorosos padrões de excelência e a sua total satisfação."
     />,
   ];
@@ -274,13 +294,13 @@ export default async function Home() {
     },
   ];
 
-//   const FITEC_LEADS = [
-//   { id: "1", name: "Carlos Eduardo", image: "/placeholder-lead-1.jpg" },
-//   { id: "2", name: "Mariana Souza", image: "/placeholder-lead-2.jpg" },
-//   { id: "3", name: "", image: "/placeholder-lead-3.jpg" }, // Nome opcional
-//   { id: "4", name: "Roberto Alves", image: "/placeholder-lead-4.jpg" },
-// ];
-const fitecLeads = await fetchFitecLeads();
+  //   const FITEC_LEADS = [
+  //   { id: "1", name: "Carlos Eduardo", image: "/placeholder-lead-1.jpg" },
+  //   { id: "2", name: "Mariana Souza", image: "/placeholder-lead-2.jpg" },
+  //   { id: "3", name: "", image: "/placeholder-lead-3.jpg" }, // Nome opcional
+  //   { id: "4", name: "Roberto Alves", image: "/placeholder-lead-4.jpg" },
+  // ];
+  const fitecLeads = await fetchFitecLeads();
 
   return (
     <>
@@ -288,17 +308,19 @@ const fitecLeads = await fetchFitecLeads();
         logo={"/logo-mavellium-header.svg"}
         logoAlt={"Mavellium - Tecnologia e Inovação"}
         links={[
-          { name: "Início", href: "#inicio" },
-          { name: "Quem Somos", href: "#quem-somos" },
-          { name: "Soluções", href: "#solucoes" },
-          { name: "Metodologia", href: "#metodologia" },
+          { name: "Início", href: "/" },
+          { name: "Quem Somos", href: "/quem-somos" },
+          { name: "Soluções", href: "/solucoes" },
+          { name: "Cases", href: "/cases" },
+          { name: "Metodologia", href: "/#metodologia" },
           { name: "Blog", href: "/blog" },
-          { name: "FITEC 2026", href: "/fitec-2026" },
+          { name: "Docs", href: "/docs/janus-cms" },
+          { name: "Eventos", href: "/eventos" },
         ]}
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
         ctaText={"Falar com Especialista"}
       />
-      <HeroSection slides={heroSlidesData as HeroSlide[]} />
+      <HeroSection slides={heroSlides} />
       <Pricing />
       <div id="metodologia">
         <Carousel
@@ -339,8 +361,8 @@ const fitecLeads = await fetchFitecLeads();
         title="Minha Timeline Interativa"
         description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
         timelineData={timelineData} /> */}
-        {fitecLeads.length > 0 && (
-        <FitecLeadsGallery 
+      {fitecLeads.length > 0 && (
+        <FitecLeadsGallery
           title="Conexões FITEC 2026"
           description="Pessoas incríveis que conhecemos na feira, gerenciadas via Janus CMS."
           items={fitecLeads.map(lead => ({ ...lead, text: lead.text ?? undefined }))}

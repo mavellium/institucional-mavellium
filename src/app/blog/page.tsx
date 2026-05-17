@@ -4,7 +4,7 @@ import { Footer } from "../../components/ui/footer";
 import { BlogCard } from "../../components/ui/blog-card";
 import { BlogGrid } from "./_components/BlogGrid";
 import { getAllPosts } from "../../lib/blog";
-import { getWhatsappUrl } from "../../lib/constants";
+import { getWhatsappUrl, NAV_LINKS } from "../../lib/constants";
 
 export const metadata: Metadata = {
   title: "Blog & Insights | Mavellium",
@@ -17,15 +17,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-const NAV_LINKS = [
-  { name: "Início", href: "/" },
-  { name: "Quem Somos", href: "/#quem-somos" },
-  { name: "Soluções", href: "/#solucoes" },
-  { name: "Metodologia", href: "/#metodologia" },
-  { name: "Blog", href: "/blog" },
-  { name: "FITEC - 2026", href: "/fitec-2026" },
-];
 
 export default function BlogPage() {
   const posts = getAllPosts();

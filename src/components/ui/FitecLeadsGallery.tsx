@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ArrowRight, UserSquare2 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -27,15 +28,16 @@ interface FitecLeadsGalleryProps {
 
 const LeadCard = memo(({ item }: { item: FitecLeadItem }) => (
   <CarouselItem className="max-w-[280px] pl-5 lg:max-w-[320px]">
-    <Link 
-      href="/fitec-2026"
+    <Link
+      href="/eventos/fitec-2026"
       className="group relative block h-[380px] overflow-hidden rounded-md bg-zinc-950 shadow-xl border border-white/10 transition-all duration-500 hover:border-[#00D26A]/40 hover:shadow-[0_0_30px_rgba(0,210,106,0.1)] cursor-pointer"
     >
-      <img
+      <Image
         src={item.image}
-        alt={item.name || "Visitante FITEC"}
-        loading="lazy"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-40 grayscale group-hover:grayscale-0"
+        alt={`Estande da Mavellium na FITEC 2026 — ${item.name || "visitante"} interagindo com o Janus CMS para análise de dados com GA4 e Clarity`}
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+        className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-40 grayscale group-hover:grayscale-0"
       />
       
       <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent opacity-90" />
@@ -163,7 +165,7 @@ export function FitecLeadsGallery({
           </div>
 
           <Button asChild variant="outline" className="h-14 rounded-md border-white/10 bg-transparent px-8 text-base font-bold text-white transition-all hover:bg-[#00D26A] hover:border-[#00D26A] hover:text-black w-full md:w-auto">
-            <Link href="/fitec-2026">Ver Todos os Leads</Link>
+            <Link href="/eventos/fitec-2026">Ver Todos os Leads</Link>
           </Button>
         </div>
       </div>

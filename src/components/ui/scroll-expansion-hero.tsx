@@ -66,7 +66,7 @@ const ScrollExpandMedia = ({
           
           {/* BG Inicial */}
           <motion.div style={{ opacity: uiOpacity }} className="absolute inset-0 z-0">
-            <Image src={bgImageSrc} alt="Background" fill className="object-cover" priority />
+            <Image src={bgImageSrc} alt="Background" fill sizes="100vw" className="object-cover" priority />
             <div className="absolute inset-0 bg-black/50" />
           </motion.div>
 
@@ -84,7 +84,7 @@ const ScrollExpandMedia = ({
             {mediaType === 'video' ? (
               <video src={mediaSrc} poster={posterSrc} autoPlay muted loop playsInline className="w-full h-full object-cover" />
             ) : (
-              <Image src={mediaSrc} alt={title || 'Media'} fill className="object-cover" />
+              <Image src={mediaSrc} alt={title || 'Media'} fill sizes="100vw" className="object-cover" />
             )}
           </motion.div>
 

@@ -123,8 +123,9 @@ export function FitecGrid({ leads }: FitecGridProps) {
               <div className="relative aspect-square w-full overflow-hidden bg-zinc-100">
                 <Image
                   src={lead.image}
-                  alt={lead.name}
+                  alt={`Estande da Mavellium na FITEC 2026 — ${lead.name} interagindo com o Janus CMS para análise de dados com GA4 e Clarity`}
                   fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <button
@@ -187,7 +188,8 @@ export function FitecGrid({ leads }: FitecGridProps) {
               Quase lá!
             </h2>
             <p className="mb-4 text-center text-sm font-light text-zinc-500">
-              Preencha rapidinho e tenha acesso a novidades e soluções pensadas para acelerar os resultados do seu negócio.
+              Preencha rapidinho e tenha acesso a novidades e soluções pensadas para acelerar os
+              resultados do seu negócio.
             </p>
 
             <form onSubmit={handleFormSubmit} className="flex flex-col gap-3">
@@ -269,9 +271,9 @@ export function FitecGrid({ leads }: FitecGridProps) {
               Download Concluído!
             </h2>
             <p className="mb-8 text-sm font-light text-zinc-600">
-              Agradecemos imensamente pela sua visita ao nosso estande na FITEC 2026.
-              Foi um prazer conectar com você! Que tal aproveitar para descobrir
-              como podemos ajudar o seu negócio a escalar?
+              Agradecemos imensamente pela sua visita ao nosso estande na FITEC 2026. Foi um prazer
+              conectar com você! Que tal aproveitar para descobrir como podemos ajudar o seu negócio
+              a escalar?
             </p>
 
             <a

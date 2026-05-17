@@ -16,7 +16,7 @@ import {
   formatDate,
   CATEGORY_COLORS,
 } from "../../../lib/blog";
-import { getWhatsappUrl } from "../../../lib/constants";
+import { getWhatsappUrl, NAV_LINKS } from "../../../lib/constants";
 import { cn } from "@/src/lib/utils";
 
 interface Props {
@@ -43,15 +43,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
   };
 }
-
-const NAV_LINKS = [
-  { name: "Início", href: "/" },
-  { name: "Quem Somos", href: "/#quem-somos" },
-  { name: "Soluções", href: "/#solucoes" },
-  { name: "Metodologia", href: "/#metodologia" },
-  { name: "Blog", href: "/blog" },
-  { name: "FITEC - 2026", href: "/fitec-2026" },
-];
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;

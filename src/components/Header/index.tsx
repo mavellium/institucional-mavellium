@@ -182,23 +182,16 @@ export function Header({
                 href={ctaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:block group relative"
                 aria-label={ctaText}
+                className={`hidden sm:block group relative inline-flex items-center justify-center overflow-hidden rounded-full px-5 lg:px-8 h-9 lg:h-11 py-2 font-bold text-[10px] lg:text-xs tracking-[0.1em] transition-all duration-300 hover:scale-105 active:scale-95 border ${
+                  lightBg
+                    ? "bg-[#00D26A] text-black hover:bg-[#00b35a] border-[#00D26A]"
+                    : `border-[#00D26A]/20 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`
+                }`}
               >
-                {/* Glow alterado para verde */}
-                <div
-                  className={`absolute -inset-0.5 rounded-full opacity-30 blur-sm transition duration-500 group-hover:opacity-60 bg-[#00D26A]`}
-                />
-                <button
-                  className={`relative inline-flex cursor-pointer h-9 lg:h-11 items-center justify-center overflow-hidden rounded-full px-5 lg:px-8 py-2 font-bold text-[10px] lg:text-xs tracking-[0.1em] transition-all duration-300 hover:scale-105 active:scale-95 border ${
-                    lightBg
-                      ? "bg-[#00D26A] text-black hover:bg-[#00b35a] border-[#00D26A]"
-                      : `border-[#00D26A]/20 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`
-                  }`}
-                >
-                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
-                  <span className="relative z-20 uppercase">{ctaText}</span>
-                </button>
+                <div className="absolute -inset-0.5 rounded-full opacity-30 blur-sm transition duration-500 group-hover:opacity-60 bg-[#00D26A]" />
+                <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
+                <span className="relative z-20 uppercase">{ctaText}</span>
               </Link>
 
               {/* BOTÃO MENU MOBILE */}

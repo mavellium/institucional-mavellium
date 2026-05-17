@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/fitec-2026",
+        destination: "/eventos/fitec-2026",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

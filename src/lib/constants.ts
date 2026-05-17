@@ -16,3 +16,15 @@ export const siteConfig = {
 export const getWhatsappUrl = (message: string) => {
   return `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 };
+
+// 4. Links de navegação globais — alterar aqui reflete em todas as páginas
+export const NAV_LINKS = [
+  { name: "Início", href: "/" },
+  { name: "Quem Somos", href: "/quem-somos" },
+  { name: "Soluções", href: "/solucoes" },
+  { name: "Cases", href: "/cases"},
+  { name: "Metodologia", href: "/#metodologia" },
+  { name: "Blog", href: "/blog" },
+  { name: "Docs", href: "/docs/janus-cms" },
+  { name: "Eventos", href: "/eventos" },
+];
