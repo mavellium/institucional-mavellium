@@ -1,8 +1,8 @@
 
 import Image from "next/image";
 import { Header } from "../components/Header";
-import { HeroSection, HeroSlide } from "../components/ui/hero-section-with-smooth-bg-shader";
 import type { IconName } from "../components/ui/radial-orbital-timeline";
+import { HeroFromJanus } from "../components/ui/hero-janus";
 import { Gallery4 } from "../components/ui/gallery4";
 import { Footer } from "../components/ui/footer";
 import ProjectShowcase from "../components/ui/project-showcase";
@@ -18,23 +18,10 @@ import FlippingCardDemo from "../components/ui/autonomous-agents";
 import { GalleryGridBlock } from "../components/ui/sections-gallery";
 import { Plan, PricingSection } from "../components/ui/pricing-details";
 import { getWhatsappUrl, siteConfig } from "../lib/constants";
-import heroSlidesData from '@/src/JSON/heroData.json'
 import { FitecLeadsGallery } from "../components/ui/FitecLeadsGallery";
 import { fetchFitecLeads } from "@/src/lib/fitec-api";
-import { JanusClient } from "@/src/lib/janus-sdk";
-
-const janus = new JanusClient({
-  baseUrl: process.env.BLOG_API_URL ?? 'http://localhost:3000',
-})
 
 export default async function Home() {
-  let heroSlides: HeroSlide[] = heroSlidesData as HeroSlide[]
-  try {
-    const remote = await janus.getHeroContent<HeroSlide>('mavellium-main/home')
-    if (remote.length > 0) heroSlides = remote
-  } catch {
-    // API unavailable or page not published — static JSON fallback keeps the site working.
-  }
 
   const images = [
     { src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1280&h=720&fit=crop', alt: 'Modern architecture' },
@@ -315,7 +302,7 @@ export default async function Home() {
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
         ctaText={"Falar com Especialista"}
       />
-      <HeroSection slides={heroSlides} />
+      <HeroFromJanus />
       <Pricing />
       <div id="metodologia">
         <Carousel
