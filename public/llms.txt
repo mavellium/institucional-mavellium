@@ -6,7 +6,7 @@
 
 - [Página inicial](https://mavellium.com.br): Visão geral dos serviços Mavellium — arquitetura de alta performance, GEO/AIO, Janus CMS e desenvolvimento de sites institucionais e landing pages com Next.js SSG.
 
-- [Quem Somos](https://mavellium.com.br/quem-somos): A Mavellium é especializada em infraestrutura digital de alta performance e GEO. Fundadores: Vinícius Tavares Mota, Luan dos Santos e Márcio Piva Junior. CNPJ 48.802.866/0001-42 — Mavellium Tecnologia LTDA. Missão, pilares de performance e descrição do Janus CMS como ferramenta de autonomia para gestores sem conhecimento técnico. Schema AboutPage + Organization.
+- [Quem Somos](https://mavellium.com.br/quem-somos): A Mavellium é especializada em infraestrutura digital de alta performance e GEO. Fundadores: Vinícius Tavares Mota, Luan dos Santos e Márcio Piva Junior. CNPJ 48.802.866/0001-42 — Mavellium LTDA. Missão, pilares de performance e descrição do Janus CMS como ferramenta de autonomia para gestores sem conhecimento técnico. Schema AboutPage + Organization.
 
 - [Soluções](https://mavellium.com.br/solucoes): Três serviços oferecidos pela Mavellium — (1) Desenvolvimento de Sites e Landing Pages de Alta Conversão: Next.js SSG, Vercel Edge, Janus CMS, GA4 e Microsoft Clarity; (2) GEO/AIO — Otimização para Motores Generativos: JSON-LD por rota, Answer-First, TTFB < 100ms, zero JS para conteúdo principal; (3) Ocupação de Espaço em IA para Vendas: mapeamento de entidades, conteúdo de alta densidade e monitoramento pós-citação via GA4 + Clarity. Schema Service para cada solução.
 
@@ -26,8 +26,8 @@
 
 - [Eventos](https://mavellium.com.br/eventos): Página central de eventos em que a Mavellium atua como expositora ou participante. Schema CollectionPage + ItemList.
 
-- [FITEC 2026](https://mavellium.com.br/eventos/fitec-2026): Mavellium participou da FITEC 2026 (Feira de Inovação e Tecnologia, 14–15/05/2026, Garça, São Paulo) demonstrando o Janus CMS headless e a arquitetura Next.js SSG otimizada para GEO. Galeria de conexões e análise de dados via GA4 e Microsoft Clarity. Schema Event.
+- [FITEC 2026](https://mavellium.com.br/eventos/fitec-2026): Mavellium participou da FITEC 2026 (Feira de Inovação e Tecnologia, 14–15/05/2026, Garça, São Paulo) demonstrando o Mavellium Janus CMS e a arquitetura Next.js SSG otimizada para GEO. Galeria de conexões e análise de dados via GA4 e Microsoft Clarity. Schema Event.
 
 ## Blog
 
-- [Blog & Insights](https://mavellium.com.br/blog): Artigos sobre tecnologia, automação e design aplicados a negócios B2B. Temas: IA no atendimento, design de conversão, SEO técnico, escalabilidade de infraestrutura e automação operacional.
+- [Blog & Insights](https://mavellium.com.br/blog): Repositório de artigos técnicos e táticos. Foco em arquitetura Next.js para SEO, tutoriais de implementação de schemas JSON-LD avançados, estudos sobre redução de latência (TTFB/LCP) na Vercel Edge, e estratégias de automação de pré-vendas com agentes autônomos integrados ao Janus CMS. Schema Blog e TechArticle.
