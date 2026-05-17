@@ -30,9 +30,10 @@ const janus = new JanusClient({
 export default async function Home() {
   let heroSlides: HeroSlide[] = heroSlidesData as HeroSlide[]
   try {
-    heroSlides = await janus.getHeroContent<HeroSlide>('mavellium-main/home')
+    const remote = await janus.getHeroContent<HeroSlide>('mavellium-main/home')
+    if (remote.length > 0) heroSlides = remote
   } catch {
-    // API unavailable or page not published — static fallback keeps the site working.
+    // API unavailable or page not published — static JSON fallback keeps the site working.
   }
 
   const images = [
@@ -294,12 +295,6 @@ export default async function Home() {
     },
   ];
 
-  //   const FITEC_LEADS = [
-  //   { id: "1", name: "Carlos Eduardo", image: "/placeholder-lead-1.jpg" },
-  //   { id: "2", name: "Mariana Souza", image: "/placeholder-lead-2.jpg" },
-  //   { id: "3", name: "", image: "/placeholder-lead-3.jpg" }, // Nome opcional
-  //   { id: "4", name: "Roberto Alves", image: "/placeholder-lead-4.jpg" },
-  // ];
   const fitecLeads = await fetchFitecLeads();
 
   return (

@@ -29,7 +29,10 @@ export class JanusClient {
 
     let response: Response
     try {
-      response = await fetch(url, { method: 'GET' })
+      response = await fetch(url, {
+        method: 'GET',
+        next: { revalidate: 3600 },
+      })
     } catch (cause) {
       throw new JanusNetworkError(
         `unable to reach Janus API at "${url}"`,
@@ -43,10 +46,16 @@ export class JanusClient {
 
     const page: JanusPageResponse = await response.json()
 
-    if (!Array.isArray(page.content)) {
+    // content shape: { [blockId]: { slides: T[], ...otherFields } }
+    // read the first block that contains a slides array
+    const content = page.content as Record<string, Record<string, unknown>> | null
+    const block = content ? Object.values(content)[0] : null
+    const slides = block?.slides
+
+    if (!Array.isArray(slides)) {
       return []
     }
 
-    return page.content as T[]
+    return slides as T[]
   }
 }
