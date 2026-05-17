@@ -21,7 +21,7 @@ import { getWhatsappUrl, siteConfig } from "../lib/constants";
 import heroSlidesData from '@/src/JSON/heroData.json'
 import { FitecLeadsGallery } from "../components/ui/FitecLeadsGallery";
 import { fetchFitecLeads } from "@/src/lib/fitec-api";
-import { JanusClient } from "@mavellium/janus-sdk";
+import { JanusClient } from "@/src/lib/janus-sdk";
 
 const janus = new JanusClient({
   baseUrl: process.env.BLOG_API_URL ?? 'http://localhost:3000',
