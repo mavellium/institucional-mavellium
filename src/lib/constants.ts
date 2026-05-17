@@ -25,6 +25,6 @@ export const NAV_LINKS = [
   { name: "Cases", href: "/cases"},
   { name: "Metodologia", href: "/#metodologia" },
   { name: "Blog", href: "/blog" },
-  { name: "Docs", href: "/docs/janus-cms" },
+  { name: "Docs", href: "/docs" },
   { name: "Eventos", href: "/eventos" },
 ];

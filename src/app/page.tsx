@@ -314,7 +314,7 @@ export default async function Home() {
           { name: "Cases", href: "/cases" },
           { name: "Metodologia", href: "/#metodologia" },
           { name: "Blog", href: "/blog" },
-          { name: "Docs", href: "/docs/janus-cms" },
+          { name: "Docs", href: "/docs" },
           { name: "Eventos", href: "/eventos" },
         ]}
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
