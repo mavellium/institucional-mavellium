@@ -1,7 +1,25 @@
 
 import Image from "next/image";
 import { Header } from "../components/Header";
-import type { IconName } from "../components/ui/radial-orbital-timeline";
+
+function SlideWithText({ image, title, description, imageAlt }: { image: string; title: string; description: string; imageAlt: string }) {
+  return (
+    <div className="relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] group border border-black/5 shadow-lg">
+      <Image
+        src={image}
+        alt={imageAlt}
+        fill
+        sizes="(max-width: 768px) 100vw, 60vw"
+        className="object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90" />
+      <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-8 md:p-12 h-full">
+        <h3 className="text-white text-2xl md:text-3xl font-bold mb-3 tracking-tight">{title}</h3>
+        <p className="text-white/80 text-base md:text-lg leading-relaxed">{description}</p>
+      </div>
+    </div>
+  );
+}
 import { Hero } from "../components/ui/hero-janus";
 import { Gallery4 } from "../components/ui/gallery4";
 import { Footer } from "../components/ui/footer";
@@ -19,22 +37,11 @@ import {
 } from "../components/ui/janus-home-sections";
 import { GalleryGridBlock } from "../components/ui/sections-gallery";
 import { Plan, PricingSection } from "../components/ui/pricing-details";
-import { getWhatsappUrl, siteConfig } from "../lib/constants";
+import { getWhatsappUrl } from "../lib/constants";
 import { FitecLeadsGallery } from "../components/ui/FitecLeadsGallery";
 import { fetchFitecLeads } from "@/src/lib/fitec-api";
 
 export default async function Home() {
-
-  const images = [
-    { src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1280&h=720&fit=crop', alt: 'Modern architecture' },
-    { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
-    { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
-    { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
-    { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
-    { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
-    { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
-    { src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop', alt: 'Cityscape' },
-  ];
 
   const blogData = {
     title: "Mavellium Insights",
@@ -82,87 +89,6 @@ export default async function Home() {
       },
     ],
   };
-
-  // Import IconName type from the timeline component
-
-
-  const timelineData = [
-    {
-      id: 1,
-      title: "Planning",
-      date: "Jan 2024",
-      content: "Project planning and requirements gathering phase.",
-      category: "Planning",
-      icon: "Calendar" as IconName, // Cast to IconName
-      relatedIds: [2],
-      status: "completed" as const,
-      energy: 100,
-    },
-    {
-      id: 2,
-      title: "Design",
-      date: "Feb 2024",
-      content: "UI/UX design and system architecture.",
-      category: "Design",
-      icon: "FileText" as IconName,
-      relatedIds: [1, 3],
-      status: "completed" as const,
-      energy: 90,
-    },
-    {
-      id: 3,
-      title: "Development",
-      date: "Mar 2024",
-      content: "Core features implementation and testing.",
-      category: "Development",
-      icon: "Code" as IconName,
-      relatedIds: [2, 4],
-      status: "in-progress" as const,
-      energy: 60,
-    },
-    {
-      id: 4,
-      title: "Testing",
-      date: "Apr 2024",
-      content: "User testing and bug fixes.",
-      category: "Testing",
-      icon: "User" as IconName,
-      relatedIds: [3, 5],
-      status: "pending" as const,
-      energy: 30,
-    },
-    {
-      id: 5,
-      title: "Release",
-      date: "May 2024",
-      content: "Final deployment and release.",
-      category: "Release",
-      icon: "Clock" as IconName,
-      relatedIds: [4],
-      status: "pending" as const,
-      energy: 10,
-    },
-  ];
-
-  const SlideWithText = ({ image, title, description, imageAlt }: { image: string; title: string; description: string; imageAlt: string }) => (
-    <div className="relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] group border border-black/5 shadow-lg">
-      <Image
-        src={image}
-        alt={imageAlt}
-        fill
-        sizes="(max-width: 768px) 100vw, 60vw"
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      {/* Gradiente ampliado para garantir que o texto branco sempre tenha contraste */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90" />
-
-      {/* Espaçamento interno (padding) muito maior: p-8 no mobile e p-12 no desktop */}
-      <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-8 md:p-12 h-full">
-        <h3 className="text-white text-2xl md:text-3xl font-bold mb-3 tracking-tight">{title}</h3>
-        <p className="text-white/80 text-base md:text-lg leading-relaxed">{description}</p>
-      </div>
-    </div>
-  );
 
   const slidesMetodologia = [
     <SlideWithText

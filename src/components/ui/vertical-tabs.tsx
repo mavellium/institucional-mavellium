@@ -167,7 +167,15 @@ export default function VerticalTabs({ services: servicesProp }: VerticalTabsPro
 
 // --- Sub-componentes ---
 
-const TabButton = memo(({ service, isActive, isInView, isPaused, onClick }: any) => (
+interface TabButtonProps {
+  service: Service;
+  isActive: boolean;
+  isInView: boolean;
+  isPaused: boolean;
+  onClick: () => void;
+}
+
+const TabButton = memo(({ service, isActive, isInView, isPaused, onClick }: TabButtonProps) => (
   <button
     onClick={onClick}
     className={cn(
@@ -220,7 +228,7 @@ const TabButton = memo(({ service, isActive, isInView, isPaused, onClick }: any)
 
 TabButton.displayName = "TabButton";
 
-const NavButton = memo(({ onClick, icon }: { onClick: () => void, icon: any }) => (
+const NavButton = memo(({ onClick, icon }: { onClick: () => void, icon: React.ComponentProps<typeof HugeiconsIcon>["icon"] }) => (
   <button
     onClick={(e) => { e.stopPropagation(); onClick(); }}
     // Botões claros com hover em verde
