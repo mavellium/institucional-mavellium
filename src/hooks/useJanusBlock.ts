@@ -34,9 +34,9 @@ export function useJanusBlock<T>(pageSlug: string, blockId: string) {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((page: { content: Record<string, T> }) => {
+      .then((page: { schema: { content: Record<string, T> } }) => {
         if (cancelled) return;
-        const block = page?.content?.[blockId] ?? null;
+        const block = page?.schema?.content?.[blockId] ?? null;
         if (block) {
           cache.set(key, block);
           setData(block);
