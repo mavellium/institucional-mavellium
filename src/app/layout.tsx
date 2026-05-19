@@ -36,6 +36,31 @@ export const metadata: Metadata = {
   keywords: ["Mavellium", "Inteligência Artificial", "Criação de Sites", "Automação", "Landing Pages", "Tecnologia B2B"],
 };
 
+const professionalServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Mavellium",
+  url: "https://mavellium.com.br",
+  logo: "https://mavellium.com.br/logo.png",
+  description: "Desenvolvimento de sites e landing pages com arquitetura otimizada para modelos de IA, RAG e motores de busca semânticos.",
+  telephone: "+55-14-99177-9502",
+  email: "contato@mavellium.com.br",
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "BR",
+  },
+  sameAs: [
+    "https://www.instagram.com/mavellium/",
+    "https://www.linkedin.com/company/mavellium",
+  ],
+  knowsAbout: [
+    "Artificial Intelligence",
+    "Search Engine Optimization",
+    "Structured Data",
+    "Large Language Models",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,6 +74,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className={`min-h-full flex flex-col ${satoshi.variable} font-satoshi bg-[#050505] text-white`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceSchema) }}
+        />
         <HashScroller />
         {children}
       </body>
