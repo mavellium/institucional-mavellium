@@ -59,8 +59,10 @@ function cmsGuestToFitecLeads(guest: CmsGuest): FitecLead[] {
 // ─── Fetch ───────────────────────────────────────────────────────────────────
 
 export async function fetchFitecLeads(): Promise<FitecLead[]> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
   try {
-    const res = await fetch(GUESTS_URL, { cache: "no-store" });
+    const res = await fetch(GUESTS_URL, { cache: "no-store", signal: controller.signal });
     if (!res.ok) return [];
     const data = (await res.json()) as CmsGuestsResponse;
     if (!data.ok || !Array.isArray(data.data)) return [];
@@ -70,5 +72,7 @@ export async function fetchFitecLeads(): Promise<FitecLead[]> {
   } catch (error) {
     console.error("[fitec-api] Erro ao buscar guests:", error);
     return [];
+  } finally {
+    clearTimeout(timeout);
   }
 }
