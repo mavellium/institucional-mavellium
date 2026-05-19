@@ -14,7 +14,7 @@ const FALLBACK = heroSlidesData as HeroSlide[];
  * Enquanto carrega usa o fallback estático (heroData.json).
  * Alterações no Janus aparecem no próximo F5 — sem deploy.
  */
-export function HeroFromJanus() {
+export function Hero() {
   const { data } = useJanusBlock<{ slides: HeroSlide[] }>(
     "home",
     "hero-section-mavellium"

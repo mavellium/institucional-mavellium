@@ -47,23 +47,28 @@ const SERVICES: Service[] = [
 
 const AUTO_PLAY_DURATION = 5000;
 
-export default function VerticalTabs() {
+export interface VerticalTabsProps {
+  services?: Service[];
+}
+
+export default function VerticalTabs({ services: servicesProp }: VerticalTabsProps = {}) {
+  const services = servicesProp && servicesProp.length > 0 ? servicesProp : SERVICES;
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  
+
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { amount: 0.3, once: false });
 
   const handleNext = useCallback(() => {
     setDirection(1);
-    setActiveIndex((prev) => (prev + 1) % SERVICES.length);
-  }, []);
+    setActiveIndex((prev) => (prev + 1) % services.length);
+  }, [services.length]);
 
   const handlePrev = useCallback(() => {
     setDirection(-1);
-    setActiveIndex((prev) => (prev - 1 + SERVICES.length) % SERVICES.length);
-  }, []);
+    setActiveIndex((prev) => (prev - 1 + services.length) % services.length);
+  }, [services.length]);
 
   useEffect(() => {
     if (!isInView || isPaused) return;
@@ -95,7 +100,7 @@ export default function VerticalTabs() {
           {/* Coluna Esquerda: Abas */}
           <div className="lg:col-span-5 order-2 lg:order-1">
             <div className="flex flex-col">
-              {SERVICES.map((service, index) => (
+              {services.map((service, index) => (
                 <TabButton
                   key={service.id}
                   service={service}
@@ -130,8 +135,8 @@ export default function VerticalTabs() {
                     className="absolute inset-0"
                   >
                     <img
-                      src={SERVICES[activeIndex].image}
-                      alt={SERVICES[activeIndex].title}
+                      src={services[activeIndex].image}
+                      alt={services[activeIndex].title}
                       className="w-full h-full object-cover transition-transform duration-[3s] group-hover/gallery:scale-105"
                     />
                     {/* Overlay leve apenas para dar contraste aos botões */}
@@ -148,7 +153,7 @@ export default function VerticalTabs() {
                 {/* Tag Flutuante na Imagem - Padrão Mavellium */}
                 <div className="absolute top-8 left-8 z-30">
                   <div className="px-4 py-2 rounded-sm bg-[#00D26A] text-[10px] font-bold text-black uppercase tracking-widest shadow-md">
-                    {SERVICES[activeIndex].tag}
+                    {services[activeIndex].tag}
                   </div>
                 </div>
               </div>

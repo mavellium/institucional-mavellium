@@ -19,13 +19,54 @@ interface CardData {
     back: {
         description: string;
         buttonText: string;
-        icon: React.ReactNode; 
+        icon: React.ReactNode;
+    };
+}
+
+export interface JanusCard {
+    id: string;
+    image: string;
+    imageAlt: string;
+    frontTitle: string;
+    frontDescription: string;
+    backDescription: string;
+    buttonText: string;
+}
+
+const ICON_MAP: Record<string, React.ReactNode> = {
+    "sites-inteligentes": <Globe className="w-5 h-5 text-white" />,
+    "landing-pages": <Target className="w-5 h-5 text-white" />,
+    "automacao-ia": <Bot className="w-5 h-5 text-white" />,
+};
+
+const ICON_MAP_BACK: Record<string, React.ReactNode> = {
+    "sites-inteligentes": <Globe className="w-8 h-8 text-[#00D26A]" />,
+    "landing-pages": <Target className="w-8 h-8 text-[#00D26A]" />,
+    "automacao-ia": <Bot className="w-8 h-8 text-[#00D26A]" />,
+};
+
+function janusCardToCardData(jc: JanusCard): CardData {
+    return {
+        id: jc.id,
+        front: {
+            imageSrc: jc.image,
+            imageAlt: jc.imageAlt,
+            title: jc.frontTitle,
+            description: jc.frontDescription,
+            icon: ICON_MAP[jc.id] ?? <Globe className="w-5 h-5 text-white" />,
+        },
+        back: {
+            description: jc.backDescription,
+            buttonText: jc.buttonText,
+            icon: ICON_MAP_BACK[jc.id] ?? <Globe className="w-8 h-8 text-[#00D26A]" />,
+        },
     };
 }
 
 interface FlippingCardDemoProps {
     title?: string;
     description?: string;
+    cards?: JanusCard[];
 }
 
 // --- Dados Mapeados ---
@@ -77,10 +118,15 @@ const cardsData: CardData[] = [
     },
 ];
 
-export default function FlippingCardDemo({ 
-    title = "Soluções Inteligentes", 
-    description = "Apoiamos negócios de todos os portes na transição para um modelo de operação mais eficiente e lucrativo através de três frentes." 
+export default function FlippingCardDemo({
+    title = "Soluções Inteligentes",
+    description = "Apoiamos negócios de todos os portes na transição para um modelo de operação mais eficiente e lucrativo através de três frentes.",
+    cards: cardsProp,
 }: FlippingCardDemoProps) {
+    const resolvedCards = cardsProp && cardsProp.length > 0
+        ? cardsProp.map(janusCardToCardData)
+        : cardsData;
+
     return (
         <section className="flex flex-col items-center py-16 md:py-24 px-4 bg-[#050505] min-h-screen text-white border-t border-white/5">
             <div className="text-center mb-16 md:mb-20 max-w-3xl">
@@ -93,7 +139,7 @@ export default function FlippingCardDemo({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-7xl">
-                {cardsData.map((card) => (
+                {resolvedCards.map((card) => (
                     <div key={card.id} className="relative group w-full perspective-1000">
                         <FlippingCard
                             className="w-full aspect-square md:aspect-[4/5] lg:aspect-[3/4]"

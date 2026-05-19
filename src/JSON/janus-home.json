@@ -1,0 +1,289 @@
+{
+  "slug": "home",
+  "name": "Home",
+  "schema": {
+    "hero-section-mavellium": {
+      "label": "Hero",
+      "fields": {
+        "slides": {
+          "type": "array",
+          "label": "Slides",
+          "itemFields": {
+            "id": { "type": "text", "label": "ID" },
+            "headline": { "type": "text", "label": "Headline" },
+            "headlineHighlight": { "type": "text", "label": "Destaque da headline" },
+            "subheadline": { "type": "textarea", "label": "Subheadline" },
+            "ctaText": { "type": "text", "label": "Texto do botão primário" },
+            "ctaHref": { "type": "text", "label": "Link do botão primário" },
+            "secondaryCtaText": { "type": "text", "label": "Texto do botão secundário" },
+            "secondaryCtaHref": { "type": "text", "label": "Link do botão secundário" },
+            "mediaSrc": { "type": "text", "label": "URL da mídia (vídeo/imagem)" },
+            "mediaType": { "type": "text", "label": "Tipo: video | image" }
+          }
+        }
+      }
+    },
+    "sobre-mavellium": {
+      "label": "Quem Somos",
+      "fields": {
+        "services": {
+          "type": "array",
+          "label": "Abas de serviço",
+          "itemFields": {
+            "id": { "type": "text", "label": "ID (01, 02...)" },
+            "tag": { "type": "text", "label": "Tag (ex: A Empresa)" },
+            "title": { "type": "text", "label": "Título" },
+            "description": { "type": "textarea", "label": "Descrição" },
+            "image": { "type": "text", "label": "URL da imagem" }
+          }
+        }
+      }
+    },
+    "faq-mavellium": {
+      "label": "FAQ",
+      "fields": {
+        "items": {
+          "type": "array",
+          "label": "Perguntas",
+          "itemFields": {
+            "question": { "type": "text", "label": "Pergunta" },
+            "answer": { "type": "textarea", "label": "Resposta" },
+            "category": { "type": "text", "label": "Categoria" },
+            "image": { "type": "text", "label": "URL da imagem" }
+          }
+        }
+      }
+    },
+    "solucoes-mavellium": {
+      "label": "Soluções",
+      "fields": {
+        "description": { "type": "textarea", "label": "Descrição da seção" },
+        "cards": {
+          "type": "array",
+          "label": "Cards",
+          "itemFields": {
+            "id": { "type": "text", "label": "ID: sites-inteligentes | landing-pages | automacao-ia" },
+            "image": { "type": "text", "label": "URL da imagem" },
+            "imageAlt": { "type": "text", "label": "Alt da imagem" },
+            "frontTitle": { "type": "text", "label": "Título (frente)" },
+            "frontDescription": { "type": "textarea", "label": "Descrição (frente)" },
+            "backDescription": { "type": "textarea", "label": "Descrição (verso)" },
+            "buttonText": { "type": "text", "label": "Texto do botão" }
+          }
+        }
+      }
+    },
+    "manifesto-mavellium": {
+      "label": "Manifesto",
+      "fields": {
+        "src": { "type": "text", "label": "URL da imagem principal" },
+        "background": { "type": "text", "label": "URL da imagem de fundo" },
+        "title": { "type": "text", "label": "Título" },
+        "date": { "type": "text", "label": "Subtítulo / data" },
+        "scrollToExpand": { "type": "text", "label": "Texto de scroll" },
+        "about": {
+          "type": "object",
+          "label": "Conteúdo",
+          "fields": {
+            "overview": { "type": "textarea", "label": "Parágrafo 1" },
+            "conclusion": { "type": "textarea", "label": "Parágrafo 2" }
+          }
+        }
+      }
+    },
+    "cta-final-mavellium": {
+      "label": "CTA Final",
+      "fields": {
+        "text": {
+          "type": "object",
+          "label": "Textos",
+          "fields": {
+            "headline": { "type": "text", "label": "Headline" },
+            "highlight": { "type": "text", "label": "Destaque (verde)" },
+            "description": { "type": "textarea", "label": "Descrição" }
+          }
+        },
+        "theme": {
+          "type": "object",
+          "label": "Tema",
+          "fields": {
+            "bg_color": { "type": "text", "label": "Cor de fundo (hex)" },
+            "gradient_start": { "type": "text", "label": "Gradiente início" },
+            "gradient_end": { "type": "text", "label": "Gradiente fim" },
+            "button_bg": { "type": "text", "label": "Cor do botão" }
+          }
+        },
+        "calls_to_action": {
+          "type": "object",
+          "label": "CTAs",
+          "fields": {
+            "primary": {
+              "type": "object",
+              "label": "Primário",
+              "fields": {
+                "label": { "type": "text", "label": "Texto" },
+                "href": { "type": "text", "label": "Link" },
+                "icon": { "type": "text", "label": "Ícone (iconify)" }
+              }
+            },
+            "secondary": {
+              "type": "object",
+              "label": "Secundário",
+              "fields": {
+                "label": { "type": "text", "label": "Texto" },
+                "href": { "type": "text", "label": "Link" },
+                "icon": { "type": "text", "label": "Ícone (iconify)" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "content": {
+    "hero-section-mavellium": {
+      "slides": [
+        {
+          "id": "1",
+          "headline": "Impulsione seu negócio com a ",
+          "headlineHighlight": "Inteligência da Mavellium",
+          "subheadline": "Desenvolvemos Sites Institucionais, Landing Pages de alta conversão e Agentes de IA que operam 24 horas por dia para gerar resultados reais ao seu negócio.",
+          "ctaText": "Falar com Especialista",
+          "ctaHref": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Estava+navegando+no+site+da+Mavellium+e+gostaria+de+falar+com+um+especialista.",
+          "secondaryCtaText": "Ver Portfólio",
+          "secondaryCtaHref": "/portfolio",
+          "mediaSrc": "https://mavellium-janus.b-cdn.net/hero-bg.mp4",
+          "mediaType": "video"
+        }
+      ]
+    },
+    "sobre-mavellium": {
+      "services": [
+        {
+          "id": "01",
+          "tag": "A Empresa",
+          "title": "DNA Jovem e Dinâmico",
+          "description": "Estabelecida no polo tecnológico de Garça-SP, somos focados no futuro e estritamente alinhados às inovações do mercado.",
+          "image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200"
+        },
+        {
+          "id": "02",
+          "tag": "Liderança",
+          "title": "Três Sócios Especialistas",
+          "description": "Nossa estrutura é fundamentada na expertise: cada departamento chave é comandado por um especialista focado em excelência técnica.",
+          "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200"
+        },
+        {
+          "id": "03",
+          "tag": "Execução",
+          "title": "Sem Terceirização Cega",
+          "description": "Do planejamento estratégico ao código final, cada etapa do seu projeto passa pelas mãos de quem realmente entende do assunto.",
+          "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200"
+        },
+        {
+          "id": "04",
+          "tag": "Resultado",
+          "title": "Projetos Sob Medida",
+          "description": "Desenhamos soluções cirurgicamente para a realidade e necessidade de cada cliente, independentemente do porte da empresa.",
+          "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200"
+        }
+      ]
+    },
+    "faq-mavellium": {
+      "items": [
+        {
+          "question": "Como funciona o desenvolvimento do meu projeto?",
+          "answer": "Trabalhamos com total transparência através de 5 passos: Imersão e Briefing, Análise de Viabilidade Técnica, Cronograma, Desenvolvimento acompanhado por você e Entrega Final. Você nunca fica no escuro.",
+          "category": "Metodologia",
+          "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop"
+        },
+        {
+          "question": "Os projetos são feitos a partir de templates prontos?",
+          "answer": "Não. Nós desenvolvemos projetos altamente customizados, desenhados cirurgicamente para a realidade e necessidade de cada cliente, seja uma Landing Page de conversão ou a sede digital da sua empresa.",
+          "category": "Customização",
+          "image": "https://images.unsplash.com/photo-1551288049-bbbda540d3b9?q=80&w=600&auto=format&fit=crop"
+        },
+        {
+          "question": "Onde vocês estão localizados? Atendem todo o país?",
+          "answer": "Nossa operação técnica e expertise estão estabelecidas no polo de Garça-SP. No entanto, nossa infraestrutura digital nos permite atuar como parceiros estratégicos para pequenas, médias e grandes empresas em todo o território nacional.",
+          "category": "Atendimento",
+          "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop"
+        },
+        {
+          "question": "O que acontece após o lançamento do projeto?",
+          "answer": "Nós não entregamos o código e sumimos. Oferecemos modelos de parceria evolutiva, garantindo que o seu projeto conte com manutenção constante, segurança de dados e atualizações contínuas.",
+          "category": "Pós-Entrega",
+          "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop"
+        }
+      ]
+    },
+    "solucoes-mavellium": {
+      "description": "Apoiamos negócios de todos os portes na transição para um modelo de operação mais eficiente e lucrativo através de três frentes.",
+      "cards": [
+        {
+          "id": "sites-inteligentes",
+          "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+          "imageAlt": "Sites Institucionais Inteligentes",
+          "frontTitle": "Sites Inteligentes",
+          "frontDescription": "Mais do que presença, construímos a sua autoridade no ambiente digital.",
+          "backDescription": "A sede digital da sua empresa. Um canal estruturado que transmite credibilidade e trabalha a favor da sua marca 24 horas por dia.",
+          "buttonText": "Construir Autoridade"
+        },
+        {
+          "id": "landing-pages",
+          "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+          "imageAlt": "Landing Pages de Alta Conversão",
+          "frontTitle": "Alta Conversão",
+          "frontDescription": "Páginas desenvolvidas com um único objetivo: transformar visitantes em clientes.",
+          "backDescription": "Livre de distrações e desenhada cirurgicamente. Guie o usuário direto para a ação e maximize o retorno sobre seus anúncios.",
+          "buttonText": "Acelerar Vendas"
+        },
+        {
+          "id": "automacao-ia",
+          "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
+          "imageAlt": "Automação e Agentes Autônomos (IA)",
+          "frontTitle": "Automação & IA",
+          "frontDescription": "A revolução da eficiência operacional operando nos seus setores estratégicos.",
+          "backDescription": "Agentes autônomos para qualificar leads e processar dados. Atendimento instantâneo e redução da carga sobre a folha de pagamento.",
+          "buttonText": "Operar 24/7"
+        }
+      ]
+    },
+    "manifesto-mavellium": {
+      "src": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop",
+      "background": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop",
+      "title": "O Futuro é Agora",
+      "date": "Manifesto Mavellium",
+      "scrollToExpand": "Role para descobrir",
+      "about": {
+        "overview": "Acreditamos que a tecnologia não deve ser um obstáculo, mas sim o maior acelerador de resultados do seu negócio. Nascemos com o propósito de tirar projetos do papel e transformá-los em ecossistemas digitais vivos, rentáveis e escaláveis.",
+        "conclusion": "Nosso compromisso é com a entrega cirúrgica. Não vendemos sites ou códigos; nós construímos as fundações digitais para que a sua empresa lidere o mercado de amanhã."
+      }
+    },
+    "cta-final-mavellium": {
+      "text": {
+        "headline": "Pronto para escalar",
+        "highlight": "o seu negócio?",
+        "description": "Sabemos que cada empresa é única. Fale com a nossa equipe de especialistas para entendermos o seu momento e desenharmos a arquitetura tecnológica perfeita para a sua operação."
+      },
+      "theme": {
+        "bg_color": "#ffffff",
+        "gradient_start": "#00D26A",
+        "gradient_end": "#009b4d",
+        "button_bg": "#09090b"
+      },
+      "calls_to_action": {
+        "primary": {
+          "label": "Falar com Especialista",
+          "href": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Estava+navegando+no+site+da+Mavellium+e+gostaria+de+agendar+uma+conversa+com+um+especialista+para+escalar+meu+neg%C3%B3cio.",
+          "icon": "mdi:whatsapp"
+        },
+        "secondary": {
+          "label": "Rever Nossa Metodologia",
+          "href": "#metodologia",
+          "icon": "mdi:arrow-up"
+        }
+      }
+    }
+  }
+}

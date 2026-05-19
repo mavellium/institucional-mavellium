@@ -2,19 +2,21 @@
 import Image from "next/image";
 import { Header } from "../components/Header";
 import type { IconName } from "../components/ui/radial-orbital-timeline";
-import { HeroFromJanus } from "../components/ui/hero-janus";
+import { Hero } from "../components/ui/hero-janus";
 import { Gallery4 } from "../components/ui/gallery4";
 import { Footer } from "../components/ui/footer";
-import ProjectShowcase from "../components/ui/project-showcase";
-import FinalCtaSection from "../components/ui/cta-final";
 import HoverPreview from "../components/ui/hover-preview";
 import Pricing from "../components/ui/pricing-section";
 import { Carousel } from "../components/ui/carousel-companys";
 import SelectCards from "../components/ui/select-cards";
-import VerticalTabs from "../components/ui/vertical-tabs";
 import Benefits from "../components/ui/benefits";
-import Demo from "../components/ui/imagem";
-import FlippingCardDemo from "../components/ui/autonomous-agents";
+import {
+  QuemSomosJanus,
+  FaqJanus,
+  SolucoesJanus,
+  ManifestoJanus,
+  CtaFinalJanus,
+} from "../components/ui/janus-home-sections";
 import { GalleryGridBlock } from "../components/ui/sections-gallery";
 import { Plan, PricingSection } from "../components/ui/pricing-details";
 import { getWhatsappUrl, siteConfig } from "../lib/constants";
@@ -142,31 +144,6 @@ export default async function Home() {
     },
   ];
 
-  const finalCtaData = {
-    text: {
-      headline: "Pronto para escalar",
-      highlight: "o seu negócio?",
-      description: "Sabemos que cada empresa é única. Fale com a nossa equipe de especialistas para entendermos o seu momento e desenharmos a arquitetura tecnológica perfeita para a sua operação."
-    },
-    theme: {
-      bg_color: "#ffffff",       // Fundo escuro premium da Mavellium
-      gradient_start: "#00D26A", // Verde Neon oficial da marca
-      gradient_end: "#009b4d",   // Verde levemente mais escuro para dar profundidade ao degradê
-      button_bg: "#09090b"       // Um tom de preto/zinco quase absoluto para o estado inicial do botão
-    },
-    calls_to_action: {
-      primary: {
-        label: "Falar com Especialista",
-        href: getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de agendar uma conversa com um especialista para escalar meu negócio."),
-        icon: "mdi:whatsapp"
-      },
-      secondary: {
-        label: "Rever Nossa Metodologia",
-        href: "#metodologia", // Volta para a seção de metodologia se o cliente ainda tiver dúvidas
-        icon: "mdi:arrow-up"
-      }
-    }
-  };
   const SlideWithText = ({ image, title, description, imageAlt }: { image: string; title: string; description: string; imageAlt: string }) => (
     <div className="relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] group border border-black/5 shadow-lg">
       <Image
@@ -302,7 +279,7 @@ export default async function Home() {
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
         ctaText={"Falar com Especialista"}
       />
-      <HeroFromJanus />
+      <Hero />
       <Pricing />
       <div id="metodologia">
         <Carousel
@@ -313,22 +290,19 @@ export default async function Home() {
         />
       </div>
       <SelectCards />
-      <VerticalTabs />
+      <QuemSomosJanus />
       <Benefits />
-      <Demo />
-      <FlippingCardDemo
-        title="Soluções Inteligentes"
-        description="Combinamos design centrado no usuário com análise de dados poderosa para impulsionar seu sucesso digital."
-      />
+      <ManifestoJanus />
+      <SolucoesJanus />
       <GalleryGridBlock />
       <PricingSection
         plans={PLANS}
         heading="Modelos de Projeto"
         description="Desenhados cirurgicamente para a realidade do seu negócio. Do planejamento estratégico ao código final, sem terceirização cega."
       />
-      <FinalCtaSection data={finalCtaData} />
+      <CtaFinalJanus />
       <HoverPreview />
-      <ProjectShowcase />
+      <FaqJanus />
       <Gallery4  {...blogData}
         cta={{
           label: "Acessar Todos os Artigos",

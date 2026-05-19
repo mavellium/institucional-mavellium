@@ -3,12 +3,12 @@
 import { useEffect } from 'react';
 import ScrollExpandMedia from '../ui/scroll-expansion-hero'; // Certifique-se de que o caminho está correto
 
-interface MediaAbout {
+export interface MediaAbout {
   overview: string;
   conclusion: string;
 }
 
-interface MediaContent {
+export interface MediaContent {
   src: string;
   background: string;
   title: string;
@@ -34,7 +34,7 @@ const agencyContent: MediaContent = {
   },
 };
 
-const MediaContentBlock = () => {
+const MediaContentBlock = ({ content }: { content: MediaContent }) => {
   return (
     <div className='max-w-4xl mx-auto py-16 px-6'>
       <h2 className='text-3xl md:text-5xl font-medium mb-8 text-black tracking-tight'>
@@ -42,18 +42,18 @@ const MediaContentBlock = () => {
       </h2>
       <div className="space-y-6">
         <p className='text-xl md:text-2xl leading-relaxed text-zinc-600 font-medium'>
-          {agencyContent.about.overview}
+          {content.about.overview}
         </p>
         <p className='text-xl md:text-2xl leading-relaxed text-zinc-600 font-medium'>
-          {agencyContent.about.conclusion}
+          {content.about.conclusion}
         </p>
       </div>
     </div>
   );
 };
 
-export default function Demo() {
-  // Define forçadamente como 'image' para contornar a falta do vídeo
+export default function Demo({ content: contentProp }: { content?: MediaContent } = {}) {
+  const content = contentProp ?? agencyContent;
   const mediaType = 'image';
 
   useEffect(() => {
@@ -66,13 +66,13 @@ export default function Demo() {
     <div className='min-h-screen bg-white'>
       <ScrollExpandMedia
         mediaType={mediaType}
-        mediaSrc={agencyContent.src}
-        bgImageSrc={agencyContent.background}
-        title={agencyContent.title}
-        date={agencyContent.date}
-        scrollToExpand={agencyContent.scrollToExpand}
+        mediaSrc={content.src}
+        bgImageSrc={content.background}
+        title={content.title}
+        date={content.date}
+        scrollToExpand={content.scrollToExpand}
       >
-        <MediaContentBlock />
+        <MediaContentBlock content={content} />
       </ScrollExpandMedia>
     </div>
   );

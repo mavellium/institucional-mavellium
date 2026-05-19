@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 import { getWhatsappUrl, siteConfig } from "@/src/lib/constants";
 
-interface FAQItem {
+export interface FAQItem {
   question: string;
   answer: string;
   category: string;
@@ -41,7 +41,8 @@ const faqData: FAQItem[] = [
   },
 ];
 
-export default function ImmersiveFAQ() {
+export default function ImmersiveFAQ({ items }: { items?: FAQItem[] } = {}) {
+  const faqItems = items && items.length > 0 ? items : faqData;
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -123,7 +124,7 @@ export default function ImmersiveFAQ() {
               transition: "opacity 0.4s ease, scale 0.4s ease",
             }}
           >
-            {faqData.map((item, index) => (
+            {faqItems.map((item, index) => (
               <img
                 key={index}
                 src={item.image}
@@ -136,7 +137,7 @@ export default function ImmersiveFAQ() {
 
         {/* Lista de FAQ */}
         <div className="relative border-t border-zinc-200">
-          {faqData.map((item, index) => {
+          {faqItems.map((item, index) => {
             const isOpen = isMobile ? activeIndex === index : hoveredIndex === index;
 
             return (
