@@ -127,7 +127,7 @@ export async function fetchCmsPosts(opts?: {
 export async function fetchCmsPostBySlug(slug: string): Promise<CmsPost | null> {
   if (!isConfigured()) return null;
   const data = await fetchJson<JanusResponse>(blogUrl({ limit: "100" }));
-  const match = data?.posts.find((p) => p.slug === slug);
+  const match = data?.posts.find((p) => (p.slug ?? p.id) === slug);
   return match ? toCmsPost(match) : null;
 }
 
