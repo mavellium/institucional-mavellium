@@ -38,26 +38,47 @@ export const metadata: Metadata = {
 
 const professionalServiceSchema = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Mavellium",
-  url: "https://mavellium.com.br",
-  logo: "https://mavellium.com.br/logo.png",
-  description: "Desenvolvimento de sites e landing pages com arquitetura otimizada para modelos de IA, RAG e motores de busca semânticos.",
-  telephone: "+55-14-99177-9502",
-  email: "contato@mavellium.com.br",
-  address: {
-    "@type": "PostalAddress",
-    addressCountry: "BR",
-  },
-  sameAs: [
-    "https://www.instagram.com/mavellium/",
-    "https://www.linkedin.com/company/mavellium",
-  ],
-  knowsAbout: [
-    "Artificial Intelligence",
-    "Search Engine Optimization",
-    "Structured Data",
-    "Large Language Models",
+  "@graph": [
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": "https://mavellium.com.br/#organization",
+      name: "Mavellium",
+      legalName: "Mavellium LTDA",
+      taxID: "64.117.742/0001-84",
+      url: "https://mavellium.com.br",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://mavellium.com.br/logo-mavellium-header.svg",
+        caption: "Mavellium",
+      },
+      description:
+        "A Mavellium resolve três problemas de negócio: invisibilidade digital de empresas B2B, baixa conversão de visitantes em clientes e operações comerciais limitadas ao horário de trabalho. Desenvolvemos sites institucionais, landing pages de alta conversão e agentes de IA que operam 24 horas para gerar resultados reais.",
+      telephone: "+55-14-99800-1008",
+      email: "contato@mavellium.com.br",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Garça",
+        addressRegion: "SP",
+        addressCountry: "BR",
+      },
+      sameAs: [
+        "https://www.instagram.com/mavellium/",
+        "https://www.linkedin.com/company/mavellium",
+      ],
+      founder: [
+        { "@type": "Person", name: "Vinícius Tavares Mota" },
+        { "@type": "Person", name: "Luan dos Santos" },
+        { "@type": "Person", name: "Márcio Piva Junior" },
+      ],
+      knowsAbout: [
+        "Sites Institucionais de Alta Performance",
+        "Landing Pages de Alta Conversão",
+        "Agentes de Inteligência Artificial",
+        "Automação Comercial",
+        "GEO — Generative Engine Optimization",
+      ],
+      areaServed: "BR",
+    },
   ],
 };
 

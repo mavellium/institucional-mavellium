@@ -24,6 +24,9 @@ export const metadata: Metadata = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
+  provider: {
+    "@id": "https://mavellium.com.br/#organization",
+  },
   mainEntity: [
     {
       "@type": "Question",
@@ -94,27 +97,7 @@ const faqSchema = {
 
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Mavellium",
-  url: "https://mavellium.com.br",
-  logo: "https://mavellium.com.br/logo-mavellium-header.svg",
-  email: "contato@mavellium.com.br",
-  sameAs: [
-    "https://www.instagram.com/mavellium/",
-    "https://www.linkedin.com/company/mavellium",
-  ],
-  description:
-    "Mavellium é uma empresa de tecnologia especializada em desenvolvimento de sites institucionais, landing pages e automação com IA usando Next.js, Janus CMS e arquitetura headless.",
-  areaServed: "BR",
-  knowsAbout: [
-    "GEO",
-    "Generative Engine Optimization",
-    "Next.js",
-    "Headless CMS",
-    "SEO Técnico",
-    "Schema Markup",
-    "JSON-LD",
-  ],
+  "@id": "https://mavellium.com.br/#organization",
 };
 
 const breadcrumbSchema = {

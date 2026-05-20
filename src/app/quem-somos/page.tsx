@@ -25,25 +25,9 @@ const aboutPageSchema = {
   name: "Quem Somos — Mavellium",
   url: "https://mavellium.com.br/quem-somos",
   description:
-    "Mavellium é uma empresa especializada em infraestrutura digital de alta performance e GEO, fundada por Vinícius Tavares Mota, Luan dos Santos e Márcio Piva Junior.",
+    "A Mavellium é uma empresa fundada para resolver a invisibilidade digital de empresas B2B: negócios que existem no mundo físico mas são ignorados pelo ambiente digital. Conheça os fundadores e a missão da empresa.",
   about: {
-    "@type": "Organization",
-    name: "Mavellium",
-    legalName: "Mavellium Tecnologia LTDA",
-    taxID: "48.802.866/0001-42",
-    url: "https://mavellium.com.br",
-    email: "contato@mavellium.com.br",
-    knowsAbout: [
-      "GEO — Generative Engine Optimization",
-      "Next.js SSG",
-      "Infraestrutura digital de alta performance",
-      "Janus CMS",
-    ],
-    founder: [
-      { "@type": "Person", name: "Vinícius Tavares Mota" },
-      { "@type": "Person", name: "Luan dos Santos" },
-      { "@type": "Person", name: "Márcio Piva Junior" },
-    ],
+    "@id": "https://mavellium.com.br/#organization",
   },
 };
 

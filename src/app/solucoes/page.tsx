@@ -22,16 +22,14 @@ export const metadata: Metadata = {
 const service1Schema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Desenvolvimento de Sites e Landing Pages de Alta Conversão",
+  name: "Sites Institucionais e Landing Pages de Alta Conversão",
   serviceType: "Desenvolvimento Web",
   provider: {
-    "@type": "Organization",
-    name: "Mavellium",
-    url: "https://mavellium.com.br",
+    "@id": "https://mavellium.com.br/#organization",
   },
   url: "https://mavellium.com.br/solucoes#sites-landing-pages",
   description:
-    "Criação de sites institucionais e landing pages sobre a stack Next.js SSG + Janus CMS, com TTFB abaixo de 100ms via Vercel Edge Network, imagens AVIF via BunnyCDN e HTML pré-renderizado. Análise de dados integrada via Google Analytics 4 e Microsoft Clarity diretamente no painel do Janus CMS.",
+    "Empresas invisíveis no ambiente digital perdem clientes para concorrentes com mais presença. Construímos a sede digital oficial da sua empresa — sites institucionais que transmitem autoridade e landing pages que convertem visitantes em clientes, operando pela sua marca 24 horas por dia.",
   offers: {
     "@type": "Offer",
     priceCurrency: "BRL",
@@ -45,13 +43,11 @@ const service2Schema = {
   name: "Otimização para Motores Generativos (GEO/AIO)",
   serviceType: "Generative Engine Optimization",
   provider: {
-    "@type": "Organization",
-    name: "Mavellium",
-    url: "https://mavellium.com.br",
+    "@id": "https://mavellium.com.br/#organization",
   },
   url: "https://mavellium.com.br/solucoes#geo-aio",
   description:
-    "Estruturação de código e conteúdo para que LLMs como ChatGPT, Perplexity AI e Google Gemini identifiquem, extraiam e citem o site com precisão. Implementação de HTML semântico, JSON-LD por rota, conteúdo Answer-First e densidade técnica por entidade. O Janus CMS exporta HTML estático e estruturado por padrão — sem depender de renderização client-side.",
+    "Quando potenciais clientes consultam ChatGPT, Perplexity ou Gemini antes de comprar, empresas sem GEO simplesmente não existem para esses modelos. Estruturamos o código e o conteúdo do seu site para que LLMs identifiquem, extraiam e citem sua empresa no momento de decisão de compra.",
   offers: {
     "@type": "Offer",
     priceCurrency: "BRL",
@@ -62,16 +58,14 @@ const service2Schema = {
 const service3Schema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Ocupação de Espaço em IA para Vendas",
-  serviceType: "Estratégia de Presença em Inteligência Artificial",
+  name: "Automação Comercial com Agentes de Inteligência Artificial",
+  serviceType: "Automação com Inteligência Artificial",
   provider: {
-    "@type": "Organization",
-    name: "Mavellium",
-    url: "https://mavellium.com.br",
+    "@id": "https://mavellium.com.br/#organization",
   },
-  url: "https://mavellium.com.br/solucoes#ia-para-vendas",
+  url: "https://mavellium.com.br/solucoes#automacao-ia",
   description:
-    "Estratégia de conteúdo e arquitetura técnica para que a empresa seja citada por modelos de linguagem no momento de decisão de compra do usuário. Inclui mapeamento de entidades semânticas, criação de conteúdo Answer-First por intenção de busca generativa e monitoramento de comportamento pós-citação via GA4 e Microsoft Clarity integrados ao Janus CMS.",
+    "Equipes limitadas ao horário comercial perdem negócios gerados fora do expediente. Implementamos agentes autônomos de IA que qualificam leads, automatizam atendimento e operam setores estratégicos 24 horas por dia, reduzindo a dependência de mão de obra para tarefas repetitivas.",
   offers: {
     "@type": "Offer",
     priceCurrency: "BRL",

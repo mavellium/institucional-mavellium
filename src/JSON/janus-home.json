@@ -11,13 +11,13 @@
           "itemFields": {
             "id": { "type": "text", "label": "ID" },
             "headline": { "type": "text", "label": "Headline" },
-            "headlineHighlight": { "type": "text", "label": "Destaque da headline" },
-            "subheadline": { "type": "textarea", "label": "Subheadline" },
-            "ctaText": { "type": "text", "label": "Texto do botão primário" },
-            "ctaHref": { "type": "text", "label": "Link do botão primário" },
-            "secondaryCtaText": { "type": "text", "label": "Texto do botão secundário" },
-            "secondaryCtaHref": { "type": "text", "label": "Link do botão secundário" },
-            "mediaSrc": { "type": "text", "label": "URL da mídia (vídeo/imagem)" },
+            "headlineHighlight": { "type": "text", "label": "Destaque da headline (verde)" },
+            "description": { "type": "textarea", "label": "Descrição / subheadline" },
+            "primaryButtonText": { "type": "text", "label": "Texto do botão primário" },
+            "primaryButtonLink": { "type": "text", "label": "Link do botão primário" },
+            "secondaryButtonText": { "type": "text", "label": "Texto do botão secundário" },
+            "secondaryButtonLink": { "type": "text", "label": "Link do botão secundário" },
+            "mediaUrl": { "type": "text", "label": "URL da mídia (vídeo/imagem)" },
             "mediaType": { "type": "text", "label": "Tipo: video | image" }
           }
         }
@@ -147,12 +147,12 @@
           "id": "1",
           "headline": "Impulsione seu negócio com a ",
           "headlineHighlight": "Inteligência da Mavellium",
-          "subheadline": "Desenvolvemos Sites Institucionais, Landing Pages de alta conversão e Agentes de IA que operam 24 horas por dia para gerar resultados reais ao seu negócio.",
-          "ctaText": "Falar com Especialista",
-          "ctaHref": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Estava+navegando+no+site+da+Mavellium+e+gostaria+de+falar+com+um+especialista.",
-          "secondaryCtaText": "Ver Portfólio",
-          "secondaryCtaHref": "/portfolio",
-          "mediaSrc": "https://mavellium-janus.b-cdn.net/hero-bg.mp4",
+          "description": "Desenvolvemos Sites Institucionais, Landing Pages de alta conversão e Agentes de IA que operam 24 horas por dia para gerar resultados reais ao seu negócio.",
+          "primaryButtonText": "Falar com Especialista",
+          "primaryButtonLink": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Estava+navegando+no+site+da+Mavellium+e+gostaria+de+falar+com+um+especialista.",
+          "secondaryButtonText": "Ver Portfólio",
+          "secondaryButtonLink": "/portfolio",
+          "mediaUrl": "https://mavellium-janus.b-cdn.net/hero-bg.mp4",
           "mediaType": "video"
         }
       ]
