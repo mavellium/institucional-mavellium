@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import type { Metadata } from "next";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/ui/footer";
