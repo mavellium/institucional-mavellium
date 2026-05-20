@@ -26,7 +26,7 @@ export interface JanusTag {
 
 export interface JanusPost {
   id: string;
-  slug: string;
+  slug?: string;
   title: string;
   subtitle?: string;
   publishedAt: string;
@@ -82,7 +82,7 @@ function estimateReadingTime(html: string): number {
 function toCmsPost(p: JanusPost): CmsPost {
   return {
     id: p.id,
-    slug: p.slug,
+    slug: p.slug ?? p.id,
     title: p.title,
     subtitle: p.subtitle,
     description: p.subtitle ?? p.seoDescription ?? p.title,
