@@ -6,13 +6,30 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "./card";
 import { cn } from "@/src/lib/utils";
-import { type BlogPost, CATEGORY_COLORS, formatDate } from "@/src/lib/blog";
+import { getCategoryStyle, formatDate } from "@/src/lib/blog";
+
+export interface BlogCardPost {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  coverImage: string;
+  publishedAt: string;
+  readingTimeMinutes: number;
+  authorName: string;
+}
 
 interface BlogCardProps {
-  post: BlogPost;
+  post: BlogCardPost;
   variant?: "default" | "featured";
   index?: number;
   priority?: boolean;
+}
+
+function avatarInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
 export function BlogCard({
@@ -21,7 +38,8 @@ export function BlogCard({
   index = 0,
   priority = false,
 }: BlogCardProps) {
-  const colors = CATEGORY_COLORS[post.category];
+  const colors = getCategoryStyle(post.category);
+  const initials = avatarInitials(post.authorName);
 
   if (variant === "featured") {
     return (
@@ -31,7 +49,7 @@ export function BlogCard({
             <div className="relative aspect-[16/10] lg:aspect-auto overflow-hidden min-h-[280px] lg:min-h-[400px]">
               <Image
                 src={post.coverImage}
-                alt={post.coverImageAlt}
+                alt={post.title}
                 fill
                 priority={priority}
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -67,21 +85,13 @@ export function BlogCard({
 
               <div className="mt-8 space-y-5">
                 <div className="flex items-center gap-3">
-                  <div
-                    className={cn(
-                      "w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0",
-                      post.author.avatarColor
-                    )}
-                  >
-                    {post.author.avatarInitials}
+                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0 bg-zinc-900">
+                    {initials}
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-zinc-800">
-                      {post.author.name}
-                    </p>
+                    <p className="text-sm font-bold text-zinc-800">{post.authorName}</p>
                     <p className="text-xs text-zinc-400">
-                      {formatDate(post.publishedAt)} ·{" "}
-                      {post.readingTimeMinutes} min de leitura
+                      {formatDate(post.publishedAt)} · {post.readingTimeMinutes} min de leitura
                     </p>
                   </div>
                 </div>
@@ -110,7 +120,7 @@ export function BlogCard({
           <div className="relative aspect-[16/9] overflow-hidden flex-shrink-0">
             <Image
               src={post.coverImage}
-              alt={post.coverImageAlt}
+              alt={post.title}
               fill
               priority={priority}
               className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -140,16 +150,11 @@ export function BlogCard({
 
             <div className="flex items-center justify-between pt-4 border-t border-zinc-100 mt-auto">
               <div className="flex items-center gap-2">
-                <div
-                  className={cn(
-                    "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0",
-                    post.author.avatarColor
-                  )}
-                >
-                  {post.author.avatarInitials}
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 bg-zinc-900">
+                  {initials}
                 </div>
                 <span className="text-xs font-medium text-zinc-600 truncate max-w-[120px]">
-                  {post.author.name}
+                  {post.authorName}
                 </span>
               </div>
               <div className="flex items-center gap-2 text-xs font-light text-zinc-400 flex-shrink-0">

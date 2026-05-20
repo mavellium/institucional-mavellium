@@ -10,7 +10,7 @@ interface Heading {
   level: 2 | 3;
 }
 
-function extractHeadings(sections: ArticleSection[]): Heading[] {
+function extractHeadingsFromSections(sections: ArticleSection[]): Heading[] {
   const result: Heading[] = [];
   for (const s of sections) {
     if (s.type === "heading2") {
@@ -22,12 +22,28 @@ function extractHeadings(sections: ArticleSection[]): Heading[] {
   return result;
 }
 
-interface TableOfContentsProps {
-  sections: ArticleSection[];
+function extractHeadingsFromHtml(html: string): Heading[] {
+  const result: Heading[] = [];
+  const re = /<(h[23])[^>]*(?:id="([^"]*)")?[^>]*>([\s\S]*?)<\/h[23]>/gi;
+  let match;
+  while ((match = re.exec(html)) !== null) {
+    const level = (match[1] === "h2" ? 2 : 3) as 2 | 3;
+    const text = match[3].replace(/<[^>]+>/g, "").trim();
+    const id = match[2] || slugifyHeading(text);
+    if (text) result.push({ id, content: text, level });
+  }
+  return result;
 }
 
-export function TableOfContents({ sections }: TableOfContentsProps) {
-  const headings = extractHeadings(sections);
+interface TableOfContentsProps {
+  sections?: ArticleSection[];
+  html?: string;
+}
+
+export function TableOfContents({ sections, html }: TableOfContentsProps) {
+  const headings = html
+    ? extractHeadingsFromHtml(html)
+    : extractHeadingsFromSections(sections ?? []);
   const [activeId, setActiveId] = useState<string>("");
   const observerRef = useRef<IntersectionObserver | null>(null);
 

@@ -4,10 +4,8 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Link2, Check } from "lucide-react";
 import { Icon } from "@iconify/react";
-import { type BlogPost } from "../../../../lib/blog";
-
 interface ShareBarProps {
-  post: BlogPost;
+  post: { slug: string; title: string; description?: string };
 }
 
 export function ShareBar({ post }: ShareBarProps) {
