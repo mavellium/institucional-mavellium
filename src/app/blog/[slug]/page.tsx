@@ -65,7 +65,7 @@ function CmsPostArticle({ post, related }: { post: CmsPost; related: CmsPost[] }
         ctaText="Falar com Especialista"
       />
 
-      <main className="bg-white">
+      <main className="bg-white text-zinc-900">
         <nav className="pt-28 pb-4 px-6 border-b border-zinc-200">
           <div className="max-w-7xl mx-auto flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-zinc-400">
             <Link href="/blog" className="hover:text-zinc-800 transition-colors">

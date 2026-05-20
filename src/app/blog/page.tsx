@@ -35,7 +35,7 @@ export default async function BlogPage() {
         ctaText="Falar com Especialista"
       />
 
-      <main className="bg-white min-h-screen">
+      <main className="bg-white text-zinc-900 min-h-screen">
         <section className="relative pt-32 pb-16 px-6 overflow-hidden border-b border-zinc-100">
           <div
             className="absolute inset-0 bg-[linear-gradient(to_right,#f4f4f5_1px,transparent_1px),linear-gradient(to_top,#f4f4f5_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,#000_50%,transparent_100%)]"

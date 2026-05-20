@@ -49,6 +49,11 @@ interface JanusResponse {
   meta: { total: number; page: number; limit: number; totalPages: number };
 }
 
+interface JanusSingleResponse {
+  success: boolean;
+  post: JanusPost;
+}
+
 // ─── Normalized post consumed by blog pages ───────────────────────────────────
 
 export interface CmsPost {
@@ -126,9 +131,8 @@ export async function fetchCmsPosts(opts?: {
 
 export async function fetchCmsPostBySlug(slug: string): Promise<CmsPost | null> {
   if (!isConfigured()) return null;
-  const data = await fetchJson<JanusResponse>(blogUrl({ limit: "100" }));
-  const match = data?.posts.find((p) => (p.slug ?? p.id) === slug);
-  return match ? toCmsPost(match) : null;
+  const data = await fetchJson<JanusSingleResponse>(`${blogUrl()}/${slug}`);
+  return data?.post ? toCmsPost(data.post) : null;
 }
 
 export async function fetchCmsAllSlugs(): Promise<string[]> {
