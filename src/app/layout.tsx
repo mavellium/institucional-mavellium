@@ -53,7 +53,7 @@ const professionalServiceSchema = {
       },
       description:
         "A Mavellium resolve três problemas de negócio: invisibilidade digital de empresas B2B, baixa conversão de visitantes em clientes e operações comerciais limitadas ao horário de trabalho. Desenvolvemos sites institucionais, landing pages de alta conversão e agentes de IA que operam 24 horas para gerar resultados reais.",
-      telephone: "+55-14-99800-1008",
+      telephone: "+55-14-98177-9502",
       email: "contato@mavellium.com.br",
       address: {
         "@type": "PostalAddress",
