@@ -40,54 +40,23 @@ import { Plan, PricingSection } from "../components/ui/pricing-details";
 import { getWhatsappUrl } from "../lib/constants";
 import { FitecLeadsGallery } from "../components/ui/FitecLeadsGallery";
 import { fetchFitecLeads } from "@/src/lib/fitec-api";
+import { fetchCmsPosts } from "@/src/lib/blog-api";
 
 export default async function Home() {
+
+  const cmsPosts = await fetchCmsPosts({ limit: 3 });
+  const insightsItems = cmsPosts.map((p) => ({
+    id: p.id,
+    title: p.title,
+    description: p.description,
+    href: `/blog/${p.slug}`,
+    image: p.coverImage,
+  }));
 
   const blogData = {
     title: "Mavellium Insights",
     description: "Artigos, tendências e análises profundas sobre como a tecnologia e o design impactam o faturamento da sua empresa.",
-    items: [
-      {
-        id: "ia-atendimento",
-        title: "A Revolução Silenciosa da IA no Atendimento B2B",
-        description:
-          "Como agentes autônomos estão substituindo o 'atendimento em horário comercial' e garantindo que empresas fechem negócios às 3 da manhã sem perder a humanização.",
-        href: "/blog/ia-atendimento-b2b",
-        image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1080",
-      },
-      {
-        id: "design-conversao",
-        title: "Por que seu site bonito não converte em vendas?",
-        description:
-          "Estética sem estratégia é apenas arte. Descubra como a arquitetura da informação e a remoção de distrações em Landing Pages aumentam a captura de leads em até 300%.",
-        href: "/blog/design-conversao",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1080",
-      },
-      {
-        id: "seo-tecnico",
-        title: "Autoridade Digital não se constrói apenas com redes sociais",
-        description:
-          "O verdadeiro poder de um Site Institucional Estruturado: como o SEO Técnico e um código limpo garantem que sua empresa seja a primeira resposta no Google.",
-        href: "/blog/seo-autoridade-digital",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1080",
-      },
-      {
-        id: "escalabilidade",
-        title: "Sua infraestrutura suporta o seu crescimento?",
-        description:
-          "Os perigos de basear uma grande operação em templates engessados e plataformas lentas. Por que empresas maduras exigem código desenhado cirurgicamente.",
-        href: "/blog/escalabilidade-infraestrutura",
-        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1080",
-      },
-      {
-        id: "reducao-custos",
-        title: "Automação Operacional vs. Folha de Pagamento",
-        description:
-          "O cálculo definitivo: como a implementação de integrações via API e bots contábeis reduz erros humanos a zero e libera sua equipe para o trabalho criativo.",
-        href: "/blog/reducao-custos-automacao",
-        image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=1080",
-      },
-    ],
+    items: insightsItems,
   };
 
   const slidesMetodologia = [
