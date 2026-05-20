@@ -1,4 +1,4 @@
-const GUESTS_URL = "https://janus.187.77.236.241.nip.io/api/v1/admin/guests";
+const GUESTS_URL = "https://januscms.com.br/api/v1/admin/guests";
 
 const IMAGE_FALLBACK =
   "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1280";
