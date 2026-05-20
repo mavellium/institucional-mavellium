@@ -143,17 +143,28 @@ export function Gallery4({
           </div>
         </div>
 
-        <Carousel
-          setApi={setCarouselApi}
-          opts={{ align: "start", loop: false }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-5">
-            {items.map((item) => (
-              <GalleryCard key={item.id} item={item} />
-            ))}
-          </CarouselContent>
-        </Carousel>
+        {items.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <p className="text-zinc-500 font-light text-lg">
+              Nenhum artigo publicado ainda.
+            </p>
+            <p className="text-zinc-600 text-sm mt-2">
+              Em breve, novos conteúdos por aqui.
+            </p>
+          </div>
+        ) : (
+          <Carousel
+            setApi={setCarouselApi}
+            opts={{ align: "start", loop: false }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-5">
+              {items.map((item) => (
+                <GalleryCard key={item.id} item={item} />
+              ))}
+            </CarouselContent>
+          </Carousel>
+        )}
 
         {/* Paginação & CTA */}
         <div className="mt-16 flex flex-col items-center justify-between gap-8 border-t border-white/5 pt-12 md:flex-row">
