@@ -134,7 +134,7 @@ export async function fetchCmsPostBySlug(slug: string): Promise<CmsPost | null> 
 export async function fetchCmsAllSlugs(): Promise<string[]> {
   if (!isConfigured()) return [];
   const data = await fetchJson<JanusResponse>(blogUrl({ limit: "100" }));
-  return (data?.posts ?? []).map((p) => p.slug);
+  return (data?.posts ?? []).map((p) => p.slug ?? p.id);
 }
 
 export async function fetchCmsRelatedPosts(
