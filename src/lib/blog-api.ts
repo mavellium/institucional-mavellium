@@ -1,12 +1,13 @@
 const API_URL = process.env.BLOG_API_URL ?? "";
 const COMPANY_SLUG = process.env.BLOG_SUBTYPE_ID ?? "";
+const PROJECT_ID = process.env.BLOG_PROJECT_ID ?? "";
 
 function isConfigured(): boolean {
-  return Boolean(API_URL && COMPANY_SLUG);
+  return Boolean(API_URL && COMPANY_SLUG && PROJECT_ID);
 }
 
 function blogUrl(params?: Record<string, string>): string {
-  const base = `${API_URL}/api/${COMPANY_SLUG}/blog`;
+  const base = `${API_URL}/api/${COMPANY_SLUG}/${PROJECT_ID}/blog`;
   if (!params) return base;
   return `${base}?${new URLSearchParams(params)}`;
 }
