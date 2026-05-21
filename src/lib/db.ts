@@ -19,3 +19,16 @@ export async function ensureFitecVisitorsTable() {
     )
   `);
 }
+
+export async function ensureBlogLeadsTable() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS blog_leads (
+      id            SERIAL PRIMARY KEY,
+      name          VARCHAR(255),
+      whatsapp      VARCHAR(50),
+      article_slug  VARCHAR(255),
+      article_title TEXT,
+      created_at    TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+}

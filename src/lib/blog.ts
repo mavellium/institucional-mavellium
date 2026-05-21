@@ -95,6 +95,7 @@ export function formatDate(isoDate: string): string {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "UTC",
   }).format(new Date(isoDate));
 }
 

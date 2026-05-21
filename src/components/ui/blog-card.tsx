@@ -15,8 +15,9 @@ export interface BlogCardPost {
   category: string;
   coverImage: string;
   publishedAt: string;
-  readingTimeMinutes: number;
+  readingTimeMinutes: number | null;
   authorName: string;
+  authorImageUrl?: string;
 }
 
 interface BlogCardProps {
@@ -85,13 +86,23 @@ export function BlogCard({
 
               <div className="mt-8 space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0 bg-zinc-900">
-                    {initials}
-                  </div>
+                  {post.authorImageUrl ? (
+                    <Image
+                      src={post.authorImageUrl}
+                      alt={post.authorName}
+                      width={36}
+                      height={36}
+                      className="w-9 h-9 rounded-full object-cover flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0 bg-zinc-900">
+                      {initials}
+                    </div>
+                  )}
                   <div>
                     <p className="text-sm font-bold text-zinc-800">{post.authorName}</p>
                     <p className="text-xs text-zinc-400">
-                      {formatDate(post.publishedAt)} · {post.readingTimeMinutes} min de leitura
+                      {formatDate(post.publishedAt)}{post.readingTimeMinutes ? ` · ${post.readingTimeMinutes} min de leitura` : ""}
                     </p>
                   </div>
                 </div>
@@ -150,17 +161,31 @@ export function BlogCard({
 
             <div className="flex items-center justify-between pt-4 border-t border-zinc-100 mt-auto">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 bg-zinc-900">
-                  {initials}
-                </div>
+                {post.authorImageUrl ? (
+                  <Image
+                    src={post.authorImageUrl}
+                    alt={post.authorName}
+                    width={28}
+                    height={28}
+                    className="w-7 h-7 rounded-full object-cover flex-shrink-0"
+                  />
+                ) : (
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 bg-zinc-900">
+                    {initials}
+                  </div>
+                )}
                 <span className="text-xs font-medium text-zinc-600 truncate max-w-[120px]">
                   {post.authorName}
                 </span>
               </div>
               <div className="flex items-center gap-2 text-xs font-light text-zinc-400 flex-shrink-0">
                 <span>{formatDate(post.publishedAt)}</span>
-                <span>·</span>
-                <span>{post.readingTimeMinutes} min</span>
+                {post.readingTimeMinutes && (
+                  <>
+                    <span>·</span>
+                    <span>{post.readingTimeMinutes} min</span>
+                  </>
+                )}
               </div>
             </div>
           </CardContent>

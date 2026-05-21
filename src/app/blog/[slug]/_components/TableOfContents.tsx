@@ -75,25 +75,31 @@ export function TableOfContents({ sections, html }: TableOfContentsProps) {
   if (headings.length === 0) return null;
 
   return (
-    <nav aria-label="Índice do artigo" className="sticky top-28 space-y-1">
-      <p className="text-[10px] uppercase tracking-widest font-bold text-zinc-400 mb-4">
-        Neste artigo
-      </p>
-      {headings.map((h) => (
-        <a
-          key={h.id}
-          href={`#${h.id}`}
-          className={cn(
-            "block py-1 text-sm transition-all duration-300 border-l-2",
-            h.level === 3 ? "pl-7" : "pl-4",
-            activeId === h.id
-              ? "border-[#00D26A] text-[#00b35a] font-bold"
-              : "border-transparent text-zinc-400 hover:text-[#00b35a] hover:border-[#00D26A]/40"
-          )}
-        >
-          {h.content}
-        </a>
-      ))}
-    </nav>
+    <div className="sticky top-28">
+      <div className="rounded-md border border-zinc-200 bg-white shadow-sm overflow-hidden">
+        <div className="px-5 py-4 border-b border-zinc-100 bg-zinc-50/70">
+          <p className="text-[10px] uppercase tracking-widest font-extrabold text-zinc-400">
+            Neste artigo
+          </p>
+        </div>
+        <nav aria-label="Índice do artigo" className="px-3 py-3 space-y-0.5">
+          {headings.map((h) => (
+            <a
+              key={h.id}
+              href={`#${h.id}`}
+              className={cn(
+                "flex items-start gap-2.5 rounded-sm py-1.5 px-2 text-sm leading-snug transition-all duration-200 border-l-2",
+                h.level === 3 ? "ml-3 text-[13px]" : "",
+                activeId === h.id
+                  ? "border-[#00D26A] text-[#00b35a] font-semibold bg-[#00D26A]/5"
+                  : "border-transparent text-zinc-500 hover:text-zinc-800 hover:bg-zinc-50 hover:border-zinc-300"
+              )}
+            >
+              {h.content}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </div>
   );
 }

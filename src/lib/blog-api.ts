@@ -1,3 +1,5 @@
+import { fetchJson } from "./blog-fetch";
+
 const API_URL = process.env.BLOG_API_URL ?? "";
 const COMPANY_SLUG = process.env.BLOG_SUBTYPE_ID ?? "";
 const PROJECT_ID = process.env.BLOG_PROJECT_ID ?? "";
@@ -29,14 +31,21 @@ export interface JanusPost {
   slug?: string;
   title: string;
   subtitle?: string;
-  publishedAt: string;
+  publishedAt?: string;
+  createdAt?: string;
   body: string;
   authorName: string;
+  authorImageUrl?: string;
   coverImageUrl?: string;
   readingTime?: number;
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string;
+  // CTA overrides — Janus custom fields per post
+  ctaTitle?: string;
+  ctaDescription?: string;
+  ctaButtonText?: string;
+  ctaButtonUrl?: string;
   category?: JanusCategory;
   tags: JanusTag[];
   project: { id: string; name: string };
@@ -66,11 +75,17 @@ export interface CmsPost {
   categorySlug: string;
   coverImage: string;
   publishedAt: string;
-  readingTimeMinutes: number;
+  readingTimeMinutes: number | null;
   authorName: string;
+  authorImageUrl?: string;
   body: string;
   seoTitle?: string;
   seoDescription?: string;
+  // Per-post CTA overrides from Janus custom fields
+  ctaTitle?: string;
+  ctaDescription?: string;
+  ctaButtonText?: string;
+  ctaButtonUrl?: string;
   tags: Array<{ name: string; slug: string }>;
 }
 
@@ -94,24 +109,19 @@ function toCmsPost(p: JanusPost): CmsPost {
     category: p.category?.name ?? "Geral",
     categorySlug: p.category?.slug ?? "geral",
     coverImage: p.coverImageUrl ?? FALLBACK_IMAGE,
-    publishedAt: p.publishedAt,
-    readingTimeMinutes: p.readingTime ?? estimateReadingTime(p.body ?? ""),
+    publishedAt: p.publishedAt ?? p.createdAt ?? "",
+    readingTimeMinutes: p.readingTime ?? (p.body?.trim() ? estimateReadingTime(p.body) : null),
     authorName: p.authorName,
+    authorImageUrl: p.authorImageUrl,
     body: p.body ?? "",
     seoTitle: p.seoTitle,
     seoDescription: p.seoDescription,
+    ctaTitle: p.ctaTitle,
+    ctaDescription: p.ctaDescription,
+    ctaButtonText: p.ctaButtonText,
+    ctaButtonUrl: p.ctaButtonUrl,
     tags: (p.tags ?? []).map((t) => ({ name: t.tag.name, slug: t.tag.slug })),
   };
-}
-
-async function fetchJson<T>(url: string): Promise<T | null> {
-  try {
-    const res = await fetch(url, { next: { revalidate: 60 } });
-    if (!res.ok) return null;
-    return (await res.json()) as T;
-  } catch {
-    return null;
-  }
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────
@@ -148,7 +158,7 @@ export async function fetchCmsRelatedPosts(
   if (!isConfigured()) return [];
   const data = await fetchJson<JanusResponse>(blogUrl({ limit: "100" }));
   return (data?.posts ?? [])
-    .filter((p) => (p.category?.slug ?? "geral") === categorySlug && p.slug !== excludeSlug)
+    .filter((p) => (p.category?.slug ?? "geral") === categorySlug && (p.slug ?? p.id) !== excludeSlug)
     .slice(0, 3)
     .map(toCmsPost);
 }
