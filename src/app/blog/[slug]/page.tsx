@@ -52,9 +52,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function CmsPostArticle({ post, related, siteConfig }: { post: CmsPost; related: CmsPost[]; siteConfig: BlogSiteConfig }) {
   const colors = getCategoryStyle(post.category);
-  const whatsappMsg = getWhatsappUrl(
-    `Olá! Li o artigo "${post.title}" no blog da Mavellium e gostaria de conversar sobre implementar isso na minha empresa.`
-  );
+  // Janus global whatsappUrl takes priority; otherwise generate per-article link
+  const whatsappMsg =
+    siteConfig.cta.whatsappUrl ??
+    getWhatsappUrl(
+      `Olá! Li o artigo "${post.title}" no blog da Mavellium e gostaria de conversar sobre implementar isso na minha empresa.`
+    );
 
   return (
     <>

@@ -1,14 +1,13 @@
-// ─── Blog site-wide config — sourced from Janus when available ───────────────
+// ─── Blog site-wide config — sourced from Janus CMS ─────────────────────────
 //
-// fetchBlogSiteConfig() tries GET /blog/config on the Janus project endpoint.
-// Until Janus exposes that route, the call fails silently and defaults are used.
-// Shape this file to match what Janus returns when the endpoint goes live.
+// Two Janus content endpoints drive this:
+//   CTA   → /api/v1/content/mavellium-main/blogcta
+//   Share → /api/v1/content/mavellium-main/blogcompartilhamento
 
 import { fetchJson } from "./blog-fetch";
 
-const API_URL = process.env.BLOG_API_URL ?? "";
-const COMPANY_SLUG = process.env.BLOG_SUBTYPE_ID ?? "";
-const PROJECT_ID = process.env.BLOG_PROJECT_ID ?? "";
+const JANUS_BASE = process.env.BLOG_API_URL ?? "https://januscms.com.br";
+const COMPANY_SLUG = process.env.BLOG_SUBTYPE_ID ?? "mavellium-main";
 
 export type SharePlatform = "linkedin" | "twitter" | "whatsapp" | "copy";
 
@@ -16,8 +15,9 @@ export interface BlogCtaConfig {
   title: string;
   description: string;
   buttonText: string;
-  // When set in Janus, overrides the default WhatsApp fallback URL
   buttonUrl?: string;
+  // When set, overrides the per-article generated WhatsApp URL
+  whatsappUrl?: string;
 }
 
 export interface BlogShareConfig {
@@ -36,7 +36,6 @@ const DEFAULTS: BlogSiteConfig = {
     description:
       "Converse com nossa equipe de especialistas e descubra como aplicar essas estratégias na realidade da sua empresa.",
     buttonText: "Falar com Especialista",
-    // buttonUrl falls back to the WhatsApp link generated per-article in page.tsx
   },
   share: {
     label: "Compartilhar artigo",
@@ -44,24 +43,62 @@ const DEFAULTS: BlogSiteConfig = {
   },
 };
 
-interface JanusBlogConfigResponse {
-  success: boolean;
-  config: {
-    cta?: Partial<BlogCtaConfig>;
-    share?: Partial<BlogShareConfig>;
+// ─── Janus response shapes ────────────────────────────────────────────────────
+
+interface JanusCtaResponse {
+  slug: string;
+  schema: {
+    config: {
+      title?: string;
+      description?: string;
+      buttonText?: string;
+      buttonUrl?: string | null;
+    };
+    whatsappUrl?: string;
   };
 }
 
+interface JanusShareResponse {
+  slug: string;
+  schema: Array<{
+    config: {
+      label?: string;
+      platforms?: string[];
+    };
+  }>;
+}
+
+// ─── Fetch ────────────────────────────────────────────────────────────────────
+
 export async function fetchBlogSiteConfig(): Promise<BlogSiteConfig> {
-  if (!API_URL || !COMPANY_SLUG || !PROJECT_ID) return DEFAULTS;
+  const ctaUrl = `${JANUS_BASE}/api/v1/content/${COMPANY_SLUG}/blogcta`;
+  const shareUrl = `${JANUS_BASE}/api/v1/content/${COMPANY_SLUG}/blogcompartilhamento`;
 
-  const url = `${API_URL}/api/${COMPANY_SLUG}/${PROJECT_ID}/blog/config`;
-  const data = await fetchJson<JanusBlogConfigResponse>(url);
+  const [ctaData, shareData] = await Promise.all([
+    fetchJson<JanusCtaResponse>(ctaUrl),
+    fetchJson<JanusShareResponse>(shareUrl),
+  ]);
 
-  if (!data?.success || !data.config) return DEFAULTS;
-
-  return {
-    cta: { ...DEFAULTS.cta, ...(data.config.cta ?? {}) },
-    share: { ...DEFAULTS.share, ...(data.config.share ?? {}) },
+  // ── CTA ──
+  const ctaConfig = ctaData?.schema?.config ?? {};
+  const cta: BlogCtaConfig = {
+    title: ctaConfig.title ?? DEFAULTS.cta.title,
+    description: ctaConfig.description ?? DEFAULTS.cta.description,
+    buttonText: ctaConfig.buttonText ?? DEFAULTS.cta.buttonText,
+    buttonUrl: ctaConfig.buttonUrl ?? undefined,
+    whatsappUrl: ctaData?.schema?.whatsappUrl ?? undefined,
   };
+
+  // ── Share ──
+  const shareConfig = shareData?.schema?.[0]?.config ?? {};
+  const rawPlatforms = shareConfig.platforms ?? [];
+  const validPlatforms = rawPlatforms.filter((p): p is SharePlatform =>
+    ["linkedin", "twitter", "whatsapp", "copy"].includes(p)
+  );
+  const share: BlogShareConfig = {
+    label: shareConfig.label ?? DEFAULTS.share.label,
+    platforms: validPlatforms.length > 0 ? validPlatforms : DEFAULTS.share.platforms,
+  };
+
+  return { cta, share };
 }
