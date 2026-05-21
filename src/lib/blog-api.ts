@@ -20,6 +20,7 @@ export interface JanusCategory {
   id: string;
   name: string;
   slug?: string;
+  parentId?: string | null;
 }
 
 export interface JanusTag {
@@ -46,7 +47,8 @@ export interface JanusPost {
   ctaDescription?: string;
   ctaButtonText?: string;
   ctaButtonUrl?: string;
-  category?: JanusCategory;
+  // Janus returns categories as an array of junction objects
+  categories?: Array<{ category: JanusCategory }>;
   tags: JanusTag[];
   project: { id: string; name: string };
 }
@@ -99,15 +101,22 @@ function estimateReadingTime(html: string): number {
   return Math.max(1, Math.ceil(words / 200));
 }
 
+// Janus returns categories ordered parent → child; pick the leaf (most specific).
+function pickCategory(p: JanusPost): JanusCategory | undefined {
+  const list = p.categories ?? [];
+  return (list.find((c) => c.category.parentId) ?? list[0])?.category;
+}
+
 function toCmsPost(p: JanusPost): CmsPost {
+  const cat = pickCategory(p);
   return {
     id: p.id,
     slug: p.slug ?? p.id,
     title: p.title,
     subtitle: p.subtitle,
     description: p.subtitle ?? p.seoDescription ?? p.title,
-    category: p.category?.name ?? "Geral",
-    categorySlug: p.category?.slug ?? "geral",
+    category: cat?.name ?? "Geral",
+    categorySlug: cat?.slug ?? "geral",
     coverImage: p.coverImageUrl ?? FALLBACK_IMAGE,
     publishedAt: p.publishedAt ?? p.createdAt ?? "",
     readingTimeMinutes: p.readingTime ?? (p.body?.trim() ? estimateReadingTime(p.body) : null),
@@ -158,7 +167,7 @@ export async function fetchCmsRelatedPosts(
   if (!isConfigured()) return [];
   const data = await fetchJson<JanusResponse>(blogUrl({ limit: "100" }));
   return (data?.posts ?? [])
-    .filter((p) => (p.category?.slug ?? "geral") === categorySlug && (p.slug ?? p.id) !== excludeSlug)
+    .filter((p) => (pickCategory(p)?.slug ?? "geral") === categorySlug && (p.slug ?? p.id) !== excludeSlug)
     .slice(0, 3)
     .map(toCmsPost);
 }
