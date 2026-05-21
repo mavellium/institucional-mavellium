@@ -1,4 +1,4 @@
-export const revalidate = 60;
+export const revalidate = 10;
 
 import type { Metadata } from "next";
 import { Header } from "../../components/Header";
