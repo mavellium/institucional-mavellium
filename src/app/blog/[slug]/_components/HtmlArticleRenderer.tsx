@@ -1,8 +1,27 @@
+import { slugifyHeading } from "../../../../lib/blog";
+
 interface HtmlArticleRendererProps {
   html: string;
 }
 
+// Injects id attributes into <h2>/<h3> tags so ToC anchor links work.
+// Skips tags that already carry an id.
+function injectHeadingIds(html: string): string {
+  return html.replace(
+    /<(h[23])([^>]*)>([\s\S]*?)<\/h[23]>/gi,
+    (match, tag: string, attrs: string, inner: string) => {
+      if (/\bid=/i.test(attrs)) return match;
+      const text = inner.replace(/<[^>]+>/g, "").trim();
+      if (!text) return match;
+      const id = slugifyHeading(text);
+      return `<${tag}${attrs} id="${id}">${inner}</${tag}>`;
+    }
+  );
+}
+
 export function HtmlArticleRenderer({ html }: HtmlArticleRendererProps) {
+  const processedHtml = injectHeadingIds(html);
+
   return (
     <div
       className="
@@ -24,7 +43,7 @@ export function HtmlArticleRenderer({ html }: HtmlArticleRendererProps) {
         prose-code:text-[#00b35a] prose-code:bg-zinc-100 prose-code:px-1 prose-code:rounded
         prose-pre:bg-zinc-900 prose-pre:text-zinc-100 prose-pre:rounded-md
       "
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={{ __html: processedHtml }}
     />
   );
 }

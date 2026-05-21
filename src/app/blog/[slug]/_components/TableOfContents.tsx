@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { cn } from "@/src/lib/utils";
 import { type ArticleSection, slugifyHeading } from "../../../../lib/blog";
 
@@ -44,24 +44,21 @@ export function TableOfContents({ sections, html }: TableOfContentsProps) {
   const headings = html
     ? extractHeadingsFromHtml(html)
     : extractHeadingsFromSections(sections ?? []);
+
   const [activeId, setActiveId] = useState<string>("");
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     if (headings.length === 0) return;
 
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          setActiveId(entry.target.id);
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
         }
-      }
-    };
-
-    observerRef.current = new IntersectionObserver(handleIntersect, {
-      rootMargin: "-112px 0px -60% 0px",
-      threshold: 0,
-    });
+      },
+      { rootMargin: "-112px 0px -60% 0px", threshold: 0 }
+    );
 
     headings.forEach(({ id }) => {
       const el = document.getElementById(id);
@@ -70,6 +67,16 @@ export function TableOfContents({ sections, html }: TableOfContentsProps) {
 
     return () => observerRef.current?.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const scrollTo = useCallback((id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    // scrollIntoView respects the element's scroll-margin-top (scroll-mt-28)
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Update URL hash without triggering another scroll
+    history.pushState(null, "", `#${id}`);
+    setActiveId(id);
   }, []);
 
   if (headings.length === 0) return null;
@@ -84,11 +91,11 @@ export function TableOfContents({ sections, html }: TableOfContentsProps) {
         </div>
         <nav aria-label="Índice do artigo" className="px-3 py-3 space-y-0.5">
           {headings.map((h) => (
-            <a
+            <button
               key={h.id}
-              href={`#${h.id}`}
+              onClick={() => scrollTo(h.id)}
               className={cn(
-                "flex items-start gap-2.5 rounded-sm py-1.5 px-2 text-sm leading-snug transition-all duration-200 border-l-2",
+                "w-full text-left flex items-start gap-2.5 rounded-sm py-1.5 px-2 text-sm leading-snug transition-all duration-200 border-l-2",
                 h.level === 3 ? "ml-3 text-[13px]" : "",
                 activeId === h.id
                   ? "border-[#00D26A] text-[#00b35a] font-semibold bg-[#00D26A]/5"
@@ -96,7 +103,7 @@ export function TableOfContents({ sections, html }: TableOfContentsProps) {
               )}
             >
               {h.content}
-            </a>
+            </button>
           ))}
         </nav>
       </div>
