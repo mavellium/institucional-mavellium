@@ -274,7 +274,7 @@ export default function SupportHoverSection() {
                         <div className="preview-inner">
                             <img src={activeItem.image} alt={activeItem.title} />
                             <div className="px-3 pb-2 pt-1">
-                                <h4 className="text-[#00D26A] font-bold text-xs uppercase tracking-widest">{activeItem.title}</h4>
+                                <p className="text-[#00D26A] font-bold text-xs uppercase tracking-widest">{activeItem.title}</p>
                                 <p className="text-zinc-300 font-light text-xs mt-2 leading-relaxed">{activeItem.subtitle}</p>
                             </div>
                         </div>

@@ -125,6 +125,7 @@ const Carousel: React.FC<PropType> = (props) => {
               <DotButton
                 key={index}
                 onClick={() => onAutoplayButtonClick(() => onDotButtonClick(index))}
+                aria-label={`Ir para slide ${index + 1}`}
                 className={cn(
                   "h-2 rounded-full outline-none transition-all duration-500",
                   index === selectedIndex
