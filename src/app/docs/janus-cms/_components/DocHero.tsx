@@ -8,6 +8,10 @@ const PROPERTIES = [
     desc: "Company → Project → Page",
   },
   {
+    label: "Dual Mode",
+    desc: "Legacy (form) · Avançado (JSON livre)",
+  },
+  {
     label: "ISR nativo",
     desc: "Cache-Control s-maxage=60 por rota",
   },
@@ -54,7 +58,7 @@ export function DocHero() {
       </p>
 
       {/* Properties grid */}
-      <dl className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <dl className="grid grid-cols-2 md:grid-cols-5 gap-3">
         {PROPERTIES.map((p) => (
           <div
             key={p.label}

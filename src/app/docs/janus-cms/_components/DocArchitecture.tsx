@@ -45,6 +45,8 @@ export function DocArchitecture() {
                blogEnabled: bool, isActive: bool)
        └─ Page  (schemaData: JSON,
                  contentData: JSON,
+                 isAdvanced:  bool,   // false = Legacy | true = Avançado
+                 uiSchema:    JSON?,  // controle de labels/widgets (opcional)
                  isPublished: bool,
                  slug: unique per project,
                  deletedAt: nullable)`}</code>
@@ -69,74 +71,60 @@ export function DocArchitecture() {
           id="dualmodel-heading"
           className="text-lg font-bold text-zinc-900 mb-3"
         >
-          Dual-model de Page: schemaData e contentData
+          Dois modos de edição: Legacy e Avançado
         </h3>
         <p className="text-zinc-600 font-light text-sm leading-relaxed mb-4">
-          Cada Page armazena dois objetos JSON independentes no PostgreSQL
-          (JSONB):{" "}
+          O campo{" "}
           <code className="text-xs font-mono bg-zinc-100 px-1.5 py-0.5 rounded">
-            schemaData
+            isAdvanced
           </code>{" "}
-          define a estrutura de campos;{" "}
+          da Page determina qual modo está ativo. A troca de modo nunca apaga
+          dados — apenas muda a flag via{" "}
           <code className="text-xs font-mono bg-zinc-100 px-1.5 py-0.5 rounded">
-            contentData
-          </code>{" "}
-          armazena os valores preenchidos pelo usuário. Esta separação permite
-          que o schema evolua sem migração de dados — alterar{" "}
-          <code className="text-xs font-mono bg-zinc-100 px-1.5 py-0.5 rounded">
-            schemaData
-          </code>{" "}
-          não requer alterar{" "}
-          <code className="text-xs font-mono bg-zinc-100 px-1.5 py-0.5 rounded">
-            contentData
+            updatePageMode()
           </code>
           .
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">
-              schemaData (estrutura)
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div className="rounded-md border border-zinc-200 overflow-hidden">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 px-4 py-2 bg-zinc-50 border-b border-zinc-200">
+              Legacy — isAdvanced = false
             </p>
-            <pre className="bg-zinc-900 text-zinc-300 text-xs font-mono rounded-md p-4 overflow-x-auto leading-relaxed h-full">
-              <code>{`{
-  "hero": {
-    "name": "Hero Principal",
-    "fields": [
-      {
-        "name": "headline",
-        "label": "Título",
-        "type": "text"
-      },
-      {
-        "name": "cover",
-        "label": "Imagem",
-        "type": "image"
-      }
-    ]
-  }
-}`}</code>
-            </pre>
+            <div className="p-4 space-y-2 text-xs text-zinc-600 font-light leading-relaxed">
+              <p>
+                <code className="font-mono bg-zinc-100 px-1 rounded">schemaData</code>{" "}
+                define a estrutura de campos (read-only pelo dev).
+              </p>
+              <p>
+                <code className="font-mono bg-zinc-100 px-1 rounded">contentData</code>{" "}
+                armazena os valores preenchidos via DynamicForm.
+              </p>
+              <p>Suporta 11 tipos de campo predefinidos.</p>
+            </div>
           </div>
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">
-              contentData (valores)
+          <div className="rounded-md border border-[#00D26A]/30 overflow-hidden">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[#00D26A] px-4 py-2 bg-[#00D26A]/5 border-b border-[#00D26A]/20">
+              Avançado — isAdvanced = true
             </p>
-            <pre className="bg-zinc-900 text-zinc-300 text-xs font-mono rounded-md p-4 overflow-x-auto leading-relaxed h-full">
-              <code>{`{
-  "hero": {
-    "headline": "Transforme sua\npresença digital",
-    "cover": "https://cdn.bunny.net/\nimagens/hero.avif"
-  }
-}`}</code>
-            </pre>
+            <div className="p-4 space-y-2 text-xs text-zinc-600 font-light leading-relaxed">
+              <p>
+                <code className="font-mono bg-zinc-100 px-1 rounded">schemaData</code>{" "}
+                é JSON livre editado via Monaco Editor (3 colunas + preview).
+              </p>
+              <p>
+                <code className="font-mono bg-zinc-100 px-1 rounded">contentData</code>{" "}
+                é ignorado completamente.
+              </p>
+              <p>Estrutura de dados totalmente livre, sem schema predefinido.</p>
+            </div>
           </div>
         </div>
 
         <p className="text-xs text-zinc-500 font-light mb-3">
-          Tipos de campo suportados:
+          Tipos de campo suportados no modo Legacy:
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-6">
           {FIELD_TYPES.map((t) => (
             <code
               key={t}
@@ -145,6 +133,27 @@ export function DocArchitecture() {
               {t}
             </code>
           ))}
+        </div>
+
+        {/* uiSchema */}
+        <div className="rounded-md border border-zinc-200 p-4">
+          <p className="text-xs font-bold text-zinc-700 mb-1">
+            Campo{" "}
+            <code className="font-mono bg-zinc-100 px-1 rounded">uiSchema</code>{" "}
+            (Modo Avançado)
+          </p>
+          <p className="text-xs text-zinc-500 font-light leading-relaxed mb-3">
+            Controla labels, tipos de widget e visibilidade de campos sem
+            poluir o JSON de dados. Usa notação de ponto com suporte a
+            wildcards:
+          </p>
+          <pre className="bg-zinc-900 text-zinc-300 text-xs font-mono rounded-md p-4 overflow-x-auto leading-relaxed">
+            <code>{`{
+  "cards.*.image":       { "ui:widget": "image" },
+  "cards.*.buttonText":  { "ui:label": "Texto do Botão" },
+  "internalId":          { "ui:hidden": true }
+}`}</code>
+          </pre>
         </div>
       </section>
 
@@ -176,8 +185,8 @@ Body 200 — OK:
 {
   "slug":      "home",
   "name":      "Página Inicial",
-  "schema":    { ... },   // schemaData
-  "content":   [ ... ],   // contentData serializado
+  "schema":    { ... },   // schemaData (estrutura ou JSON livre)
+  "content":   { ... },   // contentData (modo legacy) ou null (modo avançado)
   "updatedAt": "2026-05-16T00:00:00.000Z"
 }
 

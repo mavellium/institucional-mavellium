@@ -2,9 +2,9 @@ const PIPELINE_STEPS = [
   {
     step: 1,
     actor: "Janus Admin",
-    action: "Usuário preenche contentData via DynamicForm",
+    action: "Conteúdo editado e salvo no PostgreSQL",
     detail:
-      "Servidor Action salva no PostgreSQL via Prisma. Imagens são convertidas para AVIF (Sharp, quality 80) e enviadas ao BunnyCDN antes de salvar a URL.",
+      "Legacy (isAdvanced=false): usuário preenche contentData via DynamicForm. Avançado (isAdvanced=true): developer edita schemaData diretamente via Monaco Editor (3 colunas com preview em tempo real). Em ambos os casos, imagens são convertidas para AVIF (Sharp, quality 80) e enviadas ao BunnyCDN antes de salvar a URL.",
   },
   {
     step: 2,
@@ -25,9 +25,9 @@ const PIPELINE_STEPS = [
     step: 4,
     actor: "JanusClient SDK",
     action:
-      "getHeroContent<T>() executa no Server Component — nunca no browser",
+      "getPage(slug) executa no Server Component — nunca no browser",
     detail:
-      "O fetch acontece no servidor Next.js durante SSG/SSR. O bundle JavaScript enviado ao browser não contém o SDK, a URL da API nem as credenciais de ambiente.",
+      "O fetch acontece no servidor Next.js durante SSG/SSR via janus-sdk. O bundle JavaScript enviado ao browser não contém o SDK, a URL da API nem as credenciais de ambiente.",
   },
   {
     step: 5,
