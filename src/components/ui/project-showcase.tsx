@@ -13,36 +13,8 @@ export interface FAQItem {
   image: string;
 }
 
-// --- Textos adaptados para a sua Empresa de Projetos Customizados ---
-const faqData: FAQItem[] = [
-  {
-    question: "Como funciona o desenvolvimento do meu projeto?",
-    answer: "Trabalhamos com total transparência através de 5 passos: Imersão e Briefing, Análise de Viabilidade Técnica, Cronograma, Desenvolvimento acompanhado por você e Entrega Final. Você nunca fica no escuro.",
-    category: "Metodologia",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    question: "Os projetos são feitos a partir de templates prontos?",
-    answer: "Não. Nós desenvolvemos projetos altamente customizados, desenhados cirurgicamente para a realidade e necessidade de cada cliente, seja uma Landing Page de conversão ou a sede digital da sua empresa.",
-    category: "Customização",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    question: "Onde vocês estão localizados? Atendem todo o país?",
-    answer: "Nossa operação técnica e expertise estão estabelecidas no polo de Garça-SP. No entanto, nossa infraestrutura digital nos permite atuar como parceiros estratégicos para pequenas, médias e grandes empresas em todo o território nacional.",
-    category: "Atendimento",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop",
-  },
-  {
-    question: "O que acontece após o lançamento do projeto?",
-    answer: "Nós não entregamos o código e sumimos. Oferecemos modelos de parceria evolutiva, garantindo que o seu projeto conte com manutenção constante, segurança de dados e atualizações contínuas.",
-    category: "Pós-Entrega",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop",
-  },
-];
-
 export default function ImmersiveFAQ({ items }: { items?: FAQItem[] } = {}) {
-  const faqItems = items && items.length > 0 ? items : faqData;
+  const faqItems = items ?? [];
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -89,6 +61,8 @@ export default function ImmersiveFAQ({ items }: { items?: FAQItem[] } = {}) {
     if (!isMobile) return;
     setActiveIndex(activeIndex === index ? null : index);
   };
+
+  if (faqItems.length === 0) return null;
 
   return (
     <section

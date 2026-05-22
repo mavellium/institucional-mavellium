@@ -18,8 +18,9 @@ interface SobreBlock {
   services: VerticalTabsProps["services"];
 }
 
-export function QuemSomosJanus() {
-  const { data } = useJanusBlock<SobreBlock>("home", "sobre-mavellium");
+export function QuemSomosJanus({ initialData }: { initialData?: unknown }) {
+  const { data: janusData } = useJanusBlock<SobreBlock>("home", "sobre-mavellium");
+  const data = (initialData as SobreBlock | undefined) ?? janusData;
   return <VerticalTabs services={data?.services} />;
 }
 
@@ -28,8 +29,9 @@ interface FaqBlock {
   items: FAQItem[];
 }
 
-export function FaqJanus() {
-  const { data } = useJanusBlock<FaqBlock>("home", "faq-mavellium");
+export function FaqJanus({ initialData }: { initialData?: unknown }) {
+  const { data: janusData } = useJanusBlock<FaqBlock>("home", "faq-mavellium");
+  const data = (initialData as FaqBlock | undefined) ?? janusData;
   return <ImmersiveFAQ items={data?.items} />;
 }
 
@@ -40,8 +42,9 @@ interface SolucoesBlock {
   cards: JanusCard[];
 }
 
-export function SolucoesJanus() {
-  const { data } = useJanusBlock<SolucoesBlock>("home", "solucoes-mavellium");
+export function SolucoesJanus({ initialData }: { initialData?: unknown }) {
+  const { data: janusData } = useJanusBlock<SolucoesBlock>("home", "solucoes-mavellium");
+  const data = (initialData as SolucoesBlock | undefined) ?? janusData;
   return (
     <FlippingCardDemo
       title={data?.title}
@@ -52,39 +55,16 @@ export function SolucoesJanus() {
 }
 
 // ── Manifesto ─────────────────────────────────────────────────────────────────
-export function ManifestoJanus() {
-  const { data } = useJanusBlock<MediaContent>("home", "manifesto-mavellium");
+export function ManifestoJanus({ initialData }: { initialData?: unknown }) {
+  const { data: janusData } = useJanusBlock<MediaContent>("home", "manifesto-mavellium");
+  const data = (initialData as MediaContent | undefined) ?? janusData;
   return <Demo content={data ?? undefined} />;
 }
 
 // ── CTA Final ─────────────────────────────────────────────────────────────────
-const DEFAULT_CTA: FinalCtaData = {
-  text: {
-    headline: "Pronto para Construir",
-    highlight: "o Próximo Nível?",
-    description:
-      "Transforme sua visão em um ecossistema digital de alta performance. Vamos conversar sobre o seu projeto.",
-  },
-  theme: {
-    gradient_start: "#00D26A",
-    gradient_end: "#00b35a",
-    button_bg: "#050505",
-  },
-  calls_to_action: {
-    primary: {
-      label: "Falar com a Equipe",
-      href: "https://wa.me/5514998001008",
-      icon: "logos:whatsapp-icon",
-    },
-    secondary: {
-      label: "Ver Portfólio",
-      href: "/cases",
-      icon: "lucide:folder-open",
-    },
-  },
-};
-
-export function CtaFinalJanus() {
-  const { data } = useJanusBlock<FinalCtaData>("home", "cta-final-mavellium");
-  return <FinalCtaSection data={data ?? DEFAULT_CTA} />;
+export function CtaFinalJanus({ initialData }: { initialData?: unknown }) {
+  const { data: janusData } = useJanusBlock<FinalCtaData>("home", "cta-final-mavellium");
+  const data = (initialData as FinalCtaData | undefined) ?? janusData;
+  if (!data) return null;
+  return <FinalCtaSection data={data} />;
 }

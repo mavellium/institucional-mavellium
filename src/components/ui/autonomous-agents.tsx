@@ -69,55 +69,6 @@ interface FlippingCardDemoProps {
     cards?: JanusCard[];
 }
 
-// --- Dados Mapeados ---
-const cardsData: CardData[] = [
-    {
-        id: "sites-inteligentes",
-        front: {
-            imageSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-            imageAlt: "Sites Institucionais Inteligentes",
-            title: "Sites Inteligentes",
-            description: "Mais do que presença, construímos a sua autoridade no ambiente digital.",
-            icon: <Globe className="w-5 h-5 text-white" />,
-        },
-        back: {
-            description: "A sede digital da sua empresa. Um canal estruturado que transmite credibilidade e trabalha a favor da sua marca 24 horas por dia.",
-            buttonText: "Construir Autoridade",
-            icon: <Globe className="w-8 h-8 text-[#00D26A]" />,
-        },
-    },
-    {
-        id: "landing-pages",
-        front: {
-            imageSrc: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-            imageAlt: "Landing Pages de Alta Conversão",
-            title: "Alta Conversão",
-            description: "Páginas desenvolvidas com um único objetivo: transformar visitantes em clientes.",
-            icon: <Target className="w-5 h-5 text-white" />,
-        },
-        back: {
-            description: "Livre de distrações e desenhada cirurgicamente. Guie o usuário direto para a ação e maximize o retorno sobre seus anúncios.",
-            buttonText: "Acelerar Vendas",
-            icon: <Target className="w-8 h-8 text-[#00D26A]" />,
-        },
-    },
-    {
-        id: "automacao-ia",
-        front: {
-            imageSrc: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
-            imageAlt: "Automação e Agentes Autônomos (IA)",
-            title: "Automação & IA",
-            description: "A revolução da eficiência operacional operando nos seus setores estratégicos.",
-            icon: <Bot className="w-5 h-5 text-white" />,
-        },
-        back: {
-            description: "Agentes autônomos para qualificar leads e processar dados. Atendimento instantâneo e redução da carga sobre a folha de pagamento.",
-            buttonText: "Operar 24/7",
-            icon: <Bot className="w-8 h-8 text-[#00D26A]" />,
-        },
-    },
-];
-
 export default function FlippingCardDemo({
     title = "Soluções Inteligentes",
     description = "Apoiamos negócios de todos os portes na transição para um modelo de operação mais eficiente e lucrativo através de três frentes.",
@@ -125,7 +76,9 @@ export default function FlippingCardDemo({
 }: FlippingCardDemoProps) {
     const resolvedCards = cardsProp && cardsProp.length > 0
         ? cardsProp.map(janusCardToCardData)
-        : cardsData;
+        : [];
+
+    if (resolvedCards.length === 0) return null;
 
     return (
         <section className="flex flex-col items-center py-16 md:py-24 px-4 bg-[#050505] min-h-screen text-white border-t border-white/5">

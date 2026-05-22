@@ -14,37 +14,6 @@ interface Service {
   tag: string;
 }
 
-const SERVICES: Service[] = [
-  {
-    id: "01",
-    tag: "A Empresa",
-    title: "DNA Jovem e Dinâmico",
-    description: "Estabelecida no polo tecnológico de Garça-SP, somos focados no futuro e estritamente alinhados às inovações do mercado.",
-    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1200", 
-  },
-  {
-    id: "02",
-    tag: "Liderança",
-    title: "Três Sócios Especialistas",
-    description: "Nossa estrutura é fundamentada na expertise: cada departamento chave é comandado por um especialista focado em excelência técnica.",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200", 
-  },
-  {
-    id: "03",
-    tag: "Execução",
-    title: "Sem Terceirização Cega",
-    description: "Do planejamento estratégico ao código final, cada etapa do seu projeto passa pelas mãos de quem realmente entende do assunto.",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200", 
-  },
-  {
-    id: "04",
-    tag: "Resultado",
-    title: "Projetos Sob Medida",
-    description: "Desenhamos soluções cirurgicamente para a realidade e necessidade de cada cliente, independentemente do porte da empresa.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200", 
-  },
-];
-
 const AUTO_PLAY_DURATION = 5000;
 
 export interface VerticalTabsProps {
@@ -52,7 +21,7 @@ export interface VerticalTabsProps {
 }
 
 export default function VerticalTabs({ services: servicesProp }: VerticalTabsProps = {}) {
-  const services = servicesProp && servicesProp.length > 0 ? servicesProp : SERVICES;
+  const services = servicesProp ?? [];
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -75,6 +44,8 @@ export default function VerticalTabs({ services: servicesProp }: VerticalTabsPro
     const interval = setInterval(handleNext, AUTO_PLAY_DURATION);
     return () => clearInterval(interval);
   }, [activeIndex, isPaused, isInView, handleNext]);
+
+  if (services.length === 0) return null;
 
   return (
     <section id="quem-somos" ref={containerRef} className="w-full bg-white py-20 lg:py-32 overflow-hidden border-t border-zinc-200 text-zinc-900">

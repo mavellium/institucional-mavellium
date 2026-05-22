@@ -9,19 +9,19 @@ import heroSlidesData from "@/src/JSON/heroData.json";
 
 const FALLBACK = heroSlidesData as HeroSlide[];
 
-/**
- * Busca os slides do Janus CMS e renderiza o HeroSection.
- * Enquanto carrega usa o fallback estático (heroData.json).
- * Alterações no Janus aparecem no próximo F5 — sem deploy.
- */
-export function Hero() {
-  const { data } = useJanusBlock<{ slides: HeroSlide[] }>(
+interface HeroProps {
+  initialData?: { slides: HeroSlide[] } | null;
+}
+
+export function Hero({ initialData }: HeroProps = {}) {
+  const { data: janusData } = useJanusBlock<{ slides: HeroSlide[] }>(
     "home",
     "hero-section-mavellium"
   );
 
+  const source = initialData ?? janusData;
   const slides =
-    data?.slides && data.slides.length > 0 ? data.slides : FALLBACK;
+    source?.slides && source.slides.length > 0 ? source.slides : FALLBACK;
 
   return <HeroSection slides={slides} />;
 }

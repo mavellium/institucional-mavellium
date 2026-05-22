@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import ScrollExpandMedia from '../ui/scroll-expansion-hero'; // Certifique-se de que o caminho está correto
+import ScrollExpandMedia from '../ui/scroll-expansion-hero';
 
 export interface MediaAbout {
   overview: string;
@@ -16,23 +16,6 @@ export interface MediaContent {
   scrollToExpand: string;
   about: MediaAbout;
 }
-
-// Dados focados na sua agência de tecnologia
-const agencyContent: MediaContent = {
-  // Imagem que vai expandir (Sugestão: setup de código, servidor ou ambiente tech moderno)
-  src: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop', 
-  // Imagem de fundo (pode ser mais escura/abstrata para dar contraste)
-  background: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop',
-  title: 'O Futuro é Agora',
-  date: 'Manifesto Mavellium', // Coloquei Mavellium baseado no nome do logo que vi nos códigos anteriores
-  scrollToExpand: 'Role para descobrir',
-  about: {
-    overview:
-      'Acreditamos que a tecnologia não deve ser um obstáculo, mas sim o maior acelerador de resultados do seu negócio. Nascemos com o propósito de tirar projetos do papel e transformá-los em ecossistemas digitais vivos, rentáveis e escaláveis.',
-    conclusion:
-      'Nosso compromisso é com a entrega cirúrgica. Não vendemos sites ou códigos; nós construímos as fundações digitais para que a sua empresa lidere o mercado de amanhã.',
-  },
-};
 
 const MediaContentBlock = ({ content }: { content: MediaContent }) => {
   return (
@@ -52,20 +35,19 @@ const MediaContentBlock = ({ content }: { content: MediaContent }) => {
   );
 };
 
-export default function Demo({ content: contentProp }: { content?: MediaContent } = {}) {
-  const content = contentProp ?? agencyContent;
-  const mediaType = 'image';
-
+export default function Demo({ content }: { content?: MediaContent } = {}) {
   useEffect(() => {
     window.scrollTo(0, 0);
     const resetEvent = new Event('resetSection');
     window.dispatchEvent(resetEvent);
   }, []);
 
+  if (!content) return null;
+
   return (
     <div className='min-h-screen bg-white'>
       <ScrollExpandMedia
-        mediaType={mediaType}
+        mediaType="image"
         mediaSrc={content.src}
         bgImageSrc={content.background}
         title={content.title}

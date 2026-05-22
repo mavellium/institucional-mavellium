@@ -43,10 +43,15 @@ const CtaFinalJanus   = dynamic(() => import("../components/ui/janus-home-sectio
 
 import { fetchFitecLeads } from "@/src/lib/fitec-api";
 import { fetchCmsPosts } from "@/src/lib/blog-api";
+import { fetchJanusBlocks } from "@/src/lib/janus-server";
 
 export default async function Home() {
 
-  const cmsPosts = await fetchCmsPosts({ limit: 3 });
+  const [cmsPosts, janusHome, fitecLeads] = await Promise.all([
+    fetchCmsPosts({ limit: 3 }),
+    fetchJanusBlocks("home"),
+    fetchFitecLeads(),
+  ]);
   const insightsItems = cmsPosts.map((p) => ({
     id: p.id,
     title: p.title,
@@ -156,8 +161,6 @@ export default async function Home() {
     },
   ];
 
-  const fitecLeads = await fetchFitecLeads();
-
   return (
     <>
       <Header
@@ -176,7 +179,7 @@ export default async function Home() {
         ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
         ctaText={"Falar com Especialista"}
       />
-      <Hero />
+      <Hero initialData={janusHome?.["hero-section-mavellium"] as never} />
       <Pricing />
       <div id="metodologia">
         <Carousel
@@ -187,19 +190,19 @@ export default async function Home() {
         />
       </div>
       <SelectCards />
-      <QuemSomosJanus />
+      <QuemSomosJanus initialData={janusHome?.["sobre-mavellium"]} />
       <Benefits />
-      <ManifestoJanus />
-      <SolucoesJanus />
+      <ManifestoJanus initialData={janusHome?.["manifesto-mavellium"]} />
+      <SolucoesJanus initialData={janusHome?.["solucoes-mavellium"]} />
       <GalleryGridBlock />
       <PricingSection
         plans={PLANS}
         heading="Modelos de Projeto"
         description="Desenhados cirurgicamente para a realidade do seu negócio. Do planejamento estratégico ao código final, sem terceirização cega."
       />
-      <CtaFinalJanus />
+      <CtaFinalJanus initialData={janusHome?.["cta-final-mavellium"]} />
       <HoverPreview />
-      <FaqJanus />
+      <FaqJanus initialData={janusHome?.["faq-mavellium"]} />
       <Gallery4  {...blogData}
         cta={{
           label: "Acessar Todos os Artigos",
