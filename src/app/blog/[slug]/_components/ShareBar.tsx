@@ -51,6 +51,7 @@ export function ShareBar({ post, config }: ShareBarProps) {
 
   function handleCopy() {
     navigator.clipboard.writeText(pageUrl).then(() => {
+      window.dataLayer?.push({ event: "share", method: "copy_link", content_type: "article", item_id: post.slug });
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
@@ -98,6 +99,7 @@ export function ShareBar({ post, config }: ShareBarProps) {
               rel="noopener noreferrer"
               className={`${baseButtonClass} ${meta.className}`}
               aria-label={`Compartilhar no ${meta.label}`}
+              onClick={() => window.dataLayer?.push({ event: "share", method: platform, content_type: "article", item_id: post.slug })}
             >
               <Icon icon={meta.icon} className="size-4" />
               {meta.label}
