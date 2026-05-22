@@ -21,25 +21,26 @@ function SlideWithText({ image, title, description, imageAlt }: { image: string;
     </div>
   );
 }
+import dynamic from "next/dynamic";
 import { Hero } from "../components/ui/hero-janus";
-import { Gallery4 } from "../components/ui/gallery4";
 import { Footer } from "../components/ui/footer";
 import HoverPreview from "../components/ui/hover-preview";
 import Pricing from "../components/ui/pricing-section";
 import { Carousel } from "../components/ui/carousel-companys";
 import SelectCards from "../components/ui/select-cards";
-import Benefits from "../components/ui/benefits";
-import {
-  QuemSomosJanus,
-  FaqJanus,
-  SolucoesJanus,
-  ManifestoJanus,
-  CtaFinalJanus,
-} from "../components/ui/janus-home-sections";
-import { GalleryGridBlock } from "../components/ui/sections-gallery";
 import { Plan, PricingSection } from "../components/ui/pricing-details";
 import { getWhatsappUrl } from "../lib/constants";
-import { FitecLeadsGallery } from "../components/ui/FitecLeadsGallery";
+
+const Benefits        = dynamic(() => import("../components/ui/benefits"));
+const Gallery4        = dynamic(() => import("../components/ui/gallery4").then((m) => ({ default: m.Gallery4 })));
+const GalleryGridBlock = dynamic(() => import("../components/ui/sections-gallery").then((m) => ({ default: m.GalleryGridBlock })));
+const FitecLeadsGallery = dynamic(() => import("../components/ui/FitecLeadsGallery").then((m) => ({ default: m.FitecLeadsGallery })));
+const QuemSomosJanus  = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.QuemSomosJanus })));
+const FaqJanus        = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.FaqJanus })));
+const SolucoesJanus   = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.SolucoesJanus })));
+const ManifestoJanus  = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.ManifestoJanus })));
+const CtaFinalJanus   = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.CtaFinalJanus })));
+
 import { fetchFitecLeads } from "@/src/lib/fitec-api";
 import { fetchCmsPosts } from "@/src/lib/blog-api";
 
