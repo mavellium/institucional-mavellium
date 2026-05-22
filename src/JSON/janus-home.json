@@ -291,7 +291,7 @@
           "question": "Como funciona o desenvolvimento técnico do meu projeto?"
         },
         {
-          "image": "https://images.unsplash.com/photo-1551288049-bbbda540d3b9?q=80&w=600&auto=format&fit=crop",
+          "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop",
           "answer": "Significa que o código possui mapeamento de dados estruturados avançados (Schema Markup). Isso permite que inteligências como ChatGPT, Gemini e Perplexity leiam, contextualizem e recomendem a sua empresa diretamente nas respostas geradas para os utilizadores.",
           "category": "Tecnologia",
           "question": "O que significa ter um site otimizado para Inteligência Artificial?"
@@ -421,7 +421,7 @@
           "headlineHighlight": "recomendam e os seus clientes compram.",
           "primaryButtonLink": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Gostaria+de+adequar+a+infraestrutura+do+meu+site+para+motores+de+IA.",
           "primaryButtonText": "Falar com um Engenheiro",
-          "secondaryButtonLink": "/portfolio",
+          "secondaryButtonLink": "/cases",
           "secondaryButtonText": "Ver Infraestruturas"
         }
       ]

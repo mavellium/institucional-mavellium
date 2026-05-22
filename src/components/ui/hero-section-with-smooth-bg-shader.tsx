@@ -82,17 +82,31 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
             {/* === BACKGROUND MEDIA === */}
             <div className="absolute inset-0 z-0 h-full w-full transition-opacity duration-1000">
                 {slide.mediaType === 'video' ? (
-                    <iframe
-                        key={slide.id}
-                        title={`Vídeo background ${slide.id}`}
-                        aria-hidden="true"
-                        tabIndex={-1}
-                        className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-[100vh] w-[100vw] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 opacity-30 object-cover"
-                        src={slide.mediaUrl}
-                        frameBorder="0"
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                    />
+                    slide.mediaUrl.includes('youtube') ? (
+                        <iframe
+                            key={slide.id}
+                            title={`Vídeo background ${slide.id}`}
+                            aria-hidden="true"
+                            tabIndex={-1}
+                            className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-[100vh] w-[100vw] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 opacity-30 object-cover"
+                            src={slide.mediaUrl}
+                            frameBorder="0"
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                        />
+                    ) : (
+                        <video
+                            key={slide.id}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            aria-hidden="true"
+                            tabIndex={-1}
+                            className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-[100vh] w-[100vw] min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2 opacity-30 object-cover"
+                            src={slide.mediaUrl}
+                        />
+                    )
                 ) : (
                     <img 
                         src={slide.mediaUrl} 
@@ -197,14 +211,16 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
                     </div>
 
                     <div className="flex gap-2 hidden md:flex">
-                        <button 
+                        <button
                             onClick={prevSlide}
+                            aria-label="Slide anterior"
                             className="p-2 text-zinc-500 hover:text-white transition-colors"
                         >
                             <ChevronLeft className="h-8 w-8" />
                         </button>
-                        <button 
+                        <button
                             onClick={nextSlide}
+                            aria-label="Próximo slide"
                             className="p-2 text-zinc-500 hover:text-[#00D26A] transition-colors"
                         >
                             <ChevronRight className="h-8 w-8" />

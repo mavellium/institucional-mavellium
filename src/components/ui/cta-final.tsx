@@ -51,7 +51,6 @@ export default function FinalCtaSection({ data, className = "" }: FinalCtaSectio
       {/* Alterado para um azul super suave no blur de fundo */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-100/40 rounded-full blur-[120px] pointer-events-none" />
       
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.15] mix-blend-multiply pointer-events-none" />
 
       <div className="relative z-10 max-w-4xl w-full text-center space-y-8">
         <h2 className="text-5xl md:text-7xl font-bold text-zinc-900 tracking-tighter leading-[1.05]">

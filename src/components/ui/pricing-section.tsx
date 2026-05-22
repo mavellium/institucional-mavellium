@@ -138,7 +138,7 @@ function PricingCard({ plan }: { plan: PricingCardProps }) {
           )}
         </div>
         
-        <h4 className="mb-3 mt-8 text-3xl font-medium text-white tracking-tight">{plan.price}</h4>
+        <h3 className="mb-3 mt-8 text-3xl font-medium text-white tracking-tight">{plan.price}</h3>
         <p className="text-base leading-relaxed text-zinc-400 font-light min-h-[4rem]">{plan.description}</p>
       </div>
 

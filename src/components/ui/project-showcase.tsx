@@ -25,7 +25,7 @@ const faqData: FAQItem[] = [
     question: "Os projetos são feitos a partir de templates prontos?",
     answer: "Não. Nós desenvolvemos projetos altamente customizados, desenhados cirurgicamente para a realidade e necessidade de cada cliente, seja uma Landing Page de conversão ou a sede digital da sua empresa.",
     category: "Customização",
-    image: "https://images.unsplash.com/photo-1551288049-bbbda540d3b9?q=80&w=600&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop",
   },
   {
     question: "Onde vocês estão localizados? Atendem todo o país?",

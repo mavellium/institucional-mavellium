@@ -102,6 +102,7 @@ const Carousel: React.FC<PropType> = (props) => {
             <button
               onClick={() => onAutoplayButtonClick(onPrevButtonClick)}
               disabled={prevBtnDisabled}
+              aria-label="Slide anterior"
               className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 transition-all hover:bg-zinc-100 hover:text-zinc-900 disabled:opacity-30"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -109,6 +110,7 @@ const Carousel: React.FC<PropType> = (props) => {
             <button
               onClick={() => onAutoplayButtonClick(onNextButtonClick)}
               disabled={nextBtnDisabled}
+              aria-label="Próximo slide"
               className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 transition-all hover:bg-zinc-100 hover:text-zinc-900 disabled:opacity-30"
             >
               <ChevronRight className="h-5 w-5" />
@@ -138,9 +140,10 @@ const Carousel: React.FC<PropType> = (props) => {
           {/* Separador Claro */}
           <div className="h-6 w-[1px] bg-zinc-200" />
 
-          <button 
+          <button
             onClick={handleToggleAutoplay}
             type="button"
+            aria-label={autoplayIsPlaying ? "Pausar reprodução automática" : "Iniciar reprodução automática"}
             className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 transition-all hover:bg-zinc-100 hover:text-zinc-900 active:scale-95"
           >
             {autoplayIsPlaying ? (

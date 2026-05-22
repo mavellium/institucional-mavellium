@@ -24,17 +24,15 @@ const supportDetails = {
 };
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@800&display=swap');
-
   .support-section-container {
     min-height: 100vh;
-    background: #050505; /* Fundo escuro premium da Mavellium */
+    background: #050505;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 80px 24px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-satoshi), system-ui, sans-serif;
     position: relative;
     overflow: hidden;
     border-top: 1px solid rgba(255,255,255,0.05);

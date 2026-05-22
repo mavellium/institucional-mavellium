@@ -78,7 +78,7 @@ const DEFAULT_CTA: FinalCtaData = {
     },
     secondary: {
       label: "Ver Portfólio",
-      href: "/portfolio",
+      href: "/cases",
       icon: "lucide:folder-open",
     },
   },
