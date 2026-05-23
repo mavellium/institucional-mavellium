@@ -77,7 +77,7 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
     const slide = slides[currentSlide];
 
     return (
-        <section id="inicio" className="relative w-full h-[90vh] min-h-[600px] bg-[#050505] overflow-hidden">
+        <section id="inicio" data-cms-section="hero" className="relative w-full h-[90vh] min-h-[600px] bg-[#050505] overflow-hidden">
             
             {/* === BACKGROUND MEDIA === */}
             <div className="absolute inset-0 z-0 h-full w-full transition-opacity duration-1000">
@@ -126,13 +126,13 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
                     <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.1]">
                         {slide.headline}{" "}
                         {slide.headlineHighlight && (
-                            <span className="text-[#00D26A]">
+                            <span className="text-[#00D26A]" data-cms-field="hero.titulo_destaque">
                                 {slide.headlineHighlight}
                             </span>
                         )}
                     </h1>
 
-                    <p className="mt-6 text-lg md:text-xl text-zinc-400 font-light max-w-2xl leading-relaxed">
+                    <p className="mt-6 text-lg md:text-xl text-zinc-400 font-light max-w-2xl leading-relaxed" data-cms-field="hero.descricao">
                         {slide.description}
                     </p>
 
@@ -143,7 +143,7 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
                             size="lg"
                             className="h-14 rounded-md bg-[#00D26A] text-black font-bold text-lg px-8 hover:bg-[#00b35a] transition-colors sm:w-auto"
                         >
-                            <Link href={slide.primaryButtonLink}>
+                            <Link href={slide.primaryButtonLink} data-cms-field="hero.cta_primario_url">
                                 <span>{slide.primaryButtonText}</span>
                                 <ChevronRight className="ml-2 h-5 w-5" />
                             </Link>
@@ -159,6 +159,7 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
                                 <Link 
                                     href={slide.secondaryButtonLink || "#"} 
                                     target={slide.secondaryButtonLink?.includes('wa.me') ? "_blank" : "_self"}
+                                    data-cms-field="hero.cta_secundario_url"
                                 >
                                     {/* Ícone oficial do WhatsApp na cor verde da marca */}
                                     <WhatsAppIcon className="mr-3 h-5 w-5 text-[#00D26A]" />
