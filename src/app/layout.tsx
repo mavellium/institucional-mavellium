@@ -103,6 +103,10 @@ export default function RootLayout({
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TNLKRFV3');`,
           }}
         />
+        <Script
+          src="https://mavellium-janus.b-cdn.net/scripts/20a8ef8a-1674-4bd5-8020-fa1a90c10d6e-sync.js"
+          defer
+        />
       </head>
       <body className={`min-h-full flex flex-col ${satoshi.variable} font-satoshi bg-[#050505] text-white`}>
         <noscript>
