@@ -1,6 +1,6 @@
 {
-  "slug": "home",
   "name": "Home",
+  "slug": "home",
   "schema": {
     "faq-mavellium": {
       "label": "FAQ",
@@ -240,14 +240,6 @@
               "type": "text",
               "label": "ID"
             },
-            "primaryButtonLink": {
-              "type": "text",
-              "label": "Link do botão primário"
-            },
-            "primaryButtonText": {
-              "type": "text",
-              "label": "Texto do botão primário"
-            },
             "headline": {
               "type": "text",
               "label": "Headline"
@@ -264,6 +256,18 @@
               "type": "textarea",
               "label": "Descrição / subheadline"
             },
+            "headlineHighlight": {
+              "type": "text",
+              "label": "Destaque da headline"
+            },
+            "primaryButtonLink": {
+              "type": "text",
+              "label": "Link do botão primário"
+            },
+            "primaryButtonText": {
+              "type": "text",
+              "label": "Texto do botão primário"
+            },
             "secondaryButtonLink": {
               "type": "text",
               "label": "Link do botão secundário"
@@ -271,10 +275,6 @@
             "secondaryButtonText": {
               "type": "text",
               "label": "Texto do botão secundário"
-            },
-            "headlineHighlight": {
-              "type": "text",
-              "label": "Destaque da headline"
             }
           }
         }
@@ -291,7 +291,7 @@
           "question": "Como funciona o desenvolvimento técnico do meu projeto?"
         },
         {
-          "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop",
+          "image": "https://images.unsplash.com/photo-1551288049-bbbda540d3b9?q=80&w=600&auto=format&fit=crop",
           "answer": "Significa que o código possui mapeamento de dados estruturados avançados (Schema Markup). Isso permite que inteligências como ChatGPT, Gemini e Perplexity leiam, contextualizem e recomendem a sua empresa diretamente nas respostas geradas para os utilizadores.",
           "category": "Tecnologia",
           "question": "O que significa ter um site otimizado para Inteligência Artificial?"
@@ -307,6 +307,18 @@
           "answer": "Oferecemos uma parceria de evolução contínua. Asseguramos manutenções críticas de segurança, otimização de performance e atualização dos esquemas de dados conforme os principais modelos de LLM evoluem.",
           "category": "Evolução",
           "question": "Como funciona o suporte técnico após o lançamento?"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=600&auto=format&fit=crop",
+          "answer": "O IAG Score™ (Índice de Autoridade Gerativa) é a métrica rainha da Mavellium — um índice de 0 a 100 que mede com que frequência e precisão os grandes modelos de linguagem (ChatGPT, Gemini, Claude, Perplexity) reconhecem, entendem e recomendam a sua empresa. É composto por 6 dimensões: Presença & Citação em IAs (25%), Estrutura Semântica (20%), Entidades Reconhecíveis (15%), Autoridade Temática (15%), Consistência Contextual (15%) e Performance Técnica (10%). As métricas derivadas são o GPR (Generative Presence Rate) e o G-SOV (Generative Share of Voice) — que mede a participação da sua marca nas respostas de IA vs. os principais concorrentes.",
+          "category": "Métricas",
+          "question": "O que é o IAG Score™?"
+        },
+        {
+          "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop",
+          "answer": "O AI Visibility Audit é um diagnóstico gratuito que mapeamos para empresas qualificadas. Ele inclui: (1) Mapa de citabilidade multi-LLM — como a sua marca aparece nas respostas do ChatGPT, Gemini, Perplexity e Claude para as perguntas críticas do seu setor; (2) Análise de gap competitivo — uma comparação direta mostrando quantas vezes a IA recomenda o seu concorrente em relação à sua empresa; (3) Auditoria de estrutura semântica — raio-X do que os robôs de IA enxergam no seu site; (4) Estimativa de impacto financeiro — tradução do problema técnico em potencial de receita perdida. O Audit é o primeiro passo para começar a trabalhar com a Mavellium.",
+          "category": "Processo",
+          "question": "O que é o AI Visibility Audit e como solicitar?"
         }
       ]
     },
@@ -337,8 +349,8 @@
           "id": "04",
           "tag": "Resultados",
           "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200",
-          "title": "Sistemas Inteligentes À Medida",
-          "description": "Desenhamos aplicações cirúrgicas adaptadas à realidade do seu negócio, garantindo velocidade extrema e visibilidade total na nova era das pesquisas generativas."
+          "title": "IAG Score™ — Receita Previsível",
+          "description": "Entregamos o IAG Score™ (Índice de Autoridade Gerativa): uma métrica 0–100 que mede com que frequência as IAs recomendam a sua marca. Traduzimos infraestrutura em resultados C-Level: redução de CAC, aumento de Generative Share of Voice e geração de pipeline previsível."
         }
       ]
     },
@@ -372,13 +384,13 @@
           "frontDescription": "A revolução da eficiência operacional integrada nos seus sistemas."
         }
       ],
-      "description": "Aceleramos a transição da sua empresa para a economia da inteligência artificial através de três frentes de engenharia digital."
+      "description": "Três frentes de AI Visibility Infrastructure para que a sua empresa seja encontrada, compreendida e recomendada pelas IAs — e converta mais em cada etapa do funil."
     },
     "cta-final-mavellium": {
       "text": {
-        "headline": "Pronto para posicionar a sua empresa",
-        "highlight": "na era da IA?",
-        "description": "Cada operação possui desafios e maturidade técnica específicos. Agende uma reunião estratégica com os nossos engenheiros para desenharmos a infraestrutura ideal para a escala do seu negócio."
+        "headline": "Descubra o IAG Score™ da sua empresa",
+        "highlight": "antes que o concorrente descubra o dele.",
+        "description": "Solicite um AI Visibility Audit gratuito. Mapeamos como o ChatGPT, Gemini e Perplexity recomendam a sua marca hoje — e mostramos exatamente o que está custando receita à sua empresa."
       },
       "theme": {
         "bg_color": "#ffffff",
@@ -388,14 +400,14 @@
       },
       "calls_to_action": {
         "primary": {
-          "href": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Gostaria+de+agendar+uma+conversa+com+um+especialista+para+estruturar+a+arquitetura+tecnol%C3%B3gica+da+minha+empresa.",
+          "href": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Gostaria+de+solicitar+um+AI+Visibility+Audit+gratuito+para+descobrir+o+IAG+Score+da+minha+empresa.",
           "icon": "mdi:whatsapp",
-          "label": "Agendar Reunião Técnica"
+          "label": "Solicitar AI Visibility Audit"
         },
         "secondary": {
-          "href": "#solucoes",
-          "icon": "mdi:arrow-up",
-          "label": "Rever Soluções Semânticas"
+          "href": "/solucoes",
+          "icon": "mdi:arrow-right",
+          "label": "Ver Soluções"
         }
       }
     },
@@ -403,8 +415,8 @@
       "src": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop",
       "date": "Manifesto Mavellium",
       "about": {
-        "overview": "Acreditamos que a tecnologia não deve ser apenas uma montra estática, mas o maior motor de receita e escala do seu negócio. As pesquisas na internet deixaram de ser apenas uma lista de links azuis; hoje, os utilizadores recebem respostas consolidadas por inteligências artificiais.",
-        "conclusion": "O nosso compromisso é com a engenharia digital cirúrgica. Não entregamos código genérico ou templates obsoletos; construímos as fundações semânticas indispensáveis para que a sua empresa lidere o mercado de amanhã."
+        "overview": "60% das buscas B2B terminam sem cliques — a IA entrega a resposta pronta. 71% dos compradores B2B decidem antes de falar com qualquer vendedor, baseados em shortlists criadas por ChatGPT, Gemini e Perplexity. Infraestrutura digital lenta e desestruturada é ignorada sumariamente pelos crawlers de IA. A IA recomenda o concorrente. A sua empresa perde a venda antes de saber que estava competindo.",
+        "conclusion": "A Mavellium criou e lidera uma nova categoria de mercado: AI Visibility Infrastructure. Não vendemos design ou templates — construímos a base tecnológica, a estruturação semântica e a observabilidade contínua que permitem que a sua marca seja lida, compreendida e ativamente recomendada pelos grandes modelos de linguagem. O resultado é mensurável: IAG Score™, Generative Share of Voice e redução de CAC."
       },
       "title": "A Era da Pesquisa Mudou",
       "background": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop",
@@ -414,15 +426,15 @@
       "slides": [
         {
           "id": "1",
-          "headline": "A arquitetura digital que as IAs ",
+          "headline": "A infraestrutura de visibilidade em IA que ",
           "mediaUrl": "",
           "mediaType": "video",
-          "description": "Desenvolvemos sites semânticos, landing pages de alta conversão e agentes autónomos. Estruturamos a infraestrutura de dados do seu negócio para dominar os motores de busca e os novos modelos de linguagem (LLMs).",
-          "headlineHighlight": "recomendam e os seus clientes compram.",
-          "primaryButtonLink": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Gostaria+de+adequar+a+infraestrutura+do+meu+site+para+motores+de+IA.",
-          "primaryButtonText": "Falar com um Engenheiro",
+          "description": "Criamos e lideramos a categoria AI Visibility Infrastructure. Estruturamos a base tecnológica, a semântica e a observabilidade para que a sua marca seja lida, compreendida e recomendada pelas IAs — medido pelo IAG Score™.",
+          "headlineHighlight": "as IAs recomendam e os seus clientes compram.",
+          "primaryButtonLink": "https://wa.me/5514998001008?text=Ol%C3%A1%21+Gostaria+de+solicitar+um+AI+Visibility+Audit+e+descobrir+o+IAG+Score+da+minha+empresa.",
+          "primaryButtonText": "Solicitar AI Visibility Audit",
           "secondaryButtonLink": "/cases",
-          "secondaryButtonText": "Ver Infraestruturas"
+          "secondaryButtonText": "Ver Cases"
         }
       ]
     }

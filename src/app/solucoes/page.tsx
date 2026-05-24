@@ -8,13 +8,13 @@ import { getWhatsappUrl, NAV_LINKS } from "../../lib/constants";
 export const metadata: Metadata = {
   title: "Soluções | Mavellium",
   description:
-    "Mavellium oferece três soluções de infraestrutura digital: desenvolvimento de sites e landing pages de alta conversão, otimização para motores generativos (GEO/AIO) e ocupação de espaço em IA para vendas — todas integradas ao Janus CMS com análise via GA4 e Microsoft Clarity.",
+    "Mavellium oferece AI Visibility Infrastructure: sites e landing pages de alta conversão, GEO/AIO com IAG Score™ mensurável e agentes de IA autônomos. Solicite um AI Visibility Audit gratuito e descubra o IAG Score™ da sua empresa.",
   alternates: { canonical: "https://mavellium.com.br/solucoes" },
   openGraph: {
     type: "website",
     title: "Soluções | Mavellium",
     description:
-      "Sites de alta conversão, GEO/AIO e estratégia de presença em IA — infraestrutura digital integrada ao Janus CMS com GA4 e Microsoft Clarity.",
+      "AI Visibility Infrastructure: sites de alta conversão, GEO/AIO com IAG Score™ e agentes autônomos. Descubra o Generative Share of Voice da sua marca.",
     url: "https://mavellium.com.br/solucoes",
   },
 };
@@ -40,14 +40,14 @@ const service1Schema = {
 const service2Schema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Otimização para Motores Generativos (GEO/AIO)",
+  name: "GEO/AIO e IAG Score™ — Infraestrutura de Visibilidade em IA",
   serviceType: "Generative Engine Optimization",
   provider: {
     "@id": "https://mavellium.com.br/#organization",
   },
   url: "https://mavellium.com.br/solucoes#geo-aio",
   description:
-    "Quando potenciais clientes consultam ChatGPT, Perplexity ou Gemini antes de comprar, empresas sem GEO simplesmente não existem para esses modelos. Estruturamos o código e o conteúdo do seu site para que LLMs identifiquem, extraiam e citem sua empresa no momento de decisão de compra.",
+    "Quando potenciais clientes consultam ChatGPT, Perplexity ou Gemini antes de comprar, empresas sem GEO simplesmente não existem para esses modelos. Estruturamos código, conteúdo e dados semânticos para que LLMs identifiquem, extraiam e citem sua empresa. O resultado é medido pelo IAG Score™ — índice 0-100 de autoridade gerativa — e pelo G-SOV (Generative Share of Voice) da marca vs. concorrentes.",
   offers: {
     "@type": "Offer",
     priceCurrency: "BRL",
@@ -58,7 +58,7 @@ const service2Schema = {
 const service3Schema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Automação Comercial com Agentes de Inteligência Artificial",
+  name: "Agentes de IA Autônomos — Operação 24/7",
   serviceType: "Automação com Inteligência Artificial",
   provider: {
     "@id": "https://mavellium.com.br/#organization",
@@ -94,7 +94,7 @@ const breadcrumbSchema = {
 
 export default function SolucoesPage() {
   const whatsappUrl = getWhatsappUrl(
-    "Olá! Conheci as soluções da Mavellium e quero entender como vocês podem ajudar o meu negócio."
+    "Olá! Gostaria de solicitar um AI Visibility Audit gratuito para descobrir o IAG Score da minha empresa."
   );
 
   return (
@@ -154,16 +154,15 @@ export default function SolucoesPage() {
             </h1>
 
             <p className="text-base text-zinc-600 font-light leading-relaxed">
-              A Mavellium oferece três soluções integradas de infraestrutura digital:
-              desenvolvimento de sites e landing pages de alta conversão sobre Next.js SSG,
-              otimização para motores generativos (GEO/AIO) e estratégia de ocupação de espaço
-              em IA para vendas. Todas as soluções são operadas por meio do{" "}
+              A Mavellium entrega{" "}
+              <strong className="font-semibold text-zinc-800">AI Visibility Infrastructure</strong>{" "}
+              por meio de três frentes integradas: sites e landing pages de alta conversão,
+              GEO/AIO com{" "}
+              <strong className="font-semibold text-zinc-800">IAG Score™</strong> mensurável, e
+              agentes de IA autônomos. Todas as soluções rodam sobre o{" "}
               <strong className="font-semibold text-zinc-800">Mavellium Janus CMS</strong> —
-              plataforma headless que permite que profissionais e gestores sem conhecimento
-              técnico gerenciem conteúdo, acompanhem métricas de comportamento via{" "}
-              <strong className="font-semibold text-zinc-800">Google Analytics 4</strong> e{" "}
-              <strong className="font-semibold text-zinc-800">Microsoft Clarity</strong>, e
-              publiquem alterações em tempo real.
+              plataforma headless que permite que equipes de marketing operem conteúdo sem
+              conhecimento técnico, com GA4 e Microsoft Clarity integrados nativamente.
             </p>
           </header>
 
@@ -269,7 +268,7 @@ export default function SolucoesPage() {
                   id="s2-heading"
                   className="text-2xl font-extrabold tracking-tight text-zinc-900 leading-tight"
                 >
-                  Otimização para Motores Generativos (GEO/AIO)
+                  GEO/AIO e IAG Score™
                 </h2>
               </div>
             </div>
@@ -281,7 +280,11 @@ export default function SolucoesPage() {
               tradicional (palavra-chave → ranking), o GEO opera em nível de entidade
               semântica: o modelo precisa entender <em>o que</em> seu site é,{" "}
               <em>quem</em> está por trás dele e <em>o que</em> ele oferece — antes de decidir
-              se vai mencioná-lo numa resposta.
+              se vai mencioná-lo numa resposta. O resultado é medido pelo{" "}
+              <strong className="font-semibold text-zinc-800">IAG Score™</strong>, um índice
+              de 0 a 100 que quantifica a autoridade gerativa da marca, e pelo{" "}
+              <strong className="font-semibold text-zinc-800">G-SOV (Generative Share of Voice)</strong>{" "}
+              — a participação da marca nas respostas de IA vs. os principais concorrentes.
             </p>
 
             <ul className="space-y-4" role="list">
@@ -410,10 +413,60 @@ export default function SolucoesPage() {
                   <strong className="text-sm font-semibold text-zinc-800">Infraestrutura de longo prazo: </strong>
                   <span className="text-sm text-zinc-600 font-light">
                     Cada nova página publicada pelo Janus CMS já sai com HTML semântico, JSON-LD e
-                    TTFB otimizado — o espaço em IA cresce organicamente com o conteúdo, sem
-                    trabalho adicional de otimização.
+                    TTFB otimizado — o IAG Score™ e o espaço em IA crescem organicamente com o
+                    conteúdo, sem trabalho adicional de otimização.
                   </span>
                 </div>
+              </li>
+            </ul>
+          </section>
+
+          {/* AI Visibility Audit */}
+          <section
+            id="iag-score"
+            aria-labelledby="audit-heading"
+            className="mb-14 p-8 rounded-md bg-zinc-50 border border-zinc-200"
+          >
+            <h2
+              id="audit-heading"
+              className="text-xl font-extrabold tracking-tight text-zinc-900 mb-2"
+            >
+              AI Visibility Audit — o ponto de partida
+            </h2>
+            <p className="text-sm text-zinc-600 font-light leading-relaxed mb-4">
+              Antes de qualquer investimento, mapeamos a situação atual da sua marca nas IAs.
+              O AI Visibility Audit é um diagnóstico gratuito que inclui:
+            </p>
+            <ul className="space-y-3" role="list">
+              <li className="flex gap-3 text-sm">
+                <span className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full bg-[#00D26A]" aria-hidden="true" />
+                <span className="text-zinc-600 font-light">
+                  <strong className="font-semibold text-zinc-800">Mapa de citabilidade multi-LLM:</strong>{" "}
+                  como a sua marca aparece no ChatGPT, Gemini, Perplexity e Claude para as perguntas
+                  críticas do seu setor
+                </span>
+              </li>
+              <li className="flex gap-3 text-sm">
+                <span className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full bg-[#00D26A]" aria-hidden="true" />
+                <span className="text-zinc-600 font-light">
+                  <strong className="font-semibold text-zinc-800">Análise de gap competitivo:</strong>{" "}
+                  quantas vezes a IA recomenda o seu concorrente em relação à sua empresa
+                </span>
+              </li>
+              <li className="flex gap-3 text-sm">
+                <span className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full bg-[#00D26A]" aria-hidden="true" />
+                <span className="text-zinc-600 font-light">
+                  <strong className="font-semibold text-zinc-800">Auditoria semântica:</strong>{" "}
+                  raio-X do que os robôs de IA enxergam no seu site — schemas faltando, entidades
+                  inconsistentes, páginas invisíveis
+                </span>
+              </li>
+              <li className="flex gap-3 text-sm">
+                <span className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full bg-[#00D26A]" aria-hidden="true" />
+                <span className="text-zinc-600 font-light">
+                  <strong className="font-semibold text-zinc-800">Estimativa de impacto financeiro:</strong>{" "}
+                  tradução do problema técnico em potencial de receita perdida e CAC excessivo
+                </span>
               </li>
             </ul>
           </section>
@@ -427,12 +480,12 @@ export default function SolucoesPage() {
               id="cta-solucoes-heading"
               className="text-xl font-extrabold tracking-tight text-zinc-900 mb-2"
             >
-              Qual solução faz sentido para o seu negócio?
+              Solicite um AI Visibility Audit gratuito
             </h2>
             <p className="text-zinc-600 font-light mb-6 text-sm leading-relaxed">
-              As três soluções funcionam de forma integrada — mas cada negócio tem um ponto de
-              partida diferente. Fale com nossa equipe para um diagnóstico gratuito da sua
-              presença digital.
+              Descubra o IAG Score™ da sua empresa, veja o gap competitivo em dados reais e
+              entenda quanto a invisibilidade algorítmica está custando à sua receita — sem
+              compromisso.
             </p>
             <a
               href={whatsappUrl}
@@ -440,7 +493,7 @@ export default function SolucoesPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#00D26A] hover:bg-[#00b35a] text-black font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-md transition-all duration-300 shadow-[0_0_15px_rgba(0,210,106,0.2)] hover:shadow-[0_0_25px_rgba(0,210,106,0.4)]"
             >
-              Solicitar Diagnóstico Gratuito
+              Solicitar AI Visibility Audit
             </a>
           </section>
         </article>
