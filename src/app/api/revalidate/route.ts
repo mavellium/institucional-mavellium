@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
   }
 
   revalidateTag('janus-page-home', {})
+  revalidateTag('janus-blog', {})
   revalidatePath('/', 'page')
   revalidatePath('/blog', 'page')
   revalidatePath('/blog/[slug]', 'page')

@@ -117,7 +117,7 @@ function toCmsPost(p: JanusPost): CmsPost {
     description: p.subtitle ?? p.seoDescription ?? p.title,
     category: cat?.name ?? "Geral",
     categorySlug: cat?.slug ?? "geral",
-    coverImage: p.coverImageUrl ?? FALLBACK_IMAGE,
+    coverImage: p.coverImageUrl || FALLBACK_IMAGE,
     publishedAt: p.publishedAt ?? p.createdAt ?? "",
     readingTimeMinutes: p.readingTime ?? (p.body?.trim() ? estimateReadingTime(p.body) : null),
     authorName: p.authorName,
