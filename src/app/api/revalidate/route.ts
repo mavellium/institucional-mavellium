@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export async function POST(req: NextRequest) {
   const token = req.headers.get('x-revalidate-token')
@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  revalidateTag('janus-page-home')
   revalidatePath('/', 'page')
   revalidatePath('/blog', 'page')
   revalidatePath('/blog/[slug]', 'page')

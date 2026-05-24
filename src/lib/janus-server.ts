@@ -13,7 +13,7 @@ export async function fetchJanusBlocks(
   try {
     const res = await fetch(
       `${JANUS_URL}/api/v1/content/${JANUS_TENANT}/${pageSlug}`,
-      { next: { revalidate: 60 } }
+      { next: { tags: [`janus-page-${pageSlug}`] } }
     );
     if (!res.ok) return null;
     const page = await res.json();
