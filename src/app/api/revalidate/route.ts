@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  revalidateTag('janus-page-home')
+  revalidateTag('janus-page-home', {})
   revalidatePath('/', 'page')
   revalidatePath('/blog', 'page')
   revalidatePath('/blog/[slug]', 'page')
