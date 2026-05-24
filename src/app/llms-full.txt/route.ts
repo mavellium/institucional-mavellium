@@ -1,4 +1,4 @@
-import { fetchCmsPosts } from '@/lib/blog-api'
+import { fetchCmsPosts } from '@/src/lib/blog-api'
 
 const SITE_URL = 'https://mavellium.com.br'
 
