@@ -42,7 +42,6 @@ export function HtmlArticleRenderer({ html }: HtmlArticleRendererProps) {
         prose-img:rounded-md prose-img:border prose-img:border-zinc-200
         prose-code:text-[#00b35a] prose-code:bg-zinc-100 prose-code:px-1 prose-code:rounded
         prose-pre:bg-zinc-900 prose-pre:text-zinc-100 prose-pre:rounded-md
-        [&_br]:leading-[2]
         [&_span[style]]:leading-[inherit]
       "
       dangerouslySetInnerHTML={{ __html: processedHtml }}
