@@ -92,6 +92,7 @@ export function FitecGrid({ leads }: FitecGridProps) {
       setShowFormModal(false);
       await executeDownload(pendingDownload.imageUrl, pendingDownload.leadName);
       window.dataLayer?.push({ event: "form_submit", form_name: "fitec_registro" });
+      import('posthog-js').then(({ default: posthog }) => posthog.capture('conv_generate_lead', { form_name: 'fitec_registro' }));
       setShowThanksModal(true);
       setName("");
       setEmail("");

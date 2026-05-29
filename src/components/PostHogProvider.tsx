@@ -21,6 +21,24 @@ function PostHogPageView() {
   return null
 }
 
+function PostHogWhatsAppTracker() {
+  const ph = usePostHog()
+
+  useEffect(() => {
+    if (!ph) return
+    function handleClick(e: MouseEvent) {
+      const anchor = (e.target as HTMLElement).closest('a')
+      if (anchor?.href?.includes('wa.me')) {
+        ph.capture('conv_whatsapp_click', { url: anchor.href })
+      }
+    }
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
+  }, [ph])
+
+  return null
+}
+
 if (typeof window !== 'undefined') {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
     api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
@@ -35,6 +53,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     <PHProvider client={posthog}>
       <Suspense fallback={null}>
         <PostHogPageView />
+        <PostHogWhatsAppTracker />
       </Suspense>
       {children}
     </PHProvider>
