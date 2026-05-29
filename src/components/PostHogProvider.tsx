@@ -26,6 +26,7 @@ if (typeof window !== 'undefined') {
     api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
     capture_pageview: false,
     capture_pageleave: true,
+    capture_scroll_depth: true,
   })
 }
 
