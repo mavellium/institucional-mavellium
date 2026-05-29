@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { HashScroller } from "../components/HashScroller";
 import { JanusScriptManager } from "../components/cms/JanusScriptManager";
+import { PostHogProvider } from "../components/PostHogProvider";
 
 // Configuração da fonte Satoshi via next/font/local
 const satoshi = localFont({
@@ -123,7 +124,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceSchema) }}
         />
         <HashScroller />
-        {children}
+        <PostHogProvider>
+          {children}
+        </PostHogProvider>
       </body>
     </html>
   );
