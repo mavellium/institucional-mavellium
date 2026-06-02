@@ -40,3 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env.local
+
+# Janus local JSON cache (runtime-generated, refreshed via /api/revalidate webhook)
+src/data/janus-content.json
+src/data/janus-content.json.tmp

@@ -1,3 +1,5 @@
+import { readJanusCache } from "./janus-cache";
+
 const JANUS_URL = process.env.NEXT_PUBLIC_JANUS_URL ?? "";
 const JANUS_TENANT = process.env.NEXT_PUBLIC_JANUS_TENANT ?? "";
 
@@ -9,6 +11,11 @@ const JANUS_TENANT = process.env.NEXT_PUBLIC_JANUS_TENANT ?? "";
 export async function fetchJanusBlocks(
   pageSlug: string
 ): Promise<Record<string, unknown> | null> {
+  const cache = readJanusCache();
+  if (cache?.pageBlocks && pageSlug in cache.pageBlocks) {
+    return cache.pageBlocks[pageSlug];
+  }
+  // HTTP fallback
   if (!JANUS_URL || !JANUS_TENANT) return null;
   try {
     const res = await fetch(

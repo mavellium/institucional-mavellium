@@ -1,3 +1,5 @@
+import { readJanusCache } from "./janus-cache";
+
 const GUESTS_URL = "https://januscms.com.br/api/v1/admin/guests";
 
 const IMAGE_FALLBACK =
@@ -59,6 +61,9 @@ function cmsGuestToFitecLeads(guest: CmsGuest): FitecLead[] {
 // ─── Fetch ───────────────────────────────────────────────────────────────────
 
 export async function fetchFitecLeads(): Promise<FitecLead[]> {
+  const cache = readJanusCache();
+  if (cache?.fitecLeads?.length) return cache.fitecLeads;
+  // HTTP fallback
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
   try {

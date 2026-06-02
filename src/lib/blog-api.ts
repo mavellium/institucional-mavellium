@@ -1,4 +1,5 @@
 import { fetchJson } from "./blog-fetch";
+import { readJanusCache } from "./janus-cache";
 
 const API_URL = process.env.BLOG_API_URL ?? "";
 const COMPANY_SLUG = process.env.BLOG_SUBTYPE_ID ?? "";
@@ -139,6 +140,9 @@ export async function fetchCmsPosts(opts?: {
   limit?: number;
   page?: number;
 }): Promise<CmsPost[]> {
+  const cache = readJanusCache();
+  if (cache?.blog?.posts?.length) return cache.blog.posts;
+  // HTTP fallback
   if (!isConfigured()) return [];
   const params: Record<string, string> = {
     limit: String(opts?.limit ?? 50),
@@ -149,12 +153,20 @@ export async function fetchCmsPosts(opts?: {
 }
 
 export async function fetchCmsPostBySlug(slug: string): Promise<CmsPost | null> {
+  const cache = readJanusCache();
+  if (cache?.blog?.posts) {
+    return cache.blog.posts.find((p) => p.slug === slug || p.id === slug) ?? null;
+  }
+  // HTTP fallback
   if (!isConfigured()) return null;
   const data = await fetchJson<JanusSingleResponse>(`${blogUrl()}/${slug}`);
   return data?.post ? toCmsPost(data.post) : null;
 }
 
 export async function fetchCmsAllSlugs(): Promise<string[]> {
+  const cache = readJanusCache();
+  if (cache?.blog?.posts?.length) return cache.blog.posts.map((p) => p.slug);
+  // HTTP fallback
   if (!isConfigured()) return [];
   const data = await fetchJson<JanusResponse>(blogUrl({ limit: "100" }));
   return (data?.posts ?? []).map((p) => p.slug ?? p.id);
@@ -164,6 +176,13 @@ export async function fetchCmsRelatedPosts(
   categorySlug: string,
   excludeSlug: string,
 ): Promise<CmsPost[]> {
+  const cache = readJanusCache();
+  if (cache?.blog?.posts) {
+    return cache.blog.posts
+      .filter((p) => p.categorySlug === categorySlug && p.slug !== excludeSlug)
+      .slice(0, 3);
+  }
+  // HTTP fallback
   if (!isConfigured()) return [];
   const data = await fetchJson<JanusResponse>(blogUrl({ limit: "100" }));
   return (data?.posts ?? [])

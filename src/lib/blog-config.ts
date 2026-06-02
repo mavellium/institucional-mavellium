@@ -5,6 +5,7 @@
 //   Share → /api/v1/content/mavellium-main/blogcompartilhamento
 
 import { fetchJson } from "./blog-fetch";
+import { readJanusCache } from "./janus-cache";
 
 const JANUS_BASE = process.env.BLOG_API_URL ?? "https://januscms.com.br";
 const COMPANY_SLUG = process.env.BLOG_SUBTYPE_ID ?? "mavellium-main";
@@ -71,6 +72,9 @@ interface JanusShareResponse {
 // ─── Fetch ────────────────────────────────────────────────────────────────────
 
 export async function fetchBlogSiteConfig(): Promise<BlogSiteConfig> {
+  const cache = readJanusCache();
+  if (cache?.blog?.config) return cache.blog.config;
+  // HTTP fallback
   const ctaUrl = `${JANUS_BASE}/api/v1/content/${COMPANY_SLUG}/blogcta`;
   const shareUrl = `${JANUS_BASE}/api/v1/content/${COMPANY_SLUG}/blogcompartilhamento`;
 
