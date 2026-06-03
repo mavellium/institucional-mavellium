@@ -77,7 +77,7 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
     const slide = slides[currentSlide];
 
     return (
-        <section id="inicio" data-cms-section="hero" className="relative w-full min-h-[max(90vh,700px)] bg-[#050505] overflow-x-hidden">
+        <section id="inicio" data-cms-section="hero" className="relative w-full h-[90vh] min-h-[600px] bg-[#050505] overflow-hidden">
             
             {/* === BACKGROUND MEDIA === */}
             <div className="absolute inset-0 z-0 h-full w-full transition-opacity duration-1000">
@@ -120,10 +120,10 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
             </div>
 
             {/* === CONTEÚDO DE TEXTO === */}
-            <div className="relative z-10 flex w-full max-w-7xl mx-auto items-center px-6 md:px-12 pt-32 pb-16 min-h-[max(90vh,700px)]">
+            <div className="relative z-10 flex h-full w-full max-w-7xl mx-auto items-center px-6 md:px-12 pt-24 pb-12">
                 <div className="max-w-4xl text-left animate-in fade-in slide-in-from-bottom-4 duration-700">
                     
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-light tracking-tight text-white leading-[1.1]">
+                    <h1 className="text-4xl md:text-6xl lg:text-6xl font-light tracking-tight text-white leading-[1.1]">
                         {slide.headline}{" "}
                         {slide.headlineHighlight && (
                             <span className="text-[#00D26A]" data-cms-field="hero.titulo_destaque">
