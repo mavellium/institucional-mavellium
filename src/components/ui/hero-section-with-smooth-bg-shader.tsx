@@ -123,7 +123,7 @@ export function HeroSection({ slides = defaultSlides }: HeroSectionProps) {
             <div className="relative z-10 flex h-full w-full max-w-7xl mx-auto items-center px-6 md:px-12 pt-24 pb-12">
                 <div className="max-w-4xl text-left animate-in fade-in slide-in-from-bottom-4 duration-700">
                     
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.1]">
+                    <h1 className="text-5xl md:text-6xl lg:text-6xl font-light tracking-tight text-white leading-[1.1]">
                         {slide.headline}{" "}
                         {slide.headlineHighlight && (
                             <span className="text-[#00D26A]" data-cms-field="hero.titulo_destaque">
