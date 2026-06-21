@@ -50,6 +50,48 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+function buildArticleSchema(post: CmsPost) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `https://mavellium.com.br/blog/${post.slug}#article`,
+        headline: post.title,
+        description: post.seoDescription ?? post.description,
+        image: post.coverImage,
+        datePublished: post.publishedAt,
+        dateModified: post.publishedAt,
+        inLanguage: "pt-BR",
+        author: {
+          "@type": "Person",
+          name: post.authorName || "Equipe Mavellium",
+          url: "https://mavellium.com.br/quem-somos",
+        },
+        publisher: { "@id": "https://mavellium.com.br/#organization" },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://mavellium.com.br/blog/${post.slug}`,
+        },
+        articleSection: post.category,
+        isPartOf: {
+          "@type": "Blog",
+          "@id": "https://mavellium.com.br/blog#blog",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Início", item: "https://mavellium.com.br" },
+          { "@type": "ListItem", position: 2, name: "Blog", item: "https://mavellium.com.br/blog" },
+          { "@type": "ListItem", position: 3, name: post.category, item: "https://mavellium.com.br/blog" },
+          { "@type": "ListItem", position: 4, name: post.title },
+        ],
+      },
+    ],
+  };
+}
+
 function CmsPostArticle({ post, related, siteConfig }: { post: CmsPost; related: CmsPost[]; siteConfig: BlogSiteConfig }) {
   const colors = getCategoryStyle(post.category);
   // Janus global whatsappUrl takes priority; otherwise generate per-article link
@@ -61,6 +103,10 @@ function CmsPostArticle({ post, related, siteConfig }: { post: CmsPost; related:
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildArticleSchema(post)) }}
+      />
       <Header
         lightBg
         logo="/logo-mavellium-header.svg"

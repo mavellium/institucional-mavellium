@@ -17,7 +17,41 @@ export const metadata: Metadata = {
     description:
       "Artigos, tendências e análises profundas sobre como a tecnologia, automação e design impactam o faturamento da sua empresa.",
     type: "website",
+    url: "https://mavellium.com.br/blog",
   },
+};
+
+const blogPageSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Blog",
+      "@id": "https://mavellium.com.br/blog#blog",
+      name: "Mavellium Blog & Insights",
+      description:
+        "Artigos sobre tecnologia, IA, automação e marketing digital para empresas brasileiras.",
+      url: "https://mavellium.com.br/blog",
+      publisher: { "@id": "https://mavellium.com.br/#organization" },
+      inLanguage: "pt-BR",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Início",
+          item: "https://mavellium.com.br",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Blog & Insights",
+          item: "https://mavellium.com.br/blog",
+        },
+      ],
+    },
+  ],
 };
 
 export default async function BlogPage() {
@@ -26,6 +60,10 @@ export default async function BlogPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPageSchema) }}
+      />
       <Header
         lightBg
         logo="/logo-mavellium-header.svg"

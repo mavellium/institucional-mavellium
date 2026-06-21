@@ -52,6 +52,19 @@ export default async function Home() {
     fetchJanusBlocks("home"),
     fetchFitecLeads(),
   ]);
+
+  const faqItems = (janusHome?.["faq-mavellium"] as { items?: Array<{ question: string; answer: string }> } | null)?.items ?? [];
+  const faqSchema = faqItems.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })),
+      }
+    : null;
   const insightsItems = cmsPosts.map((p) => ({
     id: p.id,
     title: p.title,
@@ -163,6 +176,12 @@ export default async function Home() {
 
   return (
     <>
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <Header
         logo={"/logo-mavellium-header.svg"}
         logoAlt={"Mavellium - Tecnologia e Inovação"}
