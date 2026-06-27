@@ -58,7 +58,7 @@ function buildArticleSchema(post: CmsPost) {
         "@type": "BlogPosting",
         "@id": `https://mavellium.com.br/blog/${post.slug}#article`,
         headline: post.title,
-        description: post.seoDescription ?? post.description,
+        description: post.seoDescription ?? post.description ?? post.title,
         image: post.coverImage,
         datePublished: post.publishedAt,
         dateModified: post.publishedAt,
@@ -73,7 +73,7 @@ function buildArticleSchema(post: CmsPost) {
           "@type": "WebPage",
           "@id": `https://mavellium.com.br/blog/${post.slug}`,
         },
-        articleSection: post.category,
+        articleSection: post.category || "Geral",
         isPartOf: {
           "@type": "Blog",
           "@id": "https://mavellium.com.br/blog#blog",
@@ -84,8 +84,8 @@ function buildArticleSchema(post: CmsPost) {
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Início", item: "https://mavellium.com.br" },
           { "@type": "ListItem", position: 2, name: "Blog", item: "https://mavellium.com.br/blog" },
-          { "@type": "ListItem", position: 3, name: post.category, item: "https://mavellium.com.br/blog" },
-          { "@type": "ListItem", position: 4, name: post.title },
+          { "@type": "ListItem", position: 3, name: post.category || "Geral", item: "https://mavellium.com.br/blog" },
+          { "@type": "ListItem", position: 4, name: post.title, item: `https://mavellium.com.br/blog/${post.slug}` },
         ],
       },
     ],

@@ -70,7 +70,6 @@ const siteSchema = {
       priceRange: "$$",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "",
         addressLocality: "Garça",
         addressRegion: "SP",
         postalCode: "17400-000",

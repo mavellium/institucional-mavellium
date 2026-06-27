@@ -40,7 +40,7 @@ export const portfolioData: PortfolioProject[] = [
         id: 3,
         title: "FAIP - Bolsas de 60%",
         description: "Landing page educacional desenhada com fortes gatilhos de urgência para converter visitantes em alunos matriculados através de ofertas agressivas.",
-        image: "https://images.unsplash.com/photo-1532649842991-0a25bdbf72af?q=80&w=800",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800",
         categoryLabel: "Landing Pages",
         categoryValue: "landing-pages",
         tag: "Conversão Direta",

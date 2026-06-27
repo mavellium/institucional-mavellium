@@ -53,7 +53,9 @@ export default async function Home() {
     fetchFitecLeads(),
   ]);
 
-  const faqItems = (janusHome?.["faq-mavellium"] as { items?: Array<{ question: string; answer: string }> } | null)?.items ?? [];
+  const faqItems = (
+    (janusHome?.["faq-mavellium"] as { items?: Array<{ question?: string; answer?: string }> } | null)?.items ?? []
+  ).filter((item): item is { question: string; answer: string } => Boolean(item.question?.trim() && item.answer?.trim()));
   const faqSchema = faqItems.length > 0
     ? {
         "@context": "https://schema.org",

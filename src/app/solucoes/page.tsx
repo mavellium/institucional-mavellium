@@ -30,11 +30,6 @@ const service1Schema = {
   url: "https://mavellium.com.br/solucoes#sites-landing-pages",
   description:
     "Empresas invisíveis no ambiente digital perdem clientes para concorrentes com mais presença. Construímos a sede digital oficial da sua empresa — sites institucionais que transmitem autoridade e landing pages que convertem visitantes em clientes, operando pela sua marca 24 horas por dia.",
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "BRL",
-    availability: "https://schema.org/InStock",
-  },
 };
 
 const service2Schema = {
@@ -48,11 +43,6 @@ const service2Schema = {
   url: "https://mavellium.com.br/solucoes#geo-aio",
   description:
     "Quando potenciais clientes consultam ChatGPT, Perplexity ou Gemini antes de comprar, empresas sem GEO simplesmente não existem para esses modelos. Estruturamos código, conteúdo e dados semânticos para que LLMs identifiquem, extraiam e citem sua empresa. O resultado é medido pelo IAG Score™ — índice 0-100 de autoridade gerativa — e pelo G-SOV (Generative Share of Voice) da marca vs. concorrentes.",
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "BRL",
-    availability: "https://schema.org/InStock",
-  },
 };
 
 const service3Schema = {
@@ -66,11 +56,6 @@ const service3Schema = {
   url: "https://mavellium.com.br/solucoes#automacao-ia",
   description:
     "Equipes limitadas ao horário comercial perdem negócios gerados fora do expediente. Implementamos agentes autônomos de IA que qualificam leads, automatizam atendimento e operam setores estratégicos 24 horas por dia, reduzindo a dependência de mão de obra para tarefas repetitivas.",
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "BRL",
-    availability: "https://schema.org/InStock",
-  },
 };
 
 const breadcrumbSchema = {

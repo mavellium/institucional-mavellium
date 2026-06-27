@@ -12,7 +12,7 @@ import { CaseImpact } from "./_components/CaseImpact";
 
 export const metadata: Metadata = {
   title:
-    "Caso de Estudo: WordPress vs Arquitetura Mavellium — Core Web Vitals | Mavellium",
+    "WordPress vs Arquitetura Mavellium — Core Web Vitals | Mavellium",
   description:
     "Comparação técnica de performance entre WordPress tradicional e a stack Next.js SSG + Janus CMS da Mavellium. Métricas: TTFB, LCP, INP, CLS e PageSpeed Score.",
   alternates: {
@@ -33,7 +33,7 @@ const techArticleSchema = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
   headline:
-    "Caso de Estudo: Core Web Vitals WordPress vs Arquitetura Next.js — [INSERIR_TTFB_REDUCAO_PERCENT]% de Redução em TTFB",
+    "Caso de Estudo: Core Web Vitals WordPress vs Arquitetura Next.js — 96% de Redução em TTFB",
   description:
     "Comparação técnica de performance entre WordPress tradicional e a stack Next.js SSG + Janus CMS da Mavellium. Métricas medidas: TTFB, LCP, INP, CLS, bundle JS e PageSpeed Score.",
   proficiencyLevel: "Expert",

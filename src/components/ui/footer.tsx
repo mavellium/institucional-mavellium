@@ -24,9 +24,10 @@ const footerLinks: FooterSection[] = [
     {
         label: 'Soluções',
         links: [
-            { title: 'Sites Inteligentes', href: '#solucoes' },
-            { title: 'Landing Pages', href: '#solucoes' },
-            { title: 'Automação & IA', href: '#solucoes' },
+            { title: 'Sites Inteligentes', href: '/#solucoes' },
+            { title: 'Landing Pages', href: '/#solucoes' },
+            { title: 'Automação & IA', href: '/#solucoes' },
+            { title: 'GEO / AIO', href: '/geo' },
             { 
               title: 'Consultoria Técnica', 
               href: getWhatsappUrl("Olá! Gostaria de agendar uma Consultoria Técnica para entender as melhores soluções para o meu negócio."), 
@@ -37,9 +38,9 @@ const footerLinks: FooterSection[] = [
     {
         label: 'Empresa',
         links: [
-            { title: 'Quem Somos', href: '#quem-somos' },
-            { title: 'Metodologia', href: '#metodologia' },
-            { title: 'Dúvidas Frequentes', href: '#faq' },
+            { title: 'Quem Somos', href: '/#quem-somos' },
+            { title: 'Metodologia', href: '/#metodologia' },
+            { title: 'Dúvidas Frequentes', href: '/#faq' },
             { title: 'Trabalhe Conosco', href: '#' },
         ],
     },
@@ -47,7 +48,7 @@ const footerLinks: FooterSection[] = [
         label: 'Recursos',
         links: [
             { title: 'Blog e Insights', href: '/blog' },
-            { title: 'Portfólio', href: '#portfolio' },
+            { title: 'Portfólio', href: '/#portfolio' },
             { title: 'Política de Privacidade', href: '/privacy' },
             { title: 'Termos de Serviço', href: '/terms' },
         ],

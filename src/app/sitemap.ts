@@ -16,6 +16,8 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: `${BASE_URL}/docs`,                           priority: 0.6,  changeFrequency: "monthly" },
   { url: `${BASE_URL}/docs/janus-cms`,                 priority: 0.5,  changeFrequency: "monthly" },
   { url: `${BASE_URL}/docs/janus-sdk`,                 priority: 0.5,  changeFrequency: "monthly" },
+  { url: `${BASE_URL}/privacy`,                        priority: 0.3,  changeFrequency: "yearly"  },
+  { url: `${BASE_URL}/terms`,                          priority: 0.3,  changeFrequency: "yearly"  },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
