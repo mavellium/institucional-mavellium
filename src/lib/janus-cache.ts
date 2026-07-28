@@ -239,13 +239,26 @@ export async function refreshJanusCache(): Promise<void> {
   }
 
   // ── Phase 5: assemble and write atomically ───────────────────────────────────
+
+  // Stale fallback: if any section came back empty from Janus (network error,
+  // 5xx, timeout), preserve the last known good data from the existing cache
+  // instead of overwriting it with zeros and breaking the site.
+  const existingCache = readJanusCache();
+  const safePosts     = posts.length > 0       ? posts       : (existingCache?.blog?.posts   ?? []);
+  const safeLeads     = fitecLeads.length > 0  ? fitecLeads  : (existingCache?.fitecLeads    ?? []);
+  const safeHome      = homeBlocks?.schema?.content ?? existingCache?.pageBlocks?.home ?? null;
+
+  if (posts.length === 0 && (existingCache?.blog?.posts?.length ?? 0) > 0) {
+    console.warn(
+      `[janus-cache] Janus retornou 0 posts — mantendo ${existingCache!.blog.posts.length} posts do cache anterior`
+    );
+  }
+
   const cache: JanusContentCache = {
     updatedAt: new Date().toISOString(),
-    blog: { posts, config },
-    fitecLeads,
-    pageBlocks: {
-      home: homeBlocks?.schema?.content ?? null,
-    },
+    blog: { posts: safePosts, config },
+    fitecLeads: safeLeads,
+    pageBlocks: { home: safeHome },
   };
 
   const tmp = CACHE_FILE + ".tmp";
