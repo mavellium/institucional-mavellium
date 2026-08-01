@@ -3,10 +3,12 @@ import Image from "next/image";
 // Fundadores de /quem-somos — editável via Janus. Nomes reais já usados no
 // JSON-LD global (src/app/layout.tsx) ficam como default até o campo
 // "founders" ser preenchido no admin; foto é opcional — sem imagem cai pro
-// avatar de iniciais (sem inventar asset).
+// avatar de iniciais (sem inventar asset). Foto em retrato (vertical),
+// não circular.
 export interface Founder {
   name: string;
   role?: string;
+  description?: string;
   image?: string;
 }
 
@@ -43,32 +45,39 @@ export function FoundersGrid({ heading = "Fundadores", founders }: FoundersGridP
         {heading}
       </h2>
 
-      <ul className="grid grid-cols-1 sm:grid-cols-3 gap-4" role="list">
+      <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6" role="list">
         {list.map((founder) => (
           <li
             key={founder.name}
-            className="flex flex-col items-center text-center gap-3 rounded-md border border-zinc-200 bg-zinc-50/50 px-5 py-6"
+            className="flex flex-col rounded-md border border-zinc-200 bg-zinc-50/50 overflow-hidden"
           >
             {founder.image ? (
-              <div className="relative w-20 h-20 rounded-full overflow-hidden border border-zinc-200 shrink-0">
+              <div className="relative w-full aspect-[3/4] bg-zinc-100 shrink-0">
                 <Image
                   src={founder.image}
                   alt={founder.name}
                   fill
-                  sizes="80px"
+                  sizes="(max-width: 640px) 100vw, 320px"
                   className="object-cover"
                 />
               </div>
             ) : (
-              <div className="w-20 h-20 rounded-full bg-[#00D26A]/10 border border-[#00D26A]/30 flex items-center justify-center font-bold text-[#00D26A] text-lg shrink-0">
+              <div className="w-full aspect-[3/4] bg-[#00D26A]/10 border-b border-[#00D26A]/20 flex items-center justify-center font-bold text-[#00D26A] text-3xl shrink-0">
                 {initials(founder.name)}
               </div>
             )}
-            <div>
-              <p className="text-sm font-bold text-zinc-900">{founder.name}</p>
-              {founder.role && (
-                <p className="text-xs text-zinc-500 font-light tracking-wide">
-                  {founder.role}
+            <div className="p-5 text-center flex flex-col gap-2">
+              <div>
+                <p className="text-sm font-bold text-zinc-900">{founder.name}</p>
+                {founder.role && (
+                  <p className="text-xs text-zinc-500 font-light tracking-wide">
+                    {founder.role}
+                  </p>
+                )}
+              </div>
+              {founder.description && (
+                <p className="text-xs text-zinc-600 font-light leading-relaxed">
+                  {founder.description}
                 </p>
               )}
             </div>
