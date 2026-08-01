@@ -3,8 +3,6 @@
 import React from "react";
 import { FlippingCard } from "../ui/flipping-card";
 import { ArrowRight, Globe, Target, Bot, RotateCw } from "lucide-react";
-import { getWhatsappUrl } from "@/src/lib/constants";
-import Link from "next/link";
 
 // --- Interfaces ---
 interface CardData {
@@ -143,7 +141,11 @@ function GenericCardFront({ data }: { data: CardData["front"] }) {
     );
 }
 
-function GenericCardBack({ data, title }: { data: CardData["back"], title: string }) {
+function GenericCardBack({ data }: { data: CardData["back"], title: string }) {
+    // Reposicionamento GEO/AEO (doc/reposicionamento.md item 2.3): este card
+    // deixou de ser um produto vendável isoladamente — é um componente da
+    // entrega GEO. Por isso o verso não tem mais CTA de compra/WhatsApp, só
+    // o texto explicativo (vindo do Janus) + um selo neutro.
     return (
         <div className="flex flex-col items-center justify-center h-full w-full overflow-hidden p-6 md:p-8 text-center bg-zinc-950 rounded-md border border-[#00D26A]/30 shadow-[inset_0_0_50px_rgba(0,210,106,0.05)]">
             <div className="w-14 h-14 rounded-md bg-[#00D26A]/10 border border-[#00D26A]/30 flex items-center justify-center mb-6 shrink-0 -rotate-3 group-hover:rotate-0 transition-all duration-500">
@@ -155,16 +157,9 @@ function GenericCardBack({ data, title }: { data: CardData["back"], title: strin
             </p>
 
             <div className="w-full shrink-0 mt-auto">
-                <Link 
-                    href={getWhatsappUrl(`Olá! Gostaria de saber mais detalhes sobre a solução de ${title}.`)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    // Botão verde Mavellium
-                    className="block w-full bg-[#00D26A] text-black px-6 py-4 rounded-md text-sm font-bold transition-all hover:bg-[#00b35a] active:scale-95 text-center"
-                >
-                    {data.buttonText}
-                </Link>
+                <span className="inline-flex w-full items-center justify-center gap-2 border border-[#00D26A]/30 text-[#00D26A] px-6 py-4 rounded-md text-[11px] font-bold uppercase tracking-widest">
+                    Componente da entrega GEO
+                </span>
                 <span className="block mt-4 text-[10px] text-zinc-600 uppercase tracking-widest lg:hidden">
                     Toque fora para voltar
                 </span>

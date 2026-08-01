@@ -355,36 +355,37 @@
       ]
     },
     "solucoes-mavellium": {
+      "_comentario_reposicionamento": "doc/reposicionamento.md item 2.3 — cards reescritos como componentes da entrega GEO, não produtos vendáveis separadamente. buttonText não é mais renderizado como link de venda pelo componente (src/components/ui/autonomous-agents.tsx); mantido só como referência de rótulo. Colar no admin do Janus.",
       "cards": [
         {
           "id": "sites-inteligentes",
           "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
           "imageAlt": "Sites Semânticos Prontos para IA",
-          "buttonText": "Construir Autoridade",
+          "buttonText": "Componente da entrega GEO",
           "frontTitle": "Sites Semânticos",
-          "backDescription": "A sede digital da sua empresa. Um ecossistema veloz e mapeado com JSON-LD para transmitir credibilidade a humanos e ser o principal nó de resposta para assistentes de IA.",
+          "backDescription": "A base técnica de todo trabalho de GEO: reestruturamos o seu site com JSON-LD, entidades consistentes e HTML legível por máquina — a etapa de Arquitetura Semântica da nossa metodologia, não um site vendido à parte.",
           "frontDescription": "Estruturas de alta performance preparadas para os novos motores de busca."
         },
         {
           "id": "landing-pages",
           "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-          "imageAlt": "Landing Pages de Alta Conversão",
-          "buttonText": "Acelerar Vendas",
+          "imageAlt": "Páginas de captação estruturadas para GEO",
+          "buttonText": "Componente da entrega GEO",
           "frontTitle": "Alta Conversão",
-          "backDescription": "Código ultrarrápido e livre de distrações. Maximize o retorno dos seus anúncios pagos com arquiteturas focadas estritamente na experiência do utilizador e conversão imediata.",
+          "backDescription": "Páginas de captação rápidas e sem distração, construídas com a mesma arquitetura semântica do restante do site — parte da entrega, não um produto de conversão paga vendido isoladamente.",
           "frontDescription": "Páginas cirúrgicas desenhadas para transformar tráfego em receita ativa."
         },
         {
           "id": "automacao-ia",
           "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
-          "imageAlt": "Automação e Agentes Autónomos integrados",
-          "buttonText": "Operar 24/7",
+          "imageAlt": "Agentes de IA que operam a camada de visibilidade",
+          "buttonText": "Componente da entrega GEO",
           "frontTitle": "Agentes & IA",
-          "backDescription": "Agentes autónomos customizados para qualificar leads, integrar bases de conhecimento corporativas e otimizar processos de atendimento com operação ininterrupta 24/7.",
+          "backDescription": "Agentes que sustentam a observabilidade contínua da sua visibilidade em IA — monitoram citações, qualificam leads vindos das respostas de IA e mantêm a operação de GEO rodando entre um Raio-X e outro.",
           "frontDescription": "A revolução da eficiência operacional integrada nos seus sistemas."
         }
       ],
-      "description": "Três frentes de AI Visibility Infrastructure para que a sua empresa seja encontrada, compreendida e recomendada pelas IAs — e converta mais em cada etapa do funil."
+      "description": "Três componentes da entrega de AI Visibility Infrastructure — não produtos vendidos separadamente — para que a sua empresa seja encontrada, compreendida e recomendada pelas IAs."
     },
     "cta-final-mavellium": {
       "text": {

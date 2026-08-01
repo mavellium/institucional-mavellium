@@ -58,8 +58,13 @@ export function PricingSection({
                 )}
             </div>
 
-            {/* Grid alinhado */}
-            <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-3 mt-8 items-stretch">
+            {/* Grid alinhado — colunas se adaptam à quantidade de planos (3 ou 4 tiers) */}
+            <div
+                className={cn(
+                    'mx-auto grid w-full grid-cols-1 gap-8 mt-8 items-stretch',
+                    plans.length >= 4 ? 'max-w-7xl md:grid-cols-2 lg:grid-cols-4' : 'max-w-6xl md:grid-cols-3',
+                )}
+            >
                 {plans.map((plan) => (
                     <PricingCard plan={plan} key={plan.name} />
                 ))}

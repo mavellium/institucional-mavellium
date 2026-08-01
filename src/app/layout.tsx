@@ -5,6 +5,7 @@ import "./globals.css";
 import { HashScroller } from "../components/HashScroller";
 import { JanusScriptManager } from "../components/cms/JanusScriptManager";
 import { PostHogProvider } from "../components/PostHogProvider";
+import { WhatsappFloatButton } from "../components/ui/whatsapp-float-button";
 
 // Configuração da fonte Satoshi via next/font/local
 const satoshi = localFont({
@@ -35,9 +36,9 @@ const satoshi = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mavellium.com.br"),
-  title: "Mavellium | Tecnologia, Sites e Inteligência Artificial",
-  description: "Desenvolvimento de soluções inteligentes, sites institucionais de alta conversão e automação com Inteligência Artificial para escalar o seu negócio no ambiente digital.",
-  keywords: ["Mavellium", "Inteligência Artificial", "Criação de Sites", "Automação", "Landing Pages", "Tecnologia B2B", "GEO", "Generative Engine Optimization"],
+  title: "Mavellium | GEO — Visibilidade da sua marca nas respostas de IA",
+  description: "A Mavellium é especialista em GEO (Generative Engine Optimization): fazemos sua marca ser encontrada, compreendida e recomendada por ChatGPT, Gemini, Perplexity e Claude. Diagnóstico Raio-X, IAG Score™ e metodologia própria.",
+  keywords: ["Mavellium", "GEO", "AEO", "Generative Engine Optimization", "Answer Engine Optimization", "IAG Score", "Visibilidade em IA", "ChatGPT", "Perplexity", "Tecnologia B2B"],
   twitter: {
     card: "summary_large_image",
     site: "@mavellium",
@@ -64,7 +65,7 @@ const siteSchema = {
       },
       image: "https://mavellium.com.br/opengraph-image.png",
       description:
-        "A Mavellium resolve três problemas de negócio: invisibilidade digital de empresas B2B, baixa conversão de visitantes em clientes e operações comerciais limitadas ao horário de trabalho. Desenvolvemos sites institucionais, landing pages de alta conversão e agentes de IA que operam 24 horas para gerar resultados reais.",
+        "A Mavellium é uma empresa de AI Visibility Infrastructure especializada em GEO (Generative Engine Optimization): estruturamos dados, entidades e conteúdo para que grandes modelos de linguagem (ChatGPT, Gemini, Perplexity, Claude) reconheçam, entendam e recomendem marcas B2B. Metodologia própria em quatro etapas — Raio-X, Arquitetura Semântica, Autoridade Algorítmica e Observabilidade Contínua — medida pelo IAG Score™.",
       telephone: "+55-14-99177-9502",
       email: "contato@mavellium.com.br",
       priceRange: "$$",
@@ -90,11 +91,12 @@ const siteSchema = {
         { "@type": "Person", name: "Márcio Piva Junior" },
       ],
       knowsAbout: [
-        "Sites Institucionais de Alta Performance",
-        "Landing Pages de Alta Conversão",
-        "Agentes de Inteligência Artificial",
-        "Automação Comercial",
         "GEO — Generative Engine Optimization",
+        "AEO — Answer Engine Optimization",
+        "IAG Score™ — Índice de Autoridade Gerativa",
+        "Generative Share of Voice (G-SOV)",
+        "Metodologia Raio-X de Citabilidade Multi-LLM",
+        "Dados Estruturados e Schema Markup (JSON-LD)",
         "Next.js SSG",
         "Janus CMS",
       ],
@@ -105,43 +107,48 @@ const siteSchema = {
       },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Soluções Mavellium",
+        name: "Planos de GEO — Mavellium",
         itemListElement: [
           {
             "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Sites & Landing Pages de Alta Performance",
-              description:
-                "Desenvolvimento de sites institucionais e landing pages com Next.js SSG, TTFB < 100ms, Janus CMS headless e integração com GA4 e Microsoft Clarity.",
-              serviceType: "Web Development",
-              provider: { "@id": "https://mavellium.com.br/#organization" },
-            },
+            name: "Presença",
+            description:
+              "Para sair da invisibilidade. Diagnóstico + estruturação inicial para a marca começar a aparecer nas respostas de IA.",
+            itemOffered: { "@id": "https://mavellium.com.br/#service-geo" },
           },
           {
             "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "GEO — Generative Engine Optimization",
-              description:
-                "Otimização semântica para motores de busca generativos (ChatGPT, Perplexity, Google SGE, Gemini). JSON-LD por rota, conteúdo Answer-First, IAG Score™ e G-SOV (Generative Share of Voice).",
-              serviceType: "SEO / GEO / AIO",
-              provider: { "@id": "https://mavellium.com.br/#organization" },
-            },
+            name: "Autoridade",
+            description:
+              "Para virar fonte citada. Produção de conteúdo e construção de autoridade para a IA recomendar a marca de forma consistente.",
+            itemOffered: { "@id": "https://mavellium.com.br/#service-geo" },
           },
           {
             "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Agentes de IA e Automação Comercial",
-              description:
-                "Agentes autônomos 24/7 para qualificação de leads, atendimento via WhatsApp, processamento de dados contábeis e automação de processos operacionais com redução de custo.",
-              serviceType: "AI Automation",
-              provider: { "@id": "https://mavellium.com.br/#organization" },
-            },
+            name: "Dominância",
+            description:
+              "Para liderar a categoria. Operação completa de visibilidade, ocupando o espaço das respostas de IA à frente dos concorrentes.",
+            itemOffered: { "@id": "https://mavellium.com.br/#service-geo" },
+          },
+          {
+            "@type": "Offer",
+            name: "Enterprise",
+            description:
+              "Sob consulta. Escopo personalizado para operações multi-marca, multi-região ou com necessidades específicas.",
+            itemOffered: { "@id": "https://mavellium.com.br/#service-geo" },
           },
         ],
       },
+    },
+    {
+      "@type": "Service",
+      "@id": "https://mavellium.com.br/#service-geo",
+      name: "GEO — Generative Engine Optimization",
+      description:
+        "Otimização semântica para motores de busca generativos (ChatGPT, Perplexity, Google Gemini, Claude). Diagnóstico de citabilidade multi-LLM, dados estruturados (JSON-LD), autoridade algorítmica e observabilidade contínua via IAG Score™ e G-SOV (Generative Share of Voice).",
+      serviceType: "GEO / AEO",
+      provider: { "@id": "https://mavellium.com.br/#organization" },
+      areaServed: { "@type": "Country", name: "Brasil" },
     },
     {
       "@type": "WebSite",
@@ -205,6 +212,7 @@ export default function RootLayout({
         <PostHogProvider>
           {children}
         </PostHogProvider>
+        <WhatsappFloatButton />
       </body>
     </html>
   );

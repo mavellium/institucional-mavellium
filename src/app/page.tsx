@@ -3,7 +3,7 @@ export const revalidate = 60;
 import Image from "next/image";
 import { Header } from "../components/Header";
 
-function SlideWithText({ image, title, description, imageAlt }: { image: string; title: string; description: string; imageAlt: string }) {
+function SlideWithText({ image, title, subtitle, description, imageAlt }: { image: string; title: string; subtitle?: string; description: string; imageAlt: string }) {
   return (
     <div className="relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] group border border-black/5 shadow-lg">
       <Image
@@ -15,7 +15,10 @@ function SlideWithText({ image, title, description, imageAlt }: { image: string;
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90" />
       <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-8 md:p-12 h-full">
-        <h3 className="text-white text-2xl md:text-3xl font-bold mb-3 tracking-tight">{title}</h3>
+        <h3 className="text-white text-2xl md:text-3xl font-bold mb-2 tracking-tight">{title}</h3>
+        {subtitle && (
+          <p className="text-[#00D26A] text-sm md:text-base italic font-medium mb-3">{subtitle}</p>
+        )}
         <p className="text-white/80 text-base md:text-lg leading-relaxed">{description}</p>
       </div>
     </div>
@@ -24,18 +27,19 @@ function SlideWithText({ image, title, description, imageAlt }: { image: string;
 import dynamic from "next/dynamic";
 import { Hero } from "../components/ui/hero-janus";
 import { Footer } from "../components/ui/footer";
-import HoverPreview from "../components/ui/hover-preview";
-import Pricing from "../components/ui/pricing-section";
 import { Carousel } from "../components/ui/carousel-companys";
-import SelectCards from "../components/ui/select-cards";
-import { Plan, PricingSection } from "../components/ui/pricing-details";
-import { getWhatsappUrl } from "../lib/constants";
+import { CaseTegbeSection } from "../components/ui/case-tegbe-section";
+import { MetricsCounters } from "../components/ui/metrics-counters";
+import { SeoAeoGeoComparison } from "../components/ui/seo-aeo-geo-comparison";
+import { IagScoreSection } from "../components/ui/iag-score-section";
+import { FounderSection } from "../components/ui/founder-section";
+import { QualificationFormSection } from "../components/ui/qualification-form";
+import { PricingSection } from "../components/ui/pricing-details";
+import { PLANS_GEO } from "../lib/plans-data";
+import { NAV_LINKS } from "../lib/constants";
 
-const Benefits        = dynamic(() => import("../components/ui/benefits"));
 const Gallery4        = dynamic(() => import("../components/ui/gallery4").then((m) => ({ default: m.Gallery4 })));
-const GalleryGridBlock = dynamic(() => import("../components/ui/sections-gallery").then((m) => ({ default: m.GalleryGridBlock })));
 const FitecLeadsGallery = dynamic(() => import("../components/ui/FitecLeadsGallery").then((m) => ({ default: m.FitecLeadsGallery })));
-const QuemSomosJanus  = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.QuemSomosJanus })));
 const FaqJanus        = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.FaqJanus })));
 const SolucoesJanus   = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.SolucoesJanus })));
 const ManifestoJanus  = dynamic(() => import("../components/ui/janus-home-sections").then((m) => ({ default: m.ManifestoJanus })));
@@ -81,99 +85,41 @@ export default async function Home() {
     items: insightsItems,
   };
 
+  // Reposicionamento GEO/AEO (doc/reposicionamento.md item 2.1) — copy pronto,
+  // literal. Arco: diagnosticar → arquitetar → autoridade → observar.
   const slidesMetodologia = [
     <SlideWithText
       key="1"
       image="/imagem-1.webp"
-      title="1. Imersão e Briefing"
-      imageAlt="Reunião de imersão e briefing — equipe Mavellium alinhando metas de performance e arquitetura GEO com o cliente"
-      description="Sentamos com você para entender a fundo a sua dor, o seu modelo de negócio e o que você espera de resultado."
+      title="Etapa 1 — Raio-X"
+      subtitle="Diagnóstico de Citabilidade Multi-LLM."
+      imageAlt="Raio-X — diagnóstico de citabilidade multi-LLM da marca em ChatGPT, Gemini, Perplexity e Claude"
+      description="Mapeamos como sua marca aparece hoje nas respostas de ChatGPT, Gemini, Perplexity e Claude para as perguntas críticas do seu setor — e quantas vezes a IA recomenda o concorrente no seu lugar."
     />,
     <SlideWithText
       key="2"
       image="/imagem-2.webp"
-      title="2. Análise de Viabilidade"
-      imageAlt="Análise de viabilidade técnica — seleção de stack Next.js SSG e infraestrutura headless para otimização de TTFB e LCP"
-      description="Nossa equipe técnica seleciona as melhores tecnologias atuais para resolver a sua demanda com o melhor custo-benefício."
+      title="Etapa 2 — Arquitetura Semântica"
+      subtitle="Estruturação de dados, entidades e schema."
+      imageAlt="Arquitetura Semântica — estruturação de dados, entidades e schema JSON-LD legíveis por máquina"
+      description="Reescrevemos a base técnica do seu site na linguagem que os modelos leem: dados estruturados (JSON-LD), entidades consistentes e HTML legível por máquina. É o que transforma seu site em fonte que a IA consegue interpretar."
     />,
     <SlideWithText
       key="3"
       image="/imagem-3.webp"
-      title="3. Cronograma de Entregas"
-      imageAlt="Cronograma iterativo de entregas — planejamento de projeto web com marcos de Core Web Vitals por fase"
-      description="O projeto é fatiado em etapas. Criamos um calendário transparente para que você acompanhe visualmente o progresso."
+      title="Etapa 3 — Autoridade Algorítmica"
+      subtitle="Information gain e distribuição."
+      imageAlt="Autoridade Algorítmica — produção de conteúdo citado pela IA como fonte e distribuição nos lugares que os modelos consultam"
+      description="Produzimos conteúdo que a IA cita como fonte e construímos presença nos lugares que os modelos consultam para gerar respostas. Deixar de ser encontrado para passar a ser recomendado."
     />,
     <SlideWithText
       key="4"
       image="/imagem-4.webp"
-      title="4. Desenvolvimento"
-      imageAlt="Desenvolvimento com Next.js SSG e Janus CMS — implementação de site institucional com foco em performance e GEO"
-      description="Você tem visão total do andamento do projeto, validando e acompanhando cada fase concluída pela nossa equipe."
+      title="Etapa 4 — Observabilidade Contínua"
+      subtitle="Monitoramento e IAG Score ao longo do tempo, via Janus."
+      imageAlt="Observabilidade Contínua — painel Janus de monitoramento de visibilidade em IA e IAG Score ao longo do tempo"
+      description="Nosso painel acompanha sua visibilidade e a dos concorrentes em tempo real, ajustando a estratégia conforme os modelos de IA evoluem. Visibilidade em IA não é entrega única — é operação contínua."
     />,
-    <SlideWithText
-      key="5"
-      image="/imagem-5.webp"
-      title="5. Entrega Final"
-      imageAlt="Entrega final do projeto Mavellium — site institucional com PageSpeed Score otimizado e HTML semântico para crawlers de LLMs"
-      description="O projeto só é finalizado quando atinge os nossos rigorosos padrões de excelência e a sua total satisfação."
-    />,
-  ];
-
-  const PLANS: Plan[] = [
-    {
-      name: 'Landing Pages',
-      info: 'Páginas desenvolvidas com um único objetivo: transformar visitantes em clientes reais.',
-      label: 'Alta Conversão',
-      features: [
-        { text: 'Design livre de distrações' },
-        { text: 'Copywriting Estratégico', tooltip: 'Textos focados em conversão e gatilhos mentais.' },
-        { text: 'Integração com CRM/Email' },
-        { text: 'Otimização de Velocidade' },
-        { text: 'Maximização de anúncios' },
-      ],
-      btn: {
-        text: 'Acelerar Vendas',
-        // Mensagem focada em Landing Pages e conversão
-        href: getWhatsappUrl("Olá! Gostaria de saber mais sobre o desenvolvimento de uma Landing Page de Alta Conversão para escalar minhas vendas."),
-      },
-    },
-    {
-      highlighted: true,
-      name: 'Site Inteligente',
-      info: 'A sede digital oficial da sua empresa, estruturada para transmitir credibilidade 24h por dia.',
-      label: 'Autoridade Digital',
-      features: [
-        { text: 'Design Exclusivo e Responsivo' },
-        { text: 'Painel de Gestão de Conteúdo (CMS)' },
-        { text: 'SEO Técnico Otimizado', tooltip: 'Estrutura pronta para rankear no Google.' },
-        { text: 'Animações Premium' },
-        { text: 'Arquitetura Escalável' },
-        { text: 'Posicionamento global da marca' },
-      ],
-      btn: {
-        text: 'Construir Autoridade',
-        // Mensagem focada em Institucional e posicionamento
-        href: getWhatsappUrl("Olá, equipe Mavellium! Quero construir a Autoridade Digital da minha empresa com um Site Inteligente de alto padrão."),
-      },
-    },
-    {
-      name: 'Automação & IA',
-      info: 'Agentes autônomos impulsionados por Inteligência Artificial para operar seu negócio.',
-      label: 'Operação 24/7',
-      features: [
-        { text: 'Agente Comercial 24/7' },
-        { text: 'Integração via WhatsApp/Site' },
-        { text: 'Qualificação de Leads com IA' },
-        { text: 'Processamento de Dados Contábeis' },
-        { text: 'Redução de Custos Operacionais', tooltip: 'Automatiza tarefas que consumiriam horas da sua equipe.' },
-        { text: 'Atendimento instantâneo' },
-      ],
-      btn: {
-        text: 'Automatizar Operação',
-        // Mensagem focada em eficiência e Inteligência Artificial
-        href: getWhatsappUrl("Olá! Vi no site sobre as soluções de Automação e Inteligência Artificial e gostaria de entender como aplicar na minha operação."),
-      },
-    },
   ];
 
   return (
@@ -187,42 +133,31 @@ export default async function Home() {
       <Header
         logo={"/logo-mavellium-header.svg"}
         logoAlt={"Mavellium - Tecnologia e Inovação"}
-        links={[
-          { name: "Início", href: "/" },
-          { name: "Quem Somos", href: "/quem-somos" },
-          { name: "Soluções", href: "/solucoes" },
-          { name: "Cases", href: "/cases" },
-          { name: "Metodologia", href: "/#metodologia" },
-          { name: "Blog", href: "/blog" },
-          { name: "Docs", href: "/docs" },
-          { name: "Eventos", href: "/eventos" },
-        ]}
-        ctaLink={getWhatsappUrl("Olá! Estava navegando no site da Mavellium e gostaria de falar com um especialista.")}
-        ctaText={"Falar com Especialista"}
+        links={NAV_LINKS}
+        ctaLink="/#diagnostico"
+        ctaText={"Solicitar Raio-X"}
       />
       <Hero initialData={janusHome?.["hero-section-mavellium"] as never} />
-      <Pricing />
-      <div id="metodologia">
-        <Carousel
-          slides={slidesMetodologia}
-          options={{ loop: false, align: "start" }}
-          title="Nossa Metodologia"
-          description="Transparência e previsibilidade. Você nunca fica no escuro: nosso processo de ponta a ponta é dividido em 5 passos claros."
-        />
-      </div>
-      <SelectCards />
-      <QuemSomosJanus initialData={janusHome?.["sobre-mavellium"]} />
-      <Benefits />
+      <MetricsCounters />
       <ManifestoJanus initialData={janusHome?.["manifesto-mavellium"]} />
-      <SolucoesJanus initialData={janusHome?.["solucoes-mavellium"]} />
-      <GalleryGridBlock />
-      <PricingSection
-        plans={PLANS}
-        heading="Modelos de Projeto"
-        description="Desenhados cirurgicamente para a realidade do seu negócio. Do planejamento estratégico ao código final, sem terceirização cega."
+      <SeoAeoGeoComparison />
+      <Carousel
+        slides={slidesMetodologia}
+        options={{ loop: false, align: "start" }}
+        title="Nossa Metodologia"
+        description="Da invisibilidade à recomendação por IA, em quatro etapas mensuráveis."
       />
-      <CtaFinalJanus initialData={janusHome?.["cta-final-mavellium"]} />
-      <HoverPreview />
+      <div id="solucoes">
+        <SolucoesJanus initialData={janusHome?.["solucoes-mavellium"]} />
+      </div>
+      <CaseTegbeSection />
+      <PricingSection
+        plans={PLANS_GEO}
+        heading="Planos"
+        description="Da invisibilidade à liderança de categoria — escolha onde sua marca precisa chegar."
+      />
+      <IagScoreSection />
+      <FounderSection />
       <FaqJanus initialData={janusHome?.["faq-mavellium"]} />
       <Gallery4  {...blogData}
         cta={{
@@ -230,14 +165,8 @@ export default async function Home() {
           href: "/blog",
         }}
       />
-      {/* <ZoomParallax
-        title="Meu Título Dinâmico"
-        titleClassName="text-4xl md:text-7xl font-black text-white drop-shadow-lg"
-        images={images} /> */}
-      {/* <RadialOrbitalTimeline
-        title="Minha Timeline Interativa"
-        description="Uma jornada visual através dos principais marcos do projeto, com conexões dinâmicas e energia pulsante"
-        timelineData={timelineData} /> */}
+      <CtaFinalJanus initialData={janusHome?.["cta-final-mavellium"]} />
+      <QualificationFormSection />
       {fitecLeads.length > 0 && (
         <FitecLeadsGallery
           title="Conexões FITEC 2026"
