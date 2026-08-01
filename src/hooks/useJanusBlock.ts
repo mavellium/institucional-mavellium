@@ -56,3 +56,52 @@ export function useJanusBlock<T>(pageSlug: string, blockId: string) {
 
   return { data, loading };
 }
+
+/**
+ * Busca o schema de uma página Janus autorada em modo "advanced", client-side
+ * — `schema` É o dado da página diretamente (sem mapa de blocos, sem blockId).
+ * Ex: /quem-somos.
+ *
+ * @param pageSlug  slug da página no Janus (ex: "quem-somos")
+ */
+export function useJanusPageSchema<T>(pageSlug: string) {
+  const key = `page-schema::${pageSlug}`;
+  const [data, setData] = useState<T | null>((cache.get(key) as T) ?? null);
+  const [loading, setLoading] = useState(!cache.has(key) && !!pageSlug);
+
+  useEffect(() => {
+    if (!pageSlug || !JANUS_URL || !JANUS_TENANT) {
+      setLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    const url = `${JANUS_URL}/api/v1/content/${JANUS_TENANT}/${pageSlug}`;
+
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((page: { schema: T }) => {
+        if (cancelled) return;
+        const schema = page?.schema ?? null;
+        if (schema) {
+          cache.set(key, schema);
+          setData(schema);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) console.error(`[useJanusPageSchema] ${key}:`, err);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [key, pageSlug]);
+
+  return { data, loading };
+}

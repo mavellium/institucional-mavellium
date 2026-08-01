@@ -4,12 +4,9 @@ import { ChevronRight } from "lucide-react";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/ui/footer";
 import { NAV_LINKS } from "../../lib/constants";
-import {
-  TrajetoriaJanus,
-  QUEM_SOMOS_PAGE_SLUG,
-  TRAJETORIA_BLOCK_ID,
-} from "../../components/ui/janus-quemsomos-sections";
-import { fetchJanusBlocks } from "@/src/lib/janus-server";
+import { TrajetoriaJanus } from "../../components/ui/janus-quemsomos-sections";
+import type { TrajetoriaSchema } from "../../components/ui/janus-quemsomos-sections";
+import { fetchJanusPageSchema } from "@/src/lib/janus-server";
 
 export const revalidate = 60;
 
@@ -74,7 +71,9 @@ const FOUNDERS = [
 ];
 
 export default async function QuemSomosPage() {
-  const janusQuemSomos = await fetchJanusBlocks(QUEM_SOMOS_PAGE_SLUG);
+  const trajetoriaData = await fetchJanusPageSchema<TrajetoriaSchema>(
+    "quem-somos"
+  );
 
   return (
     <>
@@ -140,9 +139,7 @@ export default async function QuemSomosPage() {
           </header>
         </article>
 
-        <TrajetoriaJanus
-          initialData={janusQuemSomos?.[TRAJETORIA_BLOCK_ID]}
-        />
+        <TrajetoriaJanus initialData={trajetoriaData ?? undefined} />
 
         <article className="max-w-4xl mx-auto px-6 pb-12">
           {/* Fundadores */}
