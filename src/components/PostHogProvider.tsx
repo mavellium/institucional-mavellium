@@ -4,6 +4,7 @@ import posthog from 'posthog-js'
 import { PostHogProvider as PHProvider, usePostHog } from 'posthog-js/react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, Suspense } from 'react'
+import { track } from '@/src/lib/analytics'
 
 function PostHogPageView() {
   const pathname = usePathname()
@@ -22,19 +23,16 @@ function PostHogPageView() {
 }
 
 function PostHogWhatsAppTracker() {
-  const ph = usePostHog()
-
   useEffect(() => {
-    if (!ph) return
     function handleClick(e: MouseEvent) {
       const anchor = (e.target as HTMLElement).closest('a')
       if (anchor?.href?.includes('wa.me')) {
-        ph.capture('conv_whatsapp_click', { url: anchor.href })
+        track('conv_whatsapp_click', { url: anchor.href })
       }
     }
     document.addEventListener('click', handleClick)
     return () => document.removeEventListener('click', handleClick)
-  }, [ph])
+  }, [])
 
   return null
 }
