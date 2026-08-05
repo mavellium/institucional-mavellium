@@ -1,13 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button } from '../ui/button';
 import { cn } from '@/src/lib/utils';
 import { CheckCircle2, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { track } from '@/src/lib/analytics';
 
 export interface Plan {
+    id: "presenca" | "autoridade" | "dominancia" | "enterprise";
     name: string;
     info: string;
     label: string;
@@ -34,9 +36,44 @@ export function PricingSection({
     description,
     ...props
 }: PricingSectionProps) {
+    const sectionRef = useRef<HTMLElement>(null);
+
+    // doc/conversao.md seção 2.2 — conta como "visível" só depois de 2s
+    // contínuos com >=50% da seção no viewport; dispara uma única vez.
+    useEffect(() => {
+        const node = sectionRef.current;
+        if (!node) return;
+        let timer: ReturnType<typeof setTimeout> | null = null;
+        let fired = false;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (fired) return;
+                if (entry.isIntersecting) {
+                    timer = setTimeout(() => {
+                        fired = true;
+                        track('secao_planos_visivel');
+                        observer.disconnect();
+                    }, 2000);
+                } else if (timer) {
+                    clearTimeout(timer);
+                    timer = null;
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        observer.observe(node);
+        return () => {
+            observer.disconnect();
+            if (timer) clearTimeout(timer);
+        };
+    }, []);
+
     return (
         <section
             id="planos"
+            ref={sectionRef}
             className={cn(
                 'flex w-full bg-[#050505] flex-col items-center justify-center space-y-12 p-4 py-24 border-t border-white/5',
                 props.className,
@@ -157,7 +194,14 @@ export function PricingCard({
                     )}
                     asChild
                 >
-                    <Link href={plan.btn.href} target="_blank" rel="noopener noreferrer">{plan.btn.text}</Link>
+                    <Link
+                        href={plan.btn.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => track("conv_plano_cta_click", { plano: plan.id, cta_location: "secao_planos" })}
+                    >
+                        {plan.btn.text}
+                    </Link>
                 </Button>
             </div>
         </div>

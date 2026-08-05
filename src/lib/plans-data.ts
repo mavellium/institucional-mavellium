@@ -14,6 +14,7 @@ const PLACEHOLDER_FEATURES: Plan["features"] = [
 
 export const PLANS_GEO: Plan[] = [
   {
+    id: "presenca",
     name: "Presença",
     label: "Para sair da invisibilidade",
     info: "Diagnóstico + estruturação inicial para sua marca começar a aparecer nas respostas de IA.",
@@ -21,6 +22,7 @@ export const PLANS_GEO: Plan[] = [
     btn: { text: "Começar com o Raio-X", href: "/#diagnostico" },
   },
   {
+    id: "autoridade",
     highlighted: true,
     name: "Autoridade",
     label: "Para virar fonte citada",
@@ -29,6 +31,7 @@ export const PLANS_GEO: Plan[] = [
     btn: { text: "Construir Autoridade", href: "/#diagnostico" },
   },
   {
+    id: "dominancia",
     name: "Dominância",
     label: "Para liderar a categoria",
     info: "Operação completa de visibilidade, ocupando o espaço das respostas de IA à frente dos concorrentes.",
@@ -36,6 +39,7 @@ export const PLANS_GEO: Plan[] = [
     btn: { text: "Dominar a Categoria", href: "/#diagnostico" },
   },
   {
+    id: "enterprise",
     name: "Enterprise",
     label: "Sob consulta",
     info: "Escopo personalizado para operações multi-marca, multi-região ou com necessidades específicas.",

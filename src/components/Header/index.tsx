@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import { Icon } from "@iconify/react";
+import { trackCtaClick } from "@/src/lib/analytics";
 
 // --- Props simplificadas ---
 export interface HeaderProps {
@@ -183,6 +184,7 @@ export function Header({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={ctaText}
+                onClick={() => trackCtaClick(ctaLink, ctaText, "header")}
                 className={`hidden sm:inline-flex items-center justify-center group relative overflow-hidden rounded-full px-5 lg:px-8 h-9 lg:h-11 font-bold text-[10px] lg:text-xs tracking-[0.1em] transition-all duration-300 hover:scale-105 active:scale-95 border ${
                   lightBg
                     ? "bg-[#00D26A] text-black hover:bg-[#00b35a] border-[#00D26A]"
@@ -284,7 +286,10 @@ export function Header({
                   <Link
                     href={ctaLink}
                     className={`w-full text-center py-4 rounded-full font-bold uppercase tracking-widest text-sm border border-[#00D26A]/20 shadow-2xl shadow-[#00D26A]/20 focus:outline-none focus:ring-2 focus:ring-[#00D26A]/30 ${theme.primary} ${theme.textOnPrimary} ${theme.hoverBg}`}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={() => {
+                      trackCtaClick(ctaLink, ctaText, "header")
+                      setMenuOpen(false)
+                    }}
                     aria-label={ctaText}
                   >
                     {ctaText}

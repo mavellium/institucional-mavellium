@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { getWhatsappUrl, siteConfig } from '@/src/lib/constants';
+import { trackCtaClick } from '@/src/lib/analytics';
 
 interface FooterLink {
     title: string;
@@ -112,6 +113,7 @@ export function Footer() {
                                                 href={link.href}
                                                 target={link.isExternal ? "_blank" : undefined}
                                                 rel={link.isExternal ? "noopener noreferrer" : undefined}
+                                                onClick={() => trackCtaClick(link.href, link.title, "footer")}
                                                 className="hover:text-white inline-flex items-center gap-2 transition-colors duration-300 group"
                                             >
                                                 {link.icon && (

@@ -1,4 +1,7 @@
+"use client";
+
 import type { BlogCtaConfig } from "@/src/lib/blog-config";
+import { trackCtaClick } from "@/src/lib/analytics";
 
 interface BlogCTAProps {
   whatsappUrl: string;
@@ -20,6 +23,7 @@ export function BlogCTA({ whatsappUrl, config }: BlogCTAProps) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackCtaClick(href, config.buttonText, "fim_artigo")}
         className="inline-flex items-center gap-2 bg-[#00D26A] hover:bg-[#00b35a] text-black font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-md transition-all duration-300 shadow-[0_0_15px_rgba(0,210,106,0.2)] hover:shadow-[0_0_25px_rgba(0,210,106,0.4)]"
       >
         {config.buttonText}

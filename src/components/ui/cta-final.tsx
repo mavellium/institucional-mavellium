@@ -2,6 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { trackCtaClick } from "@/src/lib/analytics";
 
 // --- INTERFACES DINÂMICAS ---
 export interface FinalCtaData {
@@ -71,7 +72,15 @@ export default function FinalCtaSection({ data, className = "" }: FinalCtaSectio
 
         {/* --- BOTÃO COM INVERSÃO DE COR --- */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-8">
-          <Link href={calls_to_action.primary.href} target="_blank" rel="noopener noreferrer" className="group relative">
+          <Link
+            href={calls_to_action.primary.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative"
+            onClick={() =>
+              trackCtaClick(calls_to_action.primary.href, calls_to_action.primary.label, "cta_final")
+            }
+          >
             
             {/* Sombra de contorno que brilha no hover */}
             <div
