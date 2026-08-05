@@ -1,7 +1,12 @@
 export const revalidate = 60;
 
+import type { Metadata } from "next";
 import Image from "next/image";
 import { Header } from "../components/Header";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "https://mavellium.com.br" },
+};
 
 function SlideWithText({ image, title, subtitle, description, imageAlt }: { image: string; title: string; subtitle?: string; description: string; imageAlt: string }) {
   return (

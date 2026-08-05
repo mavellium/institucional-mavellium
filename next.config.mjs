@@ -19,6 +19,13 @@ const nextConfig = {
         destination: "/eventos/fitec-2026",
         permanent: true,
       },
+      {
+        // doc/conversao.md seção 5.1 — URL duplicada do artigo GPR vs Share
+        // of Voice, dividindo autoridade com a canônica.
+        source: "/blog/gpr-generative-presence-rate-vs-share-of-voice-tradicional-qual-metrica-importa-na-era-da-ia",
+        destination: "/blog/gpr-vs-share-of-voice-qual-metrica-importa-na-era-da-ia",
+        permanent: true,
+      },
     ];
   },
   images: {

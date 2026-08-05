@@ -99,6 +99,32 @@ export function formatDate(isoDate: string): string {
   }).format(new Date(isoDate));
 }
 
+// doc/conversao.md seção 4.2 — ponto de inserção do CTA inline por contagem
+// de blocos (fecho de tag), não por caractere, já que o corpo vem como HTML
+// bruto do Janus CMS.
+const BLOCK_CLOSE_TAG = /<\/(p|h2|h3|h4|ul|ol|blockquote|pre|figure|table)>/gi;
+
+export function splitHtmlForInlineCta(
+  html: string,
+  ratio = 0.4
+): { before: string; after: string } | null {
+  const boundaries: number[] = [];
+  const re = new RegExp(BLOCK_CLOSE_TAG);
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html))) {
+    boundaries.push(match.index + match[0].length);
+  }
+  // artigo curto demais — inserir no meio não compensa
+  if (boundaries.length < 4) return null;
+
+  const targetIndex = Math.min(
+    Math.max(Math.floor(boundaries.length * ratio), 1),
+    boundaries.length - 2
+  );
+  const splitAt = boundaries[targetIndex];
+  return { before: html.slice(0, splitAt), after: html.slice(splitAt) };
+}
+
 export function slugifyHeading(content: string): string {
   return content
     .toLowerCase()

@@ -5,6 +5,7 @@ import { Header } from "../../components/Header";
 import { Footer } from "../../components/ui/footer";
 import { BlogCard } from "../../components/ui/blog-card";
 import { BlogGrid } from "./_components/BlogGrid";
+import { RaioXCTA } from "../../components/ui/raio-x-cta";
 import { fetchCmsPosts } from "../../lib/blog-api";
 import { getWhatsappUrl, NAV_LINKS } from "../../lib/constants";
 
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   title: "Blog & Insights | Mavellium",
   description:
     "Artigos, tendências e análises profundas sobre como a tecnologia, automação e design impactam o faturamento da sua empresa.",
+  alternates: { canonical: "https://mavellium.com.br/blog" },
   openGraph: {
     title: "Blog & Insights | Mavellium",
     description:
@@ -124,6 +126,10 @@ export default async function BlogPage() {
             </p>
           </div>
         )}
+
+        <div className="max-w-7xl mx-auto px-6 pb-16">
+          <RaioXCTA variant="destaque" location="blog_index" />
+        </div>
       </main>
 
       <Footer />

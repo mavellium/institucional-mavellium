@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/ui/footer";
+import { RaioXCTA } from "../../components/ui/raio-x-cta";
 import { getWhatsappUrl, NAV_LINKS } from "../../lib/constants";
 
 export const metadata: Metadata = {
@@ -279,6 +280,8 @@ export default function CasesPage() {
               </li>
             ))}
           </ul>
+
+          <RaioXCTA variant="destaque" location="cases" />
         </div>
       </main>
 

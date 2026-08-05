@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight, Globe, Brain, TrendingUp } from "lucide-react";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/ui/footer";
+import { RaioXCTA } from "../../components/ui/raio-x-cta";
 import { getWhatsappUrl, NAV_LINKS } from "../../lib/constants";
 
 export const metadata: Metadata = {
@@ -481,6 +482,8 @@ export default function SolucoesPage() {
               Solicitar AI Visibility Audit
             </a>
           </section>
+
+          <RaioXCTA variant="destaque" location="solucoes" />
         </article>
       </main>
 

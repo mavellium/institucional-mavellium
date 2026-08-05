@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/ui/footer";
+import { RaioXCTA } from "../../components/ui/raio-x-cta";
 import { NAV_LINKS } from "../../lib/constants";
 import {
   IntroJanus,
@@ -105,6 +106,8 @@ export default async function QuemSomosPage() {
 
         <article className="max-w-4xl mx-auto px-6 pb-12">
           <FoundersJanus initialData={quemSomosData ?? undefined} />
+
+          <RaioXCTA variant="destaque" location="quem_somos" />
         </article>
       </main>
 

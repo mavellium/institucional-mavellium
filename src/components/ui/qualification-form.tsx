@@ -5,16 +5,18 @@
 // de validação novas (useState + fetch, decisão confirmada) — submit direto
 // pro HubSpot Forms Submission API (src/lib/hubspot-form.ts), sem passar por
 // uma API route própria.
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import {
   submitQualificationForm,
+  HUBSPOT_RAIOX_FORM_GUID,
   SETOR_OPTIONS,
   JA_APARECEU_OPTIONS,
   FATURAMENTO_OPTIONS,
   PROBLEMA_OPTIONS,
   URGENCIA_OPTIONS,
 } from "@/src/lib/hubspot-form";
+import { track, identify } from "@/src/lib/analytics";
 
 const inputClass =
   "w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 outline-none placeholder:text-zinc-400 focus:border-[#00D26A] focus:ring-2 focus:ring-[#00D26A]/20 transition-all";
@@ -45,6 +47,14 @@ export function QualificationForm() {
   const [error, setError] = useState<string | null>(null);
   // honeypot anti-spam — campo invisível para humanos, bots costumam preencher
   const [website, setWebsite] = useState("");
+  // conv_raio_x_form_start dispara uma vez por sessão de preenchimento
+  const startTracked = useRef(false);
+
+  function handleFormFocus() {
+    if (startTracked.current) return;
+    startTracked.current = true;
+    track("conv_raio_x_form_start", { form_id: HUBSPOT_RAIOX_FORM_GUID });
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -54,6 +64,7 @@ export function QualificationForm() {
     const data = new FormData(form);
     const fullName = String(data.get("fullname") ?? "").trim();
     const [firstname, ...rest] = fullName.split(" ");
+    const email = String(data.get("email") ?? "");
 
     setSubmitting(true);
     setError(null);
@@ -62,7 +73,7 @@ export function QualificationForm() {
         {
           firstname: firstname ?? fullName,
           lastname: rest.join(" "),
-          email: String(data.get("email") ?? ""),
+          email,
           phone: String(data.get("phone") ?? "") || undefined,
           company: String(data.get("company") ?? ""),
           cargo: String(data.get("cargo") ?? "") || undefined,
@@ -74,6 +85,12 @@ export function QualificationForm() {
         },
         window.location.href
       );
+      const dominioEmpresa = email.split("@")[1] ?? "";
+      track("conv_raio_x_form_submit", {
+        form_id: HUBSPOT_RAIOX_FORM_GUID,
+        dominio_empresa: dominioEmpresa,
+      });
+      identify(email, { dominio_empresa: dominioEmpresa });
       setSubmitted(true);
       form.reset();
     } catch {
@@ -103,6 +120,7 @@ export function QualificationForm() {
   return (
     <form
       onSubmit={handleSubmit}
+      onFocus={handleFormFocus}
       className="max-w-lg mx-auto flex flex-col gap-4"
       noValidate
     >

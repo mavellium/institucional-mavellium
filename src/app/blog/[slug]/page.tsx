@@ -13,13 +13,16 @@ import { HtmlArticleRenderer } from "./_components/HtmlArticleRenderer";
 import { TableOfContents } from "./_components/TableOfContents";
 import { ShareBar } from "./_components/ShareBar";
 import { BlogCTA } from "./_components/BlogCTA";
+import { ArticleScrollTracker } from "./_components/ArticleScrollTracker";
+import { BlogNavTracker } from "./_components/BlogNavTracker";
+import { RaioXCTA } from "../../../components/ui/raio-x-cta";
 import {
   fetchCmsPostBySlug,
   fetchCmsRelatedPosts,
   type CmsPost,
 } from "../../../lib/blog-api";
 import { fetchBlogSiteConfig, type BlogSiteConfig } from "../../../lib/blog-config";
-import { formatDate, getCategoryStyle } from "../../../lib/blog";
+import { formatDate, getCategoryStyle, splitHtmlForInlineCta } from "../../../lib/blog";
 import { getWhatsappUrl, NAV_LINKS } from "../../../lib/constants";
 import { cn } from "@/src/lib/utils";
 
@@ -40,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${post.seoTitle ?? post.title} | Mavellium Blog`,
     description: post.seoDescription ?? post.description,
+    alternates: { canonical: `https://mavellium.com.br/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
@@ -100,6 +104,7 @@ function CmsPostArticle({ post, related, siteConfig }: { post: CmsPost; related:
     getWhatsappUrl(
       `Olá! Li o artigo "${post.title}" no blog da Mavellium e gostaria de conversar sobre implementar isso na minha empresa.`
     );
+  const bodySplit = splitHtmlForInlineCta(post.body);
 
   return (
     <>
@@ -107,6 +112,8 @@ function CmsPostArticle({ post, related, siteConfig }: { post: CmsPost; related:
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildArticleSchema(post)) }}
       />
+      <ArticleScrollTracker slug={post.slug} titulo={post.title} />
+      <BlogNavTracker slug={post.slug} />
       <Header
         lightBg
         logo="/logo-mavellium-header.svg"
@@ -203,7 +210,15 @@ function CmsPostArticle({ post, related, siteConfig }: { post: CmsPost; related:
           {/* ── Two-column: body + ToC ── */}
           <div className="lg:grid lg:grid-cols-[1fr_280px] lg:gap-16">
             <div>
-              <HtmlArticleRenderer html={post.body} />
+              {bodySplit ? (
+                <>
+                  <HtmlArticleRenderer html={bodySplit.before} />
+                  <RaioXCTA variant="inline" location="meio_artigo" />
+                  <HtmlArticleRenderer html={bodySplit.after} />
+                </>
+              ) : (
+                <HtmlArticleRenderer html={post.body} />
+              )}
 
               <ShareBar
                 post={{ slug: post.slug, title: post.title, description: post.description }}
@@ -221,6 +236,8 @@ function CmsPostArticle({ post, related, siteConfig }: { post: CmsPost; related:
                   ...(post.ctaButtonUrl && { buttonUrl: post.ctaButtonUrl }),
                 }}
               />
+
+              <RaioXCTA variant="destaque" location="fim_artigo" />
             </div>
 
             <aside className="hidden lg:block">
